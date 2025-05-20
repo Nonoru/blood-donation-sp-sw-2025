@@ -27,7 +27,7 @@ body{
     scroll-snap-stop: always;
 }
 .my-container section:nth-child(odd){
-    background: linear-gradient(to bottom, #e1eec3, #f05053);
+    background: white;
 }
 #section-1{
     display: flex;
