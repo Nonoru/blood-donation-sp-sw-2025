@@ -1,25 +1,65 @@
 import './Login.scss';
+const info = [
+    {form: 'signin', class: 'signin-form',title: 'Đăng nhập'},
+    {form: 'signup', class: 'signup-form', title: 'Đăng ký'}
+]
 function Login() {
     return (
         <main className='login-page'>
-            <section className='login-section row'>
-                <div className='login-form col-6'>
-                    <div className='form-title'>
+            <div className='login-slider'>
+                <div className='login-list'>
+                    <div className='signin-form'>
+                        <div className='signin-header'>
                         <h1>Đăng nhập</h1>
-                    </div>
-                    <form>
-                        <div className='form-group'>
-                            <label htmlFor='username'>Tên đăng nhập</label>
+                        <p>Vui lòng nhập thông tin đăng nhập của bạn</p>
+                        </div>
+                        <div className='signin-input'> 
+                            <div className=''>
+                            <label htmlFor='username'>Username</label>
                             <input type='text' id='username' name='username' required />
+                            </div>
+
+                            <div className=''>
+                                <label htmlFor='password'>Password</label>
+                                <input type='password' id='password' name='password' required />
+                            </div>
+
+                            <button type='submit' className=''>Đăng nhập</button>
                         </div>
-                        <div className='form-group'>
-                            <label htmlFor='password'>Mật khẩu</label>
-                            <input type='password' id='password' name='password' required />
+                    </div>
+
+                    <div className='signup-form'>
+                        
+                        <div className='signup-input'> 
+                            <div className=''>
+                                <label htmlFor='username'>Username</label>
+                                <input type='text' id='username' name='username' required />
+                            </div>
+
+                            <div className=''>
+                                <label htmlFor='password'>Password</label>
+                                <input type='password' id='password' name='password' required />
+                            </div>
+
+                            <div className=''>
+                                <label htmlFor='password'>Password Confirm</label>
+                                <input type='password' id='password' name='password' required />
+                            </div>
+
+                            <div className=''>
+                                <label htmlFor='password'>Password Confirm</label>
+                                <input type='password' id='password' name='password' required />
+                            </div>
+
+                            <button type='submit' className=''>Đăng ký</button>
                         </div>
-                        <button type='submit'>Đăng nhập</button>
-                    </form>
+                        <div className='signup-header'>
+                            <h1>Đăng ký</h1>
+                            <p>Vui lòng nhập thông tin đăng nhập của bạn</p>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
         </main>
     )
 }

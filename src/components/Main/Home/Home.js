@@ -15,9 +15,9 @@ function Home(){
     return(
         <main className='home-page'>
             <section className='section-1 row'>
-                <div className='section-1-img col-7'> 
-                    <div className='slider'>
-                        <div className="list" style={{ left: `${-(imgIndex) * 600 * 1.3 }px` }}>
+                <div className='section-1-img col'> 
+                    <div className='slider animate-appear'>
+                        <div className="list" style={{ left: `${-(imgIndex) * 600 * 1.2 }px` }}>
                             {imgSection1.map(i=>(
                                 <div className='item'>
                                     <img src={i.src}/>
@@ -30,7 +30,7 @@ function Home(){
                         </div>
                     </div>
                 </div>
-                <div className='section-1-text col-5'>
+                <div className='section-1-text col'>
                     <div className='text'>
                         <h1>Lời mở đầu</h1>
                         <p>
@@ -41,7 +41,7 @@ function Home(){
             </section>
             <section className='section-2 row' >
                 <div className='section-2-benefits col'>
-                    <div className='box'>
+                    <div className='box animate-appear'>
                         <div className='box-title'>
                             <h2>Lợi ích của hiến máu tại</h2>
                             <h2>Blood Bridge</h2>
@@ -74,7 +74,7 @@ function Home(){
                     </div>
                 </div>
                 <div className='section-2-requirements col' data-aos="fade-up">
-                    <div className='box'>
+                    <div className='box animate-appear'>
                         <div className='box-title'>
                             <h2>Yêu cầu</h2>
                         </div>

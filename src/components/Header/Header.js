@@ -5,7 +5,7 @@ const items = [
   { class: 'blog', name:'Blog' , path: 'blog' },
   { class: 'doc', name:'Nghiên cứu', path: 'doc' },
   { class: 'feature', name:'Tính năng', path:'feature' },
-  { class: 'signin', name:'Đăng nhập', path: 'login' },
+  { class: 'login', name:'Đăng nhập', path: 'login' },
 ]
 
 function Header(){
@@ -14,7 +14,8 @@ function Header(){
             items.slice(a,b).map( i => (
                 <div className={i.class} >
                     <Link to ={`/${i.path}`} className="link">
-                        {i.name}
+                        <img src={`./img/${i.class}.svg`} class ='icon'/>
+                        <span>{i.name}</span>
                     </Link>
                 </div>
             ))
@@ -26,8 +27,8 @@ function Header(){
                 {itemMenu(0,2)}
                 <div className="logo">
                     <Link to="/" className="link">
-                        <img src="./img/logo.png" alt="Logo" />
-                        <img src ="./img/title.png" alt="Logo Text" />
+                        <img src="./img/logo.png" alt="Logo"/>
+                        <img src ="./img/title.png" alt="Blood Bridge"/>
                     </Link>
                 </div>
                 {itemMenu(2,items.length)}

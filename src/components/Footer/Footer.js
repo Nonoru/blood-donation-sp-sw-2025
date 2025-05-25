@@ -25,7 +25,7 @@ function Footer(){
     }
     return(
         <footer onClick={() => changeState(state)}>
-            Trang web được thiết kế bởi Nonoru
+            Contact me
         </footer>
     )
 }
