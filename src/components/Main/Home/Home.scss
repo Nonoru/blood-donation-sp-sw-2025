@@ -1,0 +1,139 @@
+::-webkit-scrollbar {
+    display: none;
+}
+.home-page{
+    height: 82vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    section{
+        height: 82vh;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+    }
+    .section-1{
+        flex-wrap: nowrap;
+        .section-1-img{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .slider{
+                position: relative;
+                width: 70vw;
+                height: calc( 400px * 1.3);
+                width: calc( 600px * 1.3);
+                display: flex;
+                overflow: hidden;
+                border-radius: 30px;
+                border: 10px solid rgba(255, 255, 255, 0.795);
+                box-shadow: 0 0 20px rgb(240, 220, 220);
+                .list{
+                    display: flex;
+                    position: absolute;
+                    height: inherit;
+                    width: max-content;
+                    position: absolute;
+                    transition: 1s;
+                    img{
+                        height: 100%;
+                        width: 100%;
+                        transition: 1.2s;
+                        object-fit: cover;
+                    }
+                }
+                .buttons{
+                    box-sizing: border-box;
+                    padding: 0 20px !important;
+                    position: absolute;
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    button{
+                        height: 50px;
+                        width: 50px;
+                        background-color: rgba(254, 251, 251, 0.715);
+                        border-radius: 25px;
+                        border: none;
+                    }
+                }
+            }
+        }
+        .section-1-text{
+            display: flex;
+            .text{
+                width: calc(100% - 40px);
+                position: relative;
+                top: 50%;
+                left: 10px;
+                transform: translate(0, -50%);
+                max-height: max-content;
+                height: 600px;
+                overflow-x: scroll;
+                padding: 32px !important;
+                border-radius: 15px;
+                background-color: rgba(255, 255, 255, 0.418);
+                h1{
+                    margin-bottom: 10px !important;
+                    font-size: 48px;
+                    font-weight: 900;
+                    color: rgb(250, 118, 118);
+                    text-shadow: 0 0 15px rgba(237, 69, 39, 0.852);
+                }
+                p{
+                    font-size: 18px;
+                    font-weight: 700;
+                    color: #000000;
+                }
+            }
+        }
+    }
+
+    .section-2{
+        flex-wrap: nowrap;
+        .box{
+            width: calc(100% * 10 / 12);
+            height: 500px;
+            border-radius: 20px;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            flex-direction: column;
+            .box-title{
+                height: calc(100% * 2 / 8);
+                text-align: center;
+                h2:nth-child(2){
+                    font-size: 32px;
+                    font-weight: 700;
+                    margin-top: 10px;
+                    color: #B63B3B;
+                }
+            }
+            .box-row{
+                height: calc(100% * 3 / 6);
+                display: flex;
+                .box-row-element{
+                    font-size: 12px;
+                    height: calc(100% * 2 / 3);
+                    color: white;
+                    padding: 3px 10px !important;
+                    p:nth-child(1){
+                        text-align: center;
+                        color: black;
+                        font-size: 14px;
+                    }
+                }
+                #ben-1{background-color: #B63B3B;}
+                #ben-2{background-color: #D05454;}
+                #ben-3{background-color: #CC6E6E;}
+                #ben-4{background-color: #DF9F9F;}
+            }
+        }
+        .section-2-benefits, .section-2-requirements{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
