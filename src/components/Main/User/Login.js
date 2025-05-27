@@ -1,11 +1,29 @@
+import { useState } from 'react';
+import { register } from '../../../services/register.js' ;
 import './Login.scss';
 const info = [
     {form: 'signin', class: 'signin-form',title: 'Đăng nhập'},
     {form: 'signup', class: 'signup-form', title: 'Đăng ký'}
 ]
 function Login() {
+    const [userName, setUserName] = useState('');
+    const [userPasswordHash, setPassword] = useState('');
+    const [userEmail, setEmail] = useState('');
+    const submitForm = () =>{
+         register({ 
+            userName, userPasswordHash, userEmail
+        });
+    }
+
     return (
-        <main className='login-page'>
+        <div style={{height: '80vh'}}>
+        <input key={1} type='text' onChange={(e) => setUserName(e.target.value)}/>
+        <input key={2} type='password' onChange={(e) => setPassword(e.target.value)}/>
+        <input key={3} type='text' onChange={(e) => setEmail(e.target.value)}/>
+        <button key={4} onClick={() => submitForm()}>Submit</button>
+
+
+        {/* <main className='login-page' style={{display: 'none'}}>
             <div className='login-slider'>
                 <div className='login-list'>
                     <div className='signin-form'>
@@ -60,7 +78,9 @@ function Login() {
                     </div>
                 </div>
             </div>
-        </main>
+        </main> */}
+        </div>
+
     )
 }
-export default Login
+export default Login;

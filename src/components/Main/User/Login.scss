@@ -9,12 +9,13 @@
         height: 400px;
         width: 600px;
         display: flex;
+        overflow: hidden;
         .login-list{
             position: absolute;
             width: max-content;
             height: 100%;
             display: flex;
-            left: 0px;
+            left: -600px;
             .signup-form, .signin-form{
                 width: max-content;
                 display: flex;
