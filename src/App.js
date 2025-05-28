@@ -1,10 +1,11 @@
 import { Routes , Route } from 'react-router-dom'
-import Header from './components/Header/Header'
-import HomePage from './components/Main/Home/Home'
-import BlogPage from './components/Main/Blog'
-import DocPage from './components/Main/Doc'
-import LoginPage from './components/Main/User/Login'
-import Footer from './components/Footer/Footer'
+import Header from './pages/Header/Header'
+import HomePage from './pages/Body/Home/Home'
+import BlogPage from './pages/Body/Blog'
+import DocPage from './pages/Body/Doc'
+import LoginPage from './pages/Body/User/Login/Login'
+import Register from './pages/Body/User/Register/Register'
+import Footer from './pages/Footer/Footer'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/blog' element={<BlogPage/>}/>
         <Route path='/doc' element={<DocPage/>}/>
         <Route path='/login' element={<LoginPage/>}/>
+        <Route path='/register' element={<Register/>}/>
       </Routes>
       <Footer/>
     </div>

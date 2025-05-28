@@ -9,5 +9,5 @@ export const register = ({userName, userPasswordHash,userEmail}) => {
         })
     .then(response => response.json())
     .then(result => console.log('Success:', result))
-    .catch(error => console.error('Error:', error));
+    .catch(error => console.error('Error:', error))
 }

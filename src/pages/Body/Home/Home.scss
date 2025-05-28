@@ -17,13 +17,13 @@
     animation-range: entry 0 cover 40%;
 }
 .home-page{
-    height: 82vh;
+    height: 88vh;
     overflow-x: hidden;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     section{
-        height: 82vh;
+        height: 88vh;
         scroll-snap-align: start;
         scroll-snap-stop: always;
     }
