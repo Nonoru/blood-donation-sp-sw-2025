@@ -1,11 +1,11 @@
-export const register = ({userName, userPasswordHash,userEmail}) => {
+export const register = (formData) => {
     const url = 'http://localhost:8080/api/register';
     fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             },
-        body: JSON.stringify({ userName, userPasswordHash, userEmail }),
+        body: JSON.stringify(formData),
         })
     .then(response => response.json())
     .then(result => console.log('Success:', result))

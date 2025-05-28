@@ -1,7 +1,31 @@
 import { Link } from 'react-router-dom'
-import {registerForm} from '../../../../components/RegisterCall'
+import {RegisterForm} from '../../../../components/RegisterForm'
+import {register} from '../../../../services/register'
+import { useState } from 'react'
 import './Register.scss'
 function Register(){
+    const [formData, setFormData] = useState(
+        {
+            username: '',
+            password: '',
+            email: '',
+        }
+    )
+    
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    }
+    const handleSubmit = async () => {
+    try {
+        console.log("Dữ liệu gửi đi:", JSON.stringify(formData));
+        const result = await register(formData);
+        alert("Đăng ký thành công!");
+        console.log("Kết quả:", result);
+    } catch (error) {
+        alert("Lỗi đăng ký: " + error.message);
+    }
+    };
     return(
         <div className='register-page'>
             <div className='register-form row'>
@@ -9,13 +33,10 @@ function Register(){
                     <h2>Đăng ký</h2>
                     <div className ='input-block'>
                         <div>
-                            {registerForm()}
-                        </div>
-                        <div>
-                            {registerForm()}
+                            <RegisterForm formData={formData} handleChange={handleChange}/>
                         </div>
                     </div>
-                    <button className='register-btn'>Đăng ký</button>
+                    <button className='register-btn' onClick={handleSubmit}>Đăng ký</button>
                     <Link to="/login" className="back-to-login">
                         <img src="/img/icons/login.svg" alt="login"/>
                     </Link>
