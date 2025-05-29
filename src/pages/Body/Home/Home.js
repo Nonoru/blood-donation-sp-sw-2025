@@ -14,8 +14,8 @@ function Home(){
     }
     return(
         <main className='home-page'>
-            <section className='section-1 row'>
-                <div className='section-1-img col'> 
+            <section className='section-1'>
+                <div className='section-1-img'> 
                     <div className='slider animate-appear'>
                         <div className="list" style={{ left: `${-(imgIndex) * 600 * 1.2 }px` }}>
                             {imgSection1.map(i=>(
@@ -30,14 +30,7 @@ function Home(){
                         </div>
                     </div>
                 </div>
-                <div className='section-1-text col'>
-                    <div className='text'>
-                        <h1>Lời mở đầu</h1>
-                        <p>
-                            Chào mừng mọi người đến với nền tảng kết nối những tấm lòng nhân ái lại với nhau.Giống như các vì sao lấp lánh trên bầu trời liên kết lại thành từng nhánh, mỗi người hiến máu là một tia sáng mang lại hy vọng và sự sống cho những người đang cần.Hãy cùng nhau lan tỏa và kết nối sự sống dù chỉ một giọt máu cũng có thể cứu lấy một mạng người. Mỗi hành động sẻ chia hôm nay là một tia hy vọng cho ngày mai. Trên hành trình ấy, bạn không đơn độc – vì luôn có những trái tim cùng chung nhịp đập, sẵn sàng dang tay giúp đỡ.Hãy để lòng nhân ái của bạn trở thành một phần trong mạng lưới sự sống này cùng nhau, chúng ta không chỉ trao đi máu, mà còn trao đi yêu thương, niềm tin và cơ hội sống cho những người đang chiến đấu từng ngày.
-                        </p>
-                    </div>
-                </div>
+                
             </section>
             <section className='section-2 row' >
                 <div className='section-2-benefits col'>
