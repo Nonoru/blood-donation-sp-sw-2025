@@ -32,12 +32,9 @@ public class UserAccount {
         createdAt = LocalDateTime.now();
     }
 
-    private LocalDateTime updatedAt;
+//    @OneToOne(mappedBy = "userAccount", cascade = CascadeType.ALL)
+//    private UserInformation userInformation;
 
-    @PreUpdate
-    public void preUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
     public UserAccount(String username, String password, String email) {
         this.username = username;
         this.password = password;

@@ -1,7 +1,8 @@
 package com.nonoru.superapp.service;
 
-import com.nonoru.superapp.dto.UserRegisterRequest;
+import com.nonoru.superapp.entity.UserRegisterError;
+import com.nonoru.superapp.request.UserRegisterRequest;
 
 public interface AuthService {
-    void register(UserRegisterRequest request);
+    UserRegisterError registerAccount(UserRegisterRequest request);
 }
