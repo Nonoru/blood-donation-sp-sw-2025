@@ -1,26 +1,27 @@
 .register-page{
-    height: 76vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 90vh;
+    position: relative;
     .register-form{
-        position: relative;
-        height: 450px;
-        width: 600px; 
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 700px; 
         h2{font-weight: 900;}
         a{text-decoration: none;color: #0749FF;}
 
         .register-input{
             background-color: #F6E7E7;
-            border-radius: 30px 0 0 30px;
+            height: 550px;
+            border-radius: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px !important;
+            padding: 20px 50px !important;
             .input-block{
                 width: 100%;
                 display: flex;
-                flex-direction: column;
+                gap: 50px;
                 align-items: center;
                 margin: 10px 0 !important;
                 .input-child{
@@ -34,7 +35,7 @@
                         left: 10px;
                     }
                     input{
-                        padding: 12px 20px 0 12px !important;
+                        padding: 12px 60px 0 12px !important;
                         width: 100%;
                         background-color: #D9D9D9;
                         height: 50px;
@@ -42,6 +43,48 @@
                         border: none;
                         border-radius: 10px;
                     }
+                    .error-input{
+                        position: absolute;
+                        top: 50%;
+                        left: -35px;
+                        transform: translate(0, -50%);
+                        height: 30px;
+                        width: 30px;
+                        background-image: url("../../../../../public/img/icons/report.svg");
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                    }
+                    .guide{
+                        position: absolute;
+                        top: 50%;
+                        right: 10px;
+                        transform: translate(0, -50%);
+                        height: 24px;
+                        width: 24px;
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        z-index: 1;
+                        .guide-text{
+                            position: absolute;
+                            top: 50%;
+                            right: -205px;
+                            transform: translate(0,-50%);
+                            background-color: #474742;
+                            color: white;
+                            border: solid white 2px;
+                            border-radius: 15px;
+                            padding: 10px !important;
+                            width: 200px;
+                            font-size: 12px;
+                            visibility: hidden;
+                        }
+                    }
+                    .guide:hover {
+                        .guide-text{
+                            visibility: visible;
+                        }
+                    }
+                        
                 }
             }
             .register-btn{
@@ -50,7 +93,7 @@
                 background-color: #1BA3B5;
                 border-radius: 10px;
                 color: white;
-                font-weight: bold;
+                font-weight: 600;
                 border: none;
                 margin: 10px !important;
             }
@@ -64,9 +107,41 @@
                 }
             }
         }
-        .register-title{
-            background-color: #31A197;
-            border-radius: 0 30px 30px 0;
-        }
     }    
+    .show-status{
+        position: absolute;
+        right: 50%;
+        top: 50%;
+        transform: translate(600px, -225px);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        .err-status{
+            width: max-content;
+            padding: 12px !important;
+            font-size: 14px;
+            color: white;
+            border-radius: 10px;
+            font-weight: 600;
+            background-color: #ff655b;
+        }
+    }
+    .blur-form{
+        filter: blur(3px);
+        pointer-events: none;
+    }
+    .return-to-login{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 32px;
+        font-weight: 900;
+        span{
+            background: linear-gradient(to right, #dcffa3, #02f81f);
+            background-clip: text;
+            color: transparent;
+        }
+    }
 }

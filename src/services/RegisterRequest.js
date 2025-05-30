@@ -1,16 +1,12 @@
-export const register = (formData) => {
-    const url = 'http://localhost:8080/api/register'
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            },
-        body: JSON.stringify(formData),
-        })
-    .then(response => response.json())
-    .then(result => console.log('Success:', result))
-    .catch(error => console.error('Error:', error))
-}
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+
+const url = 'http://localhost:8080/api'
+
+
+export const register = async (formData) => await axios.post(`${url}/register`, formData)
+
+
 export const checkTaken = async (username) => {
   const url = 'http://localhost:8080/api/check-username';
   try {
