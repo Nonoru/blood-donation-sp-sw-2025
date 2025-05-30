@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000/")
@@ -23,20 +26,24 @@ public class AuthController {
         UserRegisterError error = authService.registerAccount(request);
         System.out.println(request.toString());
         System.out.println(error.toString());
-        if(error.getErrorConfirmPassword() != null) {
-            return new ResponseEntity<>(error.getErrorConfirmPassword(), HttpStatus.BAD_REQUEST);
-        }else if(error.getExistEmail() != null) {
-            return new ResponseEntity<>(error.getExistEmail(), HttpStatus.BAD_REQUEST);
-        }else if(error.getExistUsername() != null) {
-            return new ResponseEntity<>(error.getExistUsername(), HttpStatus.BAD_REQUEST);
-        }else {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        Map<String, String> errors = new HashMap<>();
+        if(error.getErrorConfirmPassword() != null)
+            errors.put("errorConfirmPassword", error.getErrorConfirmPassword());
+        if(error.getExistEmail() != null)
+            errors.put("existEmail", error.getExistEmail());
+        if(error.getExistUsername() != null)
+            errors.put("existUsername", error.getExistUsername());
+        if(errors.isEmpty()){
+            return ResponseEntity.ok(true);
+        }else{
+            return ResponseEntity.badRequest().body(errors);
         }
     }
-    @GetMapping("/check-username")
-    public ResponseEntity<Boolean> checkUsername(@RequestParam("username") String username) {
-        boolean exists = userRepository.existsByUsername(username);
-        return ResponseEntity.ok(exists);
-    }
+//    @GetMapping("/check-username")
+//    public ResponseEntity<Boolean> checkUsername(@RequestParam("username") String username) {
+//        boolean exists = userRepository.existsByUsername(username);
+//        return ResponseEntity.ok(exists);
+//    }
 
 }
