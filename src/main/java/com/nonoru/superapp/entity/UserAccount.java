@@ -15,11 +15,11 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 20)
+    @Column(unique = true, nullable = false, length = 12)
     private String username;
 
     @Column(nullable = false, length = 60)
-    private String password;
+    private String hashPassword;
 
     @Column(unique = true, nullable = false, length = 60)
     private String email;
@@ -32,12 +32,14 @@ public class UserAccount {
         createdAt = LocalDateTime.now();
     }
 
-//    @OneToOne(mappedBy = "userAccount", cascade = CascadeType.ALL)
-//    private UserInformation userInformation;
+    @ManyToOne
+    @JoinColumn(name = "roleId")
+    private RoleAccount roleId;
 
-    public UserAccount(String username, String password, String email) {
+    public UserAccount(String username, String hashPassword, String email, RoleAccount roleId) {
         this.username = username;
-        this.password = password;
+        this.hashPassword = hashPassword;
         this.email = email;
+        this.roleId = roleId;
     }
 }

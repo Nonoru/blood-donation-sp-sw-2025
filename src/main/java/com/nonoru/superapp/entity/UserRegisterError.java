@@ -11,13 +11,4 @@ public class UserRegisterError {
     private String existEmail;
     private String existUsername;
     private String errorConfirmPassword;
-
-    @Override
-    public String toString() {
-        return "UserRegisterError{" +
-                "existEmail='" + existEmail + '\'' +
-                ", existUsername='" + existUsername + '\'' +
-                ", errorConfirmPassword='" + errorConfirmPassword + '\'' +
-                '}';
-    }
 }

@@ -40,10 +40,10 @@ public class AuthController {
             return ResponseEntity.badRequest().body(errors);
         }
     }
-//    @GetMapping("/check-username")
-//    public ResponseEntity<Boolean> checkUsername(@RequestParam("username") String username) {
-//        boolean exists = userRepository.existsByUsername(username);
-//        return ResponseEntity.ok(exists);
-//    }
+    @GetMapping("/check-username")
+    public ResponseEntity<Boolean> checkUsername(@RequestParam("username") String username) {
+        boolean exists = userRepository.existsByUsername(username);
+        return ResponseEntity.ok(exists);
+    }
 
 }

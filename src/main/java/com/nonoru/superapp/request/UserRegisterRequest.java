@@ -10,6 +10,7 @@ public class UserRegisterRequest {
     private String password;
     private String passwordConfirm;
     private String email;
+    private int roleId;
     @Override
     public String toString() {
         return "UserRegisterRequest{" +
@@ -17,6 +18,7 @@ public class UserRegisterRequest {
                 ", password='" + password + '\'' +
                 ", passwordConfirm='" + passwordConfirm + '\'' +
                 ", email='" + email + '\'' +
+                ", roleId=" + roleId +
                 '}';
     }
 }
