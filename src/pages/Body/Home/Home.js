@@ -3,10 +3,10 @@ import Footer from '../../Footer/Footer'
 
 import './Home.scss'
 const imgSection1 = [
-        {src: '/img/pics/homebanner1.jpg'},
-        {src: 'https://placehold.co/600x400/blue/white'},
-        {src: 'https://placehold.co/600x400/green/white'},
-        {src: './img/4.jpg'}
+    {src: 'https://images.pexels.com/photos/6753457/pexels-photo-6753457.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
+    {src: 'https://images.pexels.com/photos/12193105/pexels-photo-12193105.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
+    {src: 'https://images.pexels.com/photos/8460347/pexels-photo-8460347.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
+    {src: 'https://images.pexels.com/photos/6285376/pexels-photo-6285376.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}
     ]
 function Home(){
     const [imgIndex, setImgIndex] = useState(0)
