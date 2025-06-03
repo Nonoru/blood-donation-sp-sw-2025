@@ -1,0 +1,66 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.footer {
+  background-color: #5c4033; /* Nền nâu */
+  color: white;
+  padding: 40px 20px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.logo {
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.logo h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.contact-section, .location, .support {
+  flex: 1 1 300px;
+  margin-bottom: 30px;
+}
+
+.contact-section h3, .support h3, .location h4 {
+  margin-bottom: 20px;
+}
+
+.phone {
+  text-decoration: underline;
+}
+
+a {
+  color: #ddd;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+.info-columns {
+  display: flex;
+  justify-content: space-between
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.contact-section,
+.location,
+.support {
+  flex: 1 1 300px;
+  max-width: 300px;
+}
