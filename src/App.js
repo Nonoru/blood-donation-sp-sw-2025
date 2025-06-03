@@ -6,6 +6,9 @@ import DocPage from './pages/Body/Doc'
 import LoginPage from './pages/Body/User/Login/Login'
 import Register from './pages/Body/User/Register/Register'
 
+// Admin page
+import AdminPage from './pages/Admin/pages/AdminPage'
+
 function App() {
   return (
     <div className="App">
@@ -17,6 +20,7 @@ function App() {
         <Route path='/login' element={<LoginPage/>}/>
         <Route path='/register' element={<Register/>}/>
       </Routes>
+      {/* <AdminPage/> */}
     </div>
   )
 }
