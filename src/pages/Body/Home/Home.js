@@ -3,10 +3,7 @@ import Footer from '../../Footer/Footer'
 
 import './Home.scss'
 const imgSection1 = [
-    {src: 'https://images.pexels.com/photos/6753457/pexels-photo-6753457.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
-    {src: 'https://images.pexels.com/photos/12193105/pexels-photo-12193105.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
-    {src: 'https://images.pexels.com/photos/8460347/pexels-photo-8460347.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
-    {src: 'https://images.pexels.com/photos/6285376/pexels-photo-6285376.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}
+    {src: 'https://images.pexels.com/photos/6753457/pexels-photo-6753457.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}
     ]
 function Home(){
     const [imgIndex, setImgIndex] = useState(0)
@@ -20,36 +17,33 @@ function Home(){
             behavior: 'smooth'
         })
     }
+    const scrollToSection2 = () => {
+        const section2 = document.getElementById('section-2');
+        if (section2) {
+            section2.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
     return(
         <>
         <main className='home-page'>
             <section className='section-1'>
-                <div className='section-1-title'>
-                    <p className='title-main'>Hiến máu <span>an toàn đơn giản</span></p>
-                    <div className='title-sub'>
-                        <p>
-                            Thăm khám, kiểm tra sức khỏe, tư vấn lộ trình hiến máu
-                        </p>
-                        <div onClick={scrollMore}>Xem thêm</div>
-                    </div>
+                <div className="section-1-gray-overlay"></div>
+                <div className='section-1-img-bg'>
+                  <img className='single-bg-img' src={imgSection1[0].src} alt='img'/>
                 </div>
-                <div className='section-1-img'> 
-                    <div className='slider animate-appear'>
-                        <div className="list" style={{ left: `${-(imgIndex) * 600 * 1.2 }px` }}>
-                            {imgSection1.map(i=>(
-                                <div className='item-img'>
-                                    <img src={i.src} alt='img'/>
-                                </div>
-                            ))}
-                        </div>
-                        <div class="buttons">
-                            <button id="prev" onClick={()=> changeImg(imgIndex-1)}>{'<'}</button>
-                            <button id="next" onClick={()=> changeImg(imgIndex+1)}>{'>'}</button>
-                        </div>
-                    </div>
+                <div className='section-1-content'>
+                  <div className='section-1-title'>
+                      <p className='title-main'>Phần mềm Quản lý Y tế Học đường</p>
+                      <div className='title-sub'>
+                          <p>Giải pháp toàn diện giúp nhà trường quản lý sức khỏe học sinh hiệu quả, kết nối giữa nhà trường, phụ huynh và các đơn vị y tế.</p>
+                      </div>
+                      <div className='section-1-buttons'>
+                        <button className='btn-outline' onClick={scrollToSection2}>Tìm hiểu thêm</button>
+                      </div>
+                  </div>
                 </div>
             </section>
-            <section className='section-2 row'  >
+            <section className='section-2 row' id='section-2'>
                 <div className='section-2-benefits col'>
                     <div className='box animate-appear'>
                         <div className='box-title'>
