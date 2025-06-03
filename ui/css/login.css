@@ -1,0 +1,125 @@
+body{
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    font-family: 'Roboto Slab', serif;
+    background: linear-gradient(to bottom, #2193b0, #6dd5ed); 
+    position: relative;
+}
+.container{
+    margin: auto;
+    height: 450px;
+    width: 700px;
+    display: flex;
+    border-radius: 30px;
+    font-family: 'Roboto Slab', serif;
+}
+.description{
+    width: 50%;
+    border-radius: 30px 0 0 30px;
+    background-image: url('../img/9.jpg');
+    background-size: cover;
+    box-sizing: border-box;
+    padding: 20px
+}
+
+.login{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 50%;
+    background-color: #e0eff1;
+    position: relative;
+    border-radius: 0 30px 30px 0;
+    padding: 50px;
+    box-sizing: border-box;
+}
+.home{
+    position: absolute;
+}
+.login__logo{
+    height: 50px;
+    position: relative;
+}
+.login__logo img{
+    height: 100%;
+    position: absolute;
+    left: 8%;
+}
+.login__logo span{
+    position: absolute;
+    left: 25%;
+    font-size: 24px;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+.login__title{
+    font-size: 32px;
+    text-align: center;
+    margin-top: 15px;
+}
+.login__input{
+    margin-top: 15px;
+    position: relative;
+}
+.login__input input{
+    width: 250px;
+    height: 32px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding: 0 30px 0 10px;
+    box-sizing: border-box;
+}
+.login__input i{
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translate(0, -50%);
+    cursor: pointer;
+}
+.login button{
+    margin-top: 48px;
+    height: 34px;
+    width: 254px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: rgb(29, 29, 236);
+}
+.user__guide{
+    position: absolute;
+    width: 220px;
+    top: 0;
+    right: -230px;
+    background-color: rgba(53, 50, 50, 0.863);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    transform: translate(0, calc(-50% + 16px));
+    visibility: hidden;
+}
+.login__input i:hover ~ .user__guide{
+    visibility: visible;
+}
+.login__asksignup{
+    margin-top: 10px;
+}
+.login__askpass{
+    margin-top: 10px;
+    display: flex;
+    justify-content: end;
+    right: 0;
+}
+.description__welcome{
+    color: white;
+    font-size: 36px;
+    font-weight: 600;
+    opacity: 0.8;
+    border-radius: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+}
