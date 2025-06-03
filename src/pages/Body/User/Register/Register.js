@@ -12,31 +12,30 @@ function Register(){
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
 
-    const [usernameTaken, setUsernameTaken] = useState('')
-
     const [formData, setFormData] = useState({
         username: '',
         password: '',
         passwordConfirm: '',
         email: '',
+        roleId: 3
     })
 
     const [errorByUser, setErrorByUser] = useState({
-        username : false,
-        password : false,
-        passwordConfirm: false,
-        email: false,
+        username : true,
+        password : true,
+        passwordConfirm: true,
+        email: true,
     })
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
         if(name === 'username'){
             setUsername(value)
-            setErrorByUser(prev => ({...prev, username: value.length < 6 || value.length >12 || /[^a-zA-Z0-9]/.test(value)}))
+            setErrorByUser(prev => ({...prev, username: value.length < 6 || value.length >12 || /[^\w]/.test(value)}))
         }
         if(name ==='password'){
             setPassword(value)
-            setErrorByUser(prev => ({...prev, password: value.length < 6|| value.length >12 || /[^a-zA-Z0-9]/.test(value)}))
+            setErrorByUser(prev => ({...prev, password: value.length < 6|| value.length >12 || /[^\w_!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~]/.test(value)}))
         }
         if(name ==='passwordConfirm'){
             setPasswordConfirm(value)
@@ -48,7 +47,6 @@ function Register(){
         }
     }
 
-    const [success, setSuccess] = useState(false)
     const [errors, setErrors] = useState({})
     const [blurForm, setBlurForm] = useState(false)
     const handleSubmit = async (e) => {
@@ -57,7 +55,6 @@ function Register(){
             if(!(errorByUser.username || errorByUser.password || errorByUser.passwordConfirm || errorByUser.email)){
                 const response = await RegisterRequest.register(formData)
                 if(response.status === 200 || response.status === 201){
-                    setSuccess(true)
                     setBlurForm(true)
                     setTimeout(() =>{
                         navigate('/login')
@@ -76,22 +73,6 @@ function Register(){
         }
     }
 
-    // useEffect(() => {
-    //     if (username.trim().length > 2) {
-    //         const delay = setTimeout(() => {
-    //             const check = async () => {
-    //                 const isTaken = await checkTaken(username);
-    //                 setUsernameTaken(isTaken);
-    //             };
-    //   check();
-    //         }, 500); // đợi 500ms sau khi ngừng gõ
-    //         return () => clearTimeout(delay); // xóa timeout nếu gõ tiếp
-    //     } else {
-    //         setUsernameTaken(false);
-    //     }
-    // }, [username]);
-
-
     return(
         <div className='register-page'>
             <div className='show-status'>
@@ -104,15 +85,10 @@ function Register(){
             <div className={`register-form ${blurForm ? 'blur-form':''}`} >
 
                 <form className='register-input' onSubmit={handleSubmit}>
-                    <h2>Đăng ký</h2>
+                    <h2 className='text-3xl'>Đăng ký</h2>
 
                     <div className ='input-block'>
-                        <div>
-                            <RegisterInput formData={formData} handleChange={handleChange} errorByUser={errorByUser}/>
-                        </div>
-                        <div>
-                            <RegisterInput formData={formData} handleChange={handleChange} errorByUser={errorByUser}/>
-                        </div>
+                        <RegisterInput formData={formData} handleChange={handleChange} errorByUser={errorByUser}/>
                     </div>
 
                     <button className='register-btn' type='submit'>Đăng ký</button>

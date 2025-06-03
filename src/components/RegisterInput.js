@@ -1,9 +1,9 @@
 import { useState } from "react"
 const inputs = [
     {type: 'text', name:'username', detail:'Tài khoản', require:'Username phải có độ dài từ 6-12 và không chứa kí tự đặc biệt'},
-    {type: 'password', name: 'password', detail: 'Mật khẩu', require:'Mật khẩu phải có độ dài từ 6-12 và không chứa kí tự đặc biệt'},
+    {type: 'password', name: 'password', detail: 'Mật khẩu', require:'Mật khẩu phải có độ dài từ 6-12 và không chứa lạ và khoảng trắng'},
     {type: 'password', name: 'passwordConfirm', detail: 'Nhập lại mật khẩu'},
-    {type: 'email', name: 'email', detail:'Email', require:'Nhập địa chỉ có đinh dạng của một email'}
+    {type: 'email', name: 'email', detail:'Email', require:'Nhập địa chỉ có đinh dạng của một email'},
 ]
 
 export const RegisterInput = ({formData, handleChange, errorByUser}) =>{

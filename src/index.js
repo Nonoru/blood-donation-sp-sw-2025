@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import './index.scss'; // Import your main stylesheet
+import './input.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -1,18 +1,18 @@
 .register-page{
-    height: 90vh;
+    height: 92vh;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .register-form{
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 700px; 
+        width: 400px; 
+        height: max-content;
         h2{font-weight: 900;}
         a{text-decoration: none;color: #0749FF;}
 
         .register-input{
             background-color: #F6E7E7;
-            height: 550px;
             border-radius: 30px;
             display: flex;
             flex-direction: column;
@@ -20,9 +20,6 @@
             padding: 20px 50px !important;
             .input-block{
                 width: 100%;
-                display: flex;
-                gap: 50px;
-                align-items: center;
                 margin: 10px 0 !important;
                 .input-child{
                     position: relative;
@@ -84,7 +81,12 @@
                             visibility: visible;
                         }
                     }
-                        
+                    .username-exist{
+                        position: absolute;
+                        top: -20px;
+                        width: 300px;
+                        color: red;
+                    }   
                 }
             }
             .register-btn{

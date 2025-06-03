@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom';
-import {loginForm} from '../../../../components/LoginCall'
+import {loginForm} from '../../../../components/LoginInput'
 import './Login.scss';
 function Login() {
     return (
         <div className="login-page">
             <div className='login-form row'>
                 <div className='login-title col-6'>
-                    Login
                 </div>
                 <div className='login-input col-6'>
-                    <h2>Đăng nhập</h2>
+                    <h2 className='text-3xl'>Đăng nhập</h2>
                     
                     <div className='input-block'>
                         {loginForm()}

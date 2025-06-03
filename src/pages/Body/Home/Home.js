@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import Footer from '../../Footer/Footer'
+
 import './Home.scss'
 const imgSection1 = [
-        {src: 'https://placehold.co/600x400/black/white'},
+        {src: '/img/pics/homebanner1.jpg'},
         {src: 'https://placehold.co/600x400/blue/white'},
         {src: 'https://placehold.co/600x400/green/white'},
         {src: './img/4.jpg'}
@@ -12,15 +14,31 @@ function Home(){
         const newImgIndex = ((index + imgSection1.length) % imgSection1.length);
         setImgIndex(newImgIndex);
     }
+    const scrollMore = () => {
+        window.scrollTo({
+            top: window.innerHeight,
+            behavior: 'smooth'
+        })
+    }
     return(
+        <>
         <main className='home-page'>
             <section className='section-1'>
+                <div className='section-1-title'>
+                    <p className='title-main'>Hiến máu <span>an toàn đơn giản</span></p>
+                    <div className='title-sub'>
+                        <p>
+                            Thăm khám, kiểm tra sức khỏe, tư vấn lộ trình hiến máu
+                        </p>
+                        <div onClick={scrollMore}>Xem thêm</div>
+                    </div>
+                </div>
                 <div className='section-1-img'> 
                     <div className='slider animate-appear'>
                         <div className="list" style={{ left: `${-(imgIndex) * 600 * 1.2 }px` }}>
                             {imgSection1.map(i=>(
-                                <div className='item'>
-                                    <img src={i.src}/>
+                                <div className='item-img'>
+                                    <img src={i.src} alt='img'/>
                                 </div>
                             ))}
                         </div>
@@ -30,9 +48,8 @@ function Home(){
                         </div>
                     </div>
                 </div>
-                
             </section>
-            <section className='section-2 row' >
+            <section className='section-2 row'  >
                 <div className='section-2-benefits col'>
                     <div className='box animate-appear'>
                         <div className='box-title'>
@@ -42,43 +59,84 @@ function Home(){
                         <div className='box-row row'>
                             <div className='box-row-element col' id='ben-1'>
                                 <p>1. Kiểm tra và tư vấn sức khỏe miễn phí</p>
-                                <p>Bạn sẽ được kiểm tra sức khỏe 🩺 cẩn thận đầy đủ các bước trước khi hiến máu🩸, 
-                                    giúp phát hiện sớm các vấn đề bệnh tiềm ẩn và kiểm tra các chỉ số quan trọng như huyết áp, nhịp tim, 
-                                    hemoglobin… và nhận tư vấn sức khỏe từ đội ngũ chuyên môn🤝.</p>
+                                <p>Khám sức khỏe tại phòng khám Blood Bride và tư vấn lộ trình hiến máu</p>
                             </div>
                             <div className='box-row-element col' id='ben-2'>
                                 <p>2. Nhận ưu đãi và giấy chứng nhận</p>
-                                <p>Sau khi hiến máu tại Blood Bridge với tấm lòng cao đẹp, bạn sẽ được tặng quà🎁cảm ơn và nhận giấy chứng nhận🧾hiến máu:
-                                     Xác nhận chính thức từ tổ chức, có thể dùng để:Tích lũy cho các chương trình hiến máu  thường xuyên🏅,Hưởng ưu đãi y tế 
-                                     theo chính sách nhà nước,Là minh chứng cho một hành động nhân đạo cao đẹp🤝</p>
+                                <p>Trao tặng giấy chứng nhận và hỗ trợ nhiều ưu đãi</p>
                             </div>
                         </div>
                         <div className='box-row row'>
                             <div className='box-row-element col' id='ben-3'>
                                 <p>3. Cứu người - Chia sẽ máu</p> 
-                                <p>Hiến máu là một hành động tốt đẹp 💖 mà còn là cách đơn để cứu sống người khác.
-                                    🩸Nguồn máu có thể đến từ những người hiến tặng.🚑Cứu người ngay lập tức: được sử dụng cho các ca cấp cứu điều 
-                                    trị các bệnh ung thư, tai nạn giao thông...👶Giúp đỡ những sinh linh bé nhỏ sinh thiếu máu nặng hoặc sinh non cần đến máu để sống sót..</p>
+                                <p>Hành động nhân văn - hiến máu giúp người</p>
                             </div>
                             <div className='box-row-element col' id='ben-4'>
-                                Ben2
+                                <p>4.Nâng cao sức khỏe</p> 
+                                <p>Hiến máu định kỳ giúp kích thích sản sinh máu mới,
+                                     tăng tuần hoàn máu và giúp cơ thể khỏe mạnh.
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className='section-2-requirements col' data-aos="fade-up">
+               
+                <div className='section-2-requirements col'>
                     <div className='box animate-appear'>
                         <div className='box-title'>
-                            <h2>Yêu cầu</h2>
+                            <h1>Các yêu cầu khi hiến máu</h1>
+                        </div>
+                        <div className='block-1'>
+                            <div className='block-1-main'>
+                                A
+                            </div>
+                            <div className='block-1-ele'>
+                                <div className='block-1-ele-child'>
+                                    <div>
+                                        <div className='icon-block'></div>
+                                        <p>Người khỏe mạnh từ 18 cho đến 60  tuổi</p>
+                                    </div>
+                                    <div>
+                                        <div className='icon-block'></div>
+                                        <p>Không mắc các bệnh HIV/AIDS, viêm gan B, C, giang mai.</p>
+                                    </div>
+                                </div>
+                                <div className='block-1-ele-child'>
+                                    <div>
+                                        <div className='icon-block'></div>
+                                        <p>Không sử dụng các chất kích thích, ma túy.</p>
+                                    </div>
+                                    <div>
+                                        <div className='icon-block'></div>
+                                        <p>Không xăm hình dưới 6 tháng</p>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div className='block-2'>
+                            <div className='block-2-ele'>
+                                <div className='icon-block'></div>
+                                <p>Độ tuổi hợp lệ từ 18 - 60</p>
+                            </div>
+                            <div className='block-2-ele'>
+                                <div className='icon-block'></div>
+                                <p>Độ tuổi hợp lệ từ 18 - 60</p>
+                            </div>
+                            <div className='block-2-ele'>
+                                <div className='icon-block'></div>
+                                <p>Độ tuổi hợp lệ từ 18 - 60</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
-            <section id='section-3'>
-                <h1 >Những người đã hiến máu</h1>
-
+            <section className='section-3 flex justify-center'>
             </section>
+            
         </main>
+        <Footer/>
+        </>
     )
 }
 export default Home
