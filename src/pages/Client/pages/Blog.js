@@ -1,4 +1,5 @@
-import './Blog.css'
+import '../styles/Blog.css'
+
 function Blog(){
     return(
           <div className="blog-page">

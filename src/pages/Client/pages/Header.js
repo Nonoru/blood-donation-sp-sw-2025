@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
-import {itemMenu, items} from '../../components/HeaderForm'
-import './Header.scss'
-
+import {itemMenu, items} from '../components/HeaderForm'
+import '../styles/Header.scss'
 function Header(){
     return(
         <header className="header">

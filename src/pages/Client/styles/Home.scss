@@ -15,6 +15,7 @@
     left: 0;
     transform: none;
     gap: 0;
+    z-index: 0;
     .section-1{
         position: relative;
         min-height: 100vh;
@@ -24,14 +25,15 @@
         justify-content: center;
         .section-1-gray-overlay {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: -8vh; left: 0; right: 0; bottom: 0;
             background: rgba(40, 40, 40, 0.4); /* lớp xám mờ */
+            height: 100vh;
             z-index: 1;
             border-radius: 0;
         }
         .section-1-img-bg {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: -8vh; left: 0; right: 0; bottom: 0;
             z-index: 0;
             overflow: hidden;
             border-radius: 0;
@@ -46,7 +48,7 @@
                 display: block;
             }
         }
-        .section-1-bg-overlay { display: none; }
+        .section-1-bg-overlay { display: none; top: -8vh;}
         .section-1-content {
             position: relative;
             z-index: 2;
@@ -90,13 +92,14 @@
                 background: transparent;
                 color: #fff;
                 border: 3px solid #fff;
-                padding: 16px 40px;
+                padding: 16px 30px !important;
                 border-radius: 8px;
                 font-size: 18px;
                 font-weight: 600;
                 cursor: pointer;
                 transition: transform 0.2s, text-decoration 0.2s, border 0.2s;
                 text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                text-decoration: none;
             }
             .btn-outline:hover {
                 background: transparent;
@@ -197,7 +200,7 @@
                                 .icon-block{
                                     height: 24px;
                                     width: 24px;
-                                    background-image: url("../../../assets/icon/age.svg");
+                                    background-image: url("../assets/icon/age.svg");
                                     background-repeat: no-repeat;
                                     background-size: cover;
                                 }

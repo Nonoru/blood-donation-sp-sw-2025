@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
-import * as RegisterRequest from '../../../../services/RegisterRequest'
-import { RegisterInput } from '../../../../components/RegisterInput'
+import * as RegisterRequest from '../services/RegisterRequest'
+import { RegisterInput } from '../components/RegisterInput'
 import { useState, useEffect } from 'react'
-import './Register.scss'
+import '../styles/Register.scss'
 
 function Register(){
     const navigate = useNavigate()

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import {loginForm} from '../../../../components/LoginInput'
-import './Login.scss';
+import {loginForm} from '../components/LoginInput'
+import '../styles/Login.scss'
 function Login() {
     return (
         <div className="login-page">

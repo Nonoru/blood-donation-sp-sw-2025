@@ -3,6 +3,7 @@
     width: 100vw;
     height: 8vh;
     display: flex;
+    background-color: transparent;
     .menu{
         display: flex;
         align-items: center;
@@ -66,7 +67,7 @@
         left: 0;
         right: 0;
         width: 100vw;
-        background-image: url('../../assets/background/header-background.svg');
+        // background-image: url('../assets/background/header-background.svg');
         background-size: cover;
         background-repeat: no-repeat;
         height: inherit;

@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import Footer from '../../Footer/Footer'
+import Footer from './Footer'
 
-import './Home.scss'
+import '../styles/Home.scss'
 const imgSection1 = [
     {src: 'https://images.pexels.com/photos/6753457/pexels-photo-6753457.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}
     ]
