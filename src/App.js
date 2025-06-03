@@ -1,6 +1,6 @@
 import { Routes , Route } from 'react-router-dom'
 // Admin page
-import AdminPage from './pages/Admin/pages/AdminPage'
+import AdminPage from './pages/Admin/Admin'
 // Client page
 import ClientPage from './pages/Client/Client'
 
