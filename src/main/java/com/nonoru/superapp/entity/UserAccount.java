@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -15,16 +16,16 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 12)
+    @Column(unique = true, nullable = false, columnDefinition = "VARCHAR(12)")
     private String username;
 
-    @Column(nullable = false, length = 60)
+    @Column(nullable = false, columnDefinition = "VARCHAR(60)" )
     private String hashPassword;
 
-    @Column(unique = true, nullable = false, length = 60)
+    @Column(unique = true, nullable = false, columnDefinition = "VARCHAR(60)")
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "DATETIME")
     private LocalDateTime createdAt;
 
     @PrePersist
@@ -33,13 +34,13 @@ public class UserAccount {
     }
 
     @ManyToOne
-    @JoinColumn(name = "roleId")
-    private RoleAccount roleId;
+    @JoinColumn(name = "role")
+    private RoleAccount role;
 
-    public UserAccount(String username, String hashPassword, String email, RoleAccount roleId) {
+    public UserAccount(String username, String hashPassword, String email, RoleAccount role) {
         this.username = username;
         this.hashPassword = hashPassword;
         this.email = email;
-        this.roleId = roleId;
+        this.role = role;
     }
 }

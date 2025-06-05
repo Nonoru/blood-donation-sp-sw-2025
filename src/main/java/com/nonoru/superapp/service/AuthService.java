@@ -1,8 +1,9 @@
 package com.nonoru.superapp.service;
 
-import com.nonoru.superapp.entity.UserRegisterError;
-import com.nonoru.superapp.request.UserRegisterRequest;
+import com.nonoru.superapp.request.RegisterAccountRequest;
+
+import java.util.Map;
 
 public interface AuthService {
-    UserRegisterError registerAccount(UserRegisterRequest request);
+    Map<String, String> registerAccount(RegisterAccountRequest request);
 }
