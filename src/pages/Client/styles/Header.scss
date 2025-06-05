@@ -1,9 +1,13 @@
 .header{
-    position: relative;
+    position: fixed; 
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 8vh;
     display: flex;
     background-color: transparent;
+    z-index: 999;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out;
     .menu{
         display: flex;
         align-items: center;
@@ -29,9 +33,10 @@
             font-size: 14px;
             font-weight: 400;
             .icon{
-                opacity: 0.6;
-                height: 18px;
-                width: 18px;
+                opacity: 1;
+                height: 22px;
+                width: 22px;
+                filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.6));
             }
         }
         .link:hover{
@@ -71,5 +76,39 @@
         background-repeat: no-repeat;
         height: inherit;
         filter: drop-shadow(2px 2px 8px rgb(196, 116, 116));
+    }
+}
+
+// Hiệu ứng ẩn/hiện navbar
+.header-visible {
+    transform: translateY(0);
+}
+
+.header-hidden {
+    transform: translateY(-100%);
+}
+
+.header-scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.75);
+    
+    .menu .link {
+        color: #333;
+        
+        .icon {
+            filter: brightness(0.3) contrast(2);
+            opacity: 0.9;
+        }
+    }
+      .menu .link:hover {
+        .icon {
+            filter: brightness(0.2) contrast(2.5);
+            opacity: 1;
+        }
+    }
+    
+    .overlay-header {
+        background-color: rgba(255, 255, 255, 0.1);
     }
 }
