@@ -1,0 +1,19 @@
+.list-account-page{
+    min-width: 90vw;
+    position: relative;
+    .form-add-account{
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%);
+        width: 500px;
+        height: 500px;
+        background-color: rgb(211, 147, 147);
+        filter: none;
+        z-index: 1;
+    }
+    button{
+        background-color: aqua;
+        border: solid 2px black;
+    }
+}

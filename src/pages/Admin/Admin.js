@@ -1,7 +1,7 @@
 import { Routes , Route } from 'react-router-dom'
 import AdminMenu from './pages/AdminMenu';
 import AdminStatistic from './pages/AdminStatistic';
-import AdminListAccount from './pages/AddminListAccount';
+import AdminListAccount from './pages/AdminListAccount';
 import './Admin.scss'
 function AdminPage(){
     return(
