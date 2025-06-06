@@ -1,6 +1,11 @@
 .footer {
     background-color: #4a4a4a;
     color: white;
+<<<<<<< HEAD
+=======
+    padding: 130px !important; 
+    margin-top: 50px !important;
+>>>>>>> 65a1ced01d8949c498f0eedd9bd28d761f0ce3db
     display: flex;
     justify-content: center;
     align-items: center;
@@ -66,6 +71,7 @@
             display: flex;
             gap: 20px;
             justify-content: center;
+            margin-top: 25px !important;
             
             a {
                 color: #c0c0c0;
@@ -112,8 +118,9 @@
                 p {
                     color: #a0a0a0;
                     font-size: 14px;
-                    margin: 0;
+                    margin-top: 25px !important;
                     text-align: center;
+
                     
                     .wix-link {
                         color: #c0c0c0;
