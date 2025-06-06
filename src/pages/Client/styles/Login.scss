@@ -7,6 +7,26 @@
     justify-content: center;
     position: relative;
     font-family: 'Arial', sans-serif;
+    position: relative;
+    .show-status{
+        position: absolute;
+        top: 12%;
+        right: 6%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        .err-status{
+            width: max-content;
+            padding: 12px !important;
+            font-size: 14px;
+            color: white;
+            border-radius: 10px;
+            font-weight: 600;
+            background-color: #ff655b !important;
+        }
+    }
+
 
     // Background image layer - behind everything
     &::before {
@@ -425,6 +445,7 @@
         }
     }
 }
+
 
 @keyframes show {
     0%, 49.99% {

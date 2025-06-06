@@ -1,123 +1,238 @@
-// File: AdminListAccount.scss
+// Advanced Variables
+$primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+$success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+$warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+$danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+$glass-bg: rgba(255, 255, 255, 0.1);
+$glass-border: rgba(255, 255, 255, 0.2);
 
+// Enhanced Color Palette
+$primary-color: #667eea;
+$secondary-color: #764ba2;
+$accent-color: #f093fb;
+$success-color: #00f2fe;
+$warning-color: #fee140;
+$danger-color: #ff6b6b;
+$dark-color: #2d3748;
+$light-color: #f7fafc;
+$border-color: rgba(255, 255, 255, 0.1);
+
+// Advanced Shadows
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$shadow-glow: 0 0 20px rgba(102, 126, 234, 0.4);
+$shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+
+// Advanced Mixins
+@mixin glass-morphism {
+  background: $glass-bg;
+  backdrop-filter: blur(20px);
+  border: 1px solid $glass-border;
+  box-shadow: $shadow-xl;
+}
+
+@mixin neon-glow($color) {
+  box-shadow: 0 0 5px $color, 0 0 10px $color, 0 0 15px $color, 0 0 20px $color;
+}
+
+@mixin button-premium {
+  position: relative;
+  padding: 0.875rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: $shadow-xl;
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(1.02);
+  }
+}
+
+@mixin card-premium {
+  @include glass-morphism;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: $primary-gradient;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+    animation: float 6s ease-in-out infinite;
+  }
+}
+
+// Advanced Animations
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(102, 126, 234, 0.5); }
+50% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.8), 0 0 30px rgba(102, 126, 234, 0.6); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Main Container with Enhanced Styling
 .list-account-page {
-  display: flex;
-  justify-content: center;
-  padding: 30px;
-  background-color: #f2f3f7;
   min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
-
-  .account-container {
-    width: calc(100vw - 160px);
-    max-width: 1200px;
-    background-color: #ffffff;
-    border-radius: 6px;
-    border: 1px solid #dee2e6;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    overflow-x: auto;
-
-    .header-action {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-
-      h3 {
-        font-size: 18px;
-        font-weight: 600;
-        color: #333;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(120, 200, 255, 0.3) 0%, transparent 50%),
+    linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+  width: calc(100vw - 160px);
+  color: white;
+  
+  // Animated background particles
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.3), transparent),
+      radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.2), transparent),
+      radial-gradient(2px 2px at 90px 40px, rgba(255, 255, 255, 0.3), transparent),
+      radial-gradient(2px 2px at 130px 80px, rgba(255, 255, 255, 0.2), transparent);
+    background-repeat: repeat;
+    background-size: 150px 150px;
+    animation: float 20s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  // Enhanced Modal
+  .form-add-account {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(15px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInScale 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    > div:first-child {
+      @include card-premium;
+      max-width: 600px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      animation: slideInUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      
+      // Custom scrollbar
+      &::-webkit-scrollbar {
+        width: 8px;
       }
-
-      .btn-add {
-        background-color: #007bff;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 4px;
-        color: white;
-        font-size: 14px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #0056b3;
-        }
+      
+      &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
       }
-    }
-
-    .account-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 12px;
-
-      thead {
-        background-color: #00aaff;
-        color: #fff;
-
-        th {
-          padding: 10px;
-          text-align: left;
-          border: 1px solid #d0e2f2;
-          font-size: 14px;
-        }
-      }
-
-      tbody {
-        tr {
-          background-color: #ffffff;
-
-          &:nth-child(even) {
-            background-color: #f2f9ff;
-          }
-
-          &:hover {
-            background-color: #e1f0ff;
-          }
-
-          td {
-            padding: 10px;
-            border: 1px solid #d0e2f2;
-            font-size: 13.5px;
-            color: #333;
-            word-break: break-word;
-          }
-        }
+      
+      &::-webkit-scrollbar-thumb {
+        background: $primary-gradient;
+        border-radius: 10px;
       }
     }
-
-    .footer-pagination {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 10px;
-
-      .pagination {
-        display: flex;
-        list-style: none;
-        gap: 4px;
-        padding: 0;
-
-        li {
-          button {
-            padding: 6px 10px;
-            border: 1px solid #ccc;
-            background-color: white;
-            border-radius: 4px;
-            cursor: pointer;
-
-            &:hover {
-              background-color: #007bff;
-              color: white;
-              border-color: #007bff;
-            }
-
-            &.active {
-              background-color: #007bff;
-              color: white;
-              font-weight: bold;
-            }
-          }
-        }
+    
+    > button {
+      @include button-premium;
+      background: $danger-gradient;
+      color: white;
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      z-index: 1001;
+      
+      &:hover {
+        @include neon-glow($danger-color);
       }
     }
   }
-}
+  
+  // Enhanced Content Sections
+  > div:not(.form-add-account) {
+    @include card-premium;
+    margin-bottom: 3rem;
+  }}
