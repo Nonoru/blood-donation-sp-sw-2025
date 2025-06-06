@@ -44,8 +44,7 @@ function Footer(){
                             <p>© 2025 by Blood Bridge. Powered and secured by G7</p>
                         </div>
                     </div>                
-                </div>
-
+                </div>               
                 {/* Left Contact Info */}
                 <div className="footer-contact">
                     <div className="contact-info">
@@ -53,9 +52,9 @@ function Footer(){
                         <p>TP. Hồ Chí Minh, Việt Nam</p>
                         <br />
                         <p>Hotline: 1900 6848</p>
-                        <p>Email: bloodbridge5555@gmail.com</p>
+                        <p>Email: <a href="mailto:bloodbridge5555@gmail.com">bloodbridge5555@gmail.com</a></p>
                     </div>
-                </div>           
+                </div>
             </div>
         </footer>
     )

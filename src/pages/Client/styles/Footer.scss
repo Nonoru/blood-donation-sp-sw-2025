@@ -128,8 +128,9 @@
                 }
             }
         }
-    }
-      //Left Contact Info 
+    }      
+    
+    //Left Contact Info 
     .footer-contact {
         display: flex;
         justify-content: flex-end;
@@ -143,6 +144,17 @@
                 font-size: 16px;
                 margin: 0 0 8px 0;
                 line-height: 1.4;
+                
+                a {
+                    color: #e0e0e0;
+                    text-decoration: underline;
+                    transition: color 0.3s ease;
+                    
+                    &:hover {
+                        color: white;
+                        text-decoration: underline;
+                    }
+                }
             }
         }    
     }
