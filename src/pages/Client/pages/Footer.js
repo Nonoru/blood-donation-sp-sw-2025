@@ -41,7 +41,7 @@ function Footer(){
                     {/* Bottom Links and Copyright moved here */}
                     <div className="footer-bottom-center">
                         <div className="footer-copyright">
-                            <p>© 2025 by Blood Bridge. Powered and secured by Wix</p>
+                            <p>© 2025 by Blood Bridge. Powered and secured by G7</p>
                         </div>
                     </div>                
                 </div>
@@ -49,11 +49,11 @@ function Footer(){
                 {/* Left Contact Info */}
                 <div className="footer-contact">
                     <div className="contact-info">
-                        <p>Địa chỉ: 500 Terry Francine Street</p>
-                        <p>San Francisco, CA 94158</p>
+                        <p>Địa chỉ: 106 Thiên Phước, Phường 9, Tân Bình</p>
+                        <p>TP. Hồ Chí Minh, Việt Nam</p>
                         <br />
-                        <p>Hotline: 0123.456.789</p>
-                        <p>Email: info@mysite.com</p>
+                        <p>Hotline: 1900 6848</p>
+                        <p>Email: bloodbridge5555@gmail.com</p>
                     </div>
                 </div>           
             </div>

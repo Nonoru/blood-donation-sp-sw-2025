@@ -1,7 +1,8 @@
 .footer {
     background-color: #4a4a4a;
     color: white;
-    padding: 100px !important; 
+    padding: 130px !important; 
+    margin-top: 50px !important;
     display: flex;
     justify-content: center;
 
@@ -65,6 +66,7 @@
             display: flex;
             gap: 20px;
             justify-content: center;
+            margin-top: 25px !important;
             
             a {
                 color: #c0c0c0;
@@ -111,8 +113,9 @@
                 p {
                     color: #a0a0a0;
                     font-size: 14px;
-                    margin: 0;
+                    margin-top: 25px !important;
                     text-align: center;
+
                     
                     .wix-link {
                         color: #c0c0c0;
