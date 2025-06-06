@@ -1,5 +1,6 @@
 .blog-page {
-  padding: 20px 40px !important;
+  position: relative;
+  top: 8vh;
 }
 
 .card-block{
