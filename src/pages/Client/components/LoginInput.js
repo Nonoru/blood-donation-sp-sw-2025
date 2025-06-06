@@ -1,14 +1,19 @@
 export const loginForm = () => {
     const inputs = [
-        {key: 1, type: 'text', name: 'username', detail: 'Tài khoản'},
-        {key: 2, type: 'password', name: 'password', detail: 'Mật khẩu'},
+        {key: 1, type: 'email', name: 'email', detail: 'Email', placeholder: 'Email'},
+        {key: 2, type: 'password', name: 'password', detail: 'Password', placeholder: 'Password'},
     ]
     return(
         inputs.map(i => (
-            <label key={i.key} htmlFor={i.name} className='input-child'>
-                <p>{i.detail}</p>
-                <input type={i.type} id={i.name} name={i.name}/>
-            </label>
+            <div key={i.key} className='input-field'>
+                <input 
+                    type={i.type} 
+                    id={i.name} 
+                    name={i.name}
+                    placeholder={i.placeholder}
+                    autoComplete={i.type === 'password' ? 'current-password' : 'email'}
+                />
+            </div>
         ))
     )
 }

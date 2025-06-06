@@ -1,3 +1,5 @@
+import '../styles/Doc.scss'
+
 function Doc(){
     return(
         <h1>Doc Page</h1>
