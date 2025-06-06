@@ -6,7 +6,7 @@ const inputs = [
     {type: 'email', name: 'email', detail:'Email', require:'Nhập địa chỉ có đinh dạng của một email'},
 ]
 
-export const RegisterInput = ({formData, handleChange, errorByUser}) =>{
+export const RegisterInput = ({formData, handleChange, /*errorByUser*/}) =>{
     const [showPass, setShowPass] = useState(false)
     return(
         inputs.map(i => (
@@ -19,9 +19,9 @@ export const RegisterInput = ({formData, handleChange, errorByUser}) =>{
                     name = {i.name}
                     onChange={e => handleChange(e)}
                 />
-                {errorByUser[i.name] && 
+                {/* {errorByUser[i.name] && 
                     <div className="error-input"></div>
-                }
+                } */}
                 {i.require && 
                     <div className={`guide ${showPass  && i.name === 'password' ? 'show' : ''}`} 
                         onClick={() => {

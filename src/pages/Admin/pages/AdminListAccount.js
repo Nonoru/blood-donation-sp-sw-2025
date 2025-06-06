@@ -1,53 +1,109 @@
-// File: AdminListAccount.js
-import React from "react";
-import "../styles/AdminListAccount.scss";
+import { useEffect, useState } from "react"
+import * as AdminRequest from "../services/AdminRequest"
+import { AdminAddAccount } from "../components/AdminAddAccount"
+import '../styles/AdminListAccount.scss'
 
-const AdminListAccount = () => {
-  return (
-    <div className="list-account-page">
-      <div className="account-container">
-        <div className="header-action">
-          <h3>Danh sách tài khoản</h3>
-          <button className="btn-add">➕ Thêm mới</button>
+const attrTableHead = ['Mã tài khoản','Tên tài khoản','Địa chỉ Email', 'Vai trò']
+
+function AdminListAccount(){
+    const [userAccounts, setUserAccounts] = useState([])
+    const [empAccounts, setEmpAccounts] = useState([])
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    useEffect(() => {
+        const getList = async () => {
+            try{
+                const response = await AdminRequest.listAccount()
+                const userList = []
+                const empList = []
+                response.data.map( acc => {
+                    if(acc.roleId === 3){
+                        userList.push(acc)
+                    }else{
+                        empList.push(acc)
+                    }
+                    setUserAccounts(userList)
+                    setEmpAccounts(empList)
+                } )
+            }catch{
+
+            }
+        }
+        getList();
+    }, [refreshKey]);
+
+    const [stateAddBtn, setStateAddBtn] = useState(false)
+    return(
+        <div className="list-account-page">  
+            <div className="form-add-account" style={{display: stateAddBtn ? 'block':'none'}}>
+                <AdminAddAccount/>   
+                <button type="none" onClick={e => setStateAddBtn(!stateAddBtn)}>Thoát</button>
+            </div>
+            {/* <button onClick={e => console.log(userAccounts)}>test</button> */}
+            <div style={{pointerEvents : stateAddBtn ? 'none':'auto', filter: stateAddBtn ? 'blur(1px)' : 'none'}}>
+                Đây là bảng nhân viên
+                <button onClick={e => setStateAddBtn(!stateAddBtn)}>Thêm tài khoản nhân viên</button>
+                <table>
+                    <thead>
+                        <tr>
+                            {attrTableHead.map((a, index) => (
+                                <th key={index}> {a} </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            empAccounts.map( acc =>
+                                <tr key={acc.id}>
+                                    <th>{acc.id}</th>
+                                    <th>{acc.username}</th>
+                                    <td>{acc.email}</td>
+                                    <td>{acc.roleName}</td>
+                                    <td><button>Chỉnh sửa</button></td>
+                                </tr>
+                            )
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Số lượng tài khoản</td>
+                            <td>{empAccounts.length}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <br/>
+            <div style={{pointerEvents : stateAddBtn ? 'none':'auto', filter: stateAddBtn ? 'blur(1px)' : 'none'}}>
+                Đây là bảng user
+                <table>
+                    <thead>
+                        <tr>
+                            {attrTableHead.map((a, index) => (
+                                <th key={index}> {a} </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            userAccounts.map( acc =>
+                                <tr key={acc.id}>
+                                    <th>{acc.id}</th>
+                                    <th>{acc.username}</th>
+                                    <td>{acc.email}</td>
+                                    <td>{acc.roleName}</td>
+                                </tr>
+                            )
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Số lượng tài khoản</td>
+                            <td>{userAccounts.length}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
-
-        <table className="account-table">
-          <thead>
-            <tr>
-              <th>Mã tài khoản</th>
-              <th>Tên tài khoản</th>
-              <th>Email</th>
-              <th>Vai trò</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>tuanngu</td>
-              <td>tuan123@gmail.com</td>
-              <td>User</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>tuanxoalqdituanxoalqdi</td>
-              <td>tuan3@gmail.com</td>
-              <td>Staff</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div className="footer-pagination">
-          <ul className="pagination">
-            <li><button>«</button></li>
-            <li><button>‹</button></li>
-            <li><button className="active">1</button></li>
-            <li><button>›</button></li>
-            <li><button>»</button></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default AdminListAccount;
+    )
+}
+export default AdminListAccount
