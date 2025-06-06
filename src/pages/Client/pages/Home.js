@@ -11,18 +11,21 @@ function Home(){
         const newImgIndex = ((index + imgSection1.length) % imgSection1.length);
         setImgIndex(newImgIndex);
     }
+
     const scrollMore = () => {
         window.scrollTo({
             top: window.innerHeight,
             behavior: 'smooth'
         })
     }
+
     const scrollToSection2 = () => {
         const section2 = document.getElementById('section-2');
         if (section2) {
             section2.scrollIntoView({ behavior: 'smooth' });
         }
     };
+
     return(
         <>
         <main className='home-page'>
@@ -32,7 +35,7 @@ function Home(){
                   <img className='single-bg-img' src={imgSection1[0].src} alt='img'/>
                 </div>
                 <div className='section-1-content'>
-                  <div className='section-1-title'>
+                    <div className='section-1-title'>
                       <p className='title-main'>Phần mềm Quản lý Y tế Học đường</p>
                       <div className='title-sub'>
                           <p>Giải pháp toàn diện giúp nhà trường quản lý sức khỏe học sinh hiệu quả, kết nối giữa nhà trường, phụ huynh và các đơn vị y tế.</p>
@@ -42,6 +45,7 @@ function Home(){
                       </div>
                   </div>
                 </div>
+
             </section>            
             <section className='section-2' id='section-2'>
                 <div className='section-2-container'>
@@ -177,8 +181,203 @@ function Home(){
                         </div>
                     </div>
                 </div>
-            </section>
-            <section className='section-3 flex justify-center'>
+            </section>    
+
+            <section className='section-3'>
+                <div className='section-3-container'>                    
+                    <div className='process-section animate-appear'>
+                        <div className='process-content'>
+                            <div className='process-image'>
+                                <img src="/img/background_page3.png" alt="Bác sĩ" className='doctor-image' />
+                            </div>
+                            
+                            <div className='process-text'>                                
+                                <div className='section-header'>
+                                    <h2 className='section-title'>Quy trình thăm khám</h2>
+                                    <h2 className='section-title-highlight'>và hiến máu</h2>
+                                </div>
+                                
+                                <div className='mission-text'>
+                                    <div className='process-steps'>
+                                        <div className='step-item'>
+                                            <div className='step-number'>1</div>
+                                            <div className='step-content'>
+                                                <h4>Đăng ký và tiếp nhận</h4>
+                                                <p>Điền form đăng ký, xuất trình giấy tờ tùy thân. Nhân viên sẽ hướng dẫn quy trình chi tiết.</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className='step-item'>
+                                            <div className='step-number'>2</div>
+                                            <div className='step-content'>
+                                                <h4>Khám sàng lọc sơ bộ</h4>
+                                                <p>Đo huyết áp, cân nặng, kiểm tra mạch. Tư vấn sức khỏe và điều kiện hiến máu phù hợp.</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className='step-item'>
+                                            <div className='step-number'>3</div>
+                                            <div className='step-content'>
+                                                <h4>Xét nghiệm máu</h4>
+                                                <p>Lấy mẫu máu để kiểm tra nhóm máu, hemoglobin và các chỉ số y tế cần thiết.</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className='step-item'>
+                                            <div className='step-number'>4</div>
+                                            <div className='step-content'>
+                                                <h4>Hiến máu chính thức</h4>
+                                                <p>Quá trình hiến máu diễn ra trong 10-15 phút. Y tá chuyên nghiệp hỗ trợ suốt quá trình.</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className='step-item'>
+                                            <div className='step-number'>5</div>
+                                            <div className='step-content'>
+                                                <h4>Nghỉ ngơi và nhận quà</h4>
+                                                <p>Nghỉ ngơi 10-15 phút, được phục vụ đồ ăn nhẹ và nhận giấy chứng nhận hiến máu.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* After Donation Tips Section */}
+                    <div className='tips-section animate-appear'>
+                        <div className='section-header'>
+                            <h2 className='section-title'>Lời khuyên sau khi</h2>
+                            <h2 className='section-title-highlight'>hiến máu</h2>
+                        </div>
+                        
+                        <div className='tips-content'>
+                            <div className='tips-grid'>
+                                <div className='tip-card immediate-tips' data-aos="fade-right" data-aos-delay="100">
+                                    <div className='tip-header'>
+                                        <div className='tip-icon'>
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                                                <polyline points="12,6 12,12 16,14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        </div>
+                                        <h3>Ngay sau hiến máu</h3>
+                                    </div>
+                                    
+                                    <div className='tip-list'>
+                                        <div className='tip-item'>
+                                            <span className='tip-bullet'>•</span>
+                                            <p>Nghỉ ngơi tại điểm hiến máu tối thiểu 15 phút</p>
+                                        </div>
+                                        <div className='tip-item'>
+                                            <span className='tip-bullet'>•</span>
+                                            <p>Uống nhiều nước, đồ uống có đường</p>
+                                        </div>
+                                        <div className='tip-item'>
+                                            <span className='tip-bullet'>•</span>
+                                            <p>Ăn đồ ăn nhẹ ( bánh kẹo, trái cây,... ) </p>
+                                        </div>
+                                        <div className='tip-item'>
+                                            <span className='tip-bullet'>•</span>
+                                            <p>Hạn chế gập tay trong quá trình nghỉ sau hiến máu</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className='tip-card daily-tips' data-aos="fade-left" data-aos-delay="200">
+                                    <div className='tip-header'>
+                                        <div className='tip-icon'>
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                                                <path d="M12 2a10 10 0 0 0 0 20 10 10 0 0 0 0-20z" fill="currentColor" fillOpacity="0.1"/>
+                                                <path d="M12 6v6l4 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        </div>
+                                        <h3>48 tiếng sau hiến máu</h3>
+                                    </div>
+                                    <div className='tip-list'>
+                                        <div className='tip-item'>
+                                            <span className='tip-bullet'>•</span>
+                                            <p>Uống nhiều nước, ăn uống đầy đủ, bổ sung sắt</p>
+                                        </div>
+                                        <div className='tip-item'>
+                                            <span className='tip-bullet'>•</span>
+                                            <p>Tránh nâng vật nặng bằng tay vừa hiến máu</p>
+                                        </div>
+                                        <div className='tip-item'>
+                                            <span className='tip-bullet'>•</span>
+                                            <p>Không uống rượu bia, không sử dụng chất kích thích</p>
+                                        </div>
+                                        <div className='tip-item'>
+                                            <span className='tip-bullet'>•</span>
+                                            <p>Tăng cường sử dụng các chất dinh dưỡng bổ máu (thịt, gan, trứng, sữa,...)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className='tip-card warning-tips' data-aos="fade-up" data-aos-delay="300">
+                                    <div className='tip-header'>
+                                        <div className='tip-icon'>
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                <line x1="12" y1="9" x2="12" y2="13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                <line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        </div>
+
+                                <h3>Dấu hiệu cần chú ý</h3>
+                                </div>
+                                    <div className='tip-list'>
+                                        <div className='tip-item warning'>
+                                            <span className='tip-bullet'>⚠</span>
+                                            <p>Chảy máu vị trí lấy máu</p>
+                                        </div>
+                                        <div className='tip-item warning'>
+                                            <span className='tip-bullet'>⚠</span>
+                                            <p>Sưng tấy, đau nhức tay</p>
+                                        </div>
+                                        <div className='tip-item warning'>
+                                            <span className='tip-bullet'>⚠</span>
+                                            <p>Mệt, chóng mặt, vã mồ hôi liên tục</p>
+                                        </div>
+                                        <div className='tip-item contact'>
+                                            <span className='tip-bullet'>📞</span>
+                                            <p><strong>Liên hệ ngay:</strong> 0123.456.789</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className='recovery-timeline' data-aos="fade-up" data-aos-delay="400">
+                                <h3>Thời gian phục hồi cơ thể</h3>
+                                <div className='recovery-items'>
+                                    <div className='recovery-item'>
+                                        <div className='recovery-icon'>🩸</div>
+                                        <div className='recovery-info'>
+                                            <h4>Huyết tương</h4>
+                                            <p>24-48 giờ</p>
+                                        </div>
+                                    </div>
+                                    <div className='recovery-item'>
+                                        <div className='recovery-icon'>🔴</div>
+                                        <div className='recovery-info'>
+                                            <h4>Hồng cầu</h4>
+                                            <p>4-6 tuần</p>
+                                        </div>
+                                    </div>
+                                    <div className='recovery-item'>
+                                        <div className='recovery-icon'>💊</div>
+                                        <div className='recovery-info'>
+                                            <h4>Mức sắt</h4>
+                                            <p>6-8 tuần</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
             
         </main>

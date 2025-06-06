@@ -7,8 +7,8 @@ import ClientPage from './pages/Client/Client'
 function App() {
   return (
     <div className="App">
-      {/* <ClientPage/> */}
-      <AdminPage/>
+      <ClientPage/>
+      {/* <AdminPage/> */}
     </div>
   )
 }
