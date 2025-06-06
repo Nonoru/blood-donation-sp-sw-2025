@@ -1,16 +1,11 @@
 .footer {
     background-color: #4a4a4a;
     color: white;
-<<<<<<< HEAD
-=======
-    padding: 130px !important; 
-    margin-top: 50px !important;
->>>>>>> 65a1ced01d8949c498f0eedd9bd28d761f0ce3db
+    padding: 150px !important; 
+    margin-top: 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-top:60px !important;
-    height: 400px;
+
     .footer-container {
         max-width: 1200px;
         margin: 0 auto;
@@ -133,9 +128,8 @@
                 }
             }
         }
-    }      
-    
-    //Left Contact Info 
+    }
+      //Left Contact Info 
     .footer-contact {
         display: flex;
         justify-content: flex-end;
@@ -149,17 +143,6 @@
                 font-size: 16px;
                 margin: 0 0 8px 0;
                 line-height: 1.4;
-                
-                a {
-                    color: #e0e0e0;
-                    text-decoration: underline;
-                    transition: color 0.3s ease;
-                    
-                    &:hover {
-                        color: white;
-                        text-decoration: underline;
-                    }
-                }
             }
         }    
     }
