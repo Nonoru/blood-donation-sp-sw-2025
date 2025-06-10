@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {loginForm} from '../components/LoginInput'
+import {LoginInput} from '../components/LoginInput'
 import {RegisterInput} from '../components/RegisterInput'
 import * as RegisterRequest from '../services/RegisterRequest'
 import '../styles/Login.scss'
@@ -14,11 +14,11 @@ function Login() {
     // REG
 
     const [formData, setFormData] = useState({
+        fullname: '',
         username: '',
         password: '',
         passwordConfirm: '',
         email: '',
-        roleId: 3
     });
 
     const handleChange = (e) => {
@@ -66,7 +66,7 @@ function Login() {
 
                     <p className='or-text'>Hoặc đăng nhập với</p>
                       <div className='input-block'>
-                        {loginForm()}
+                        <LoginInput/>
                     </div>
 
                     <div className='remember-me'>

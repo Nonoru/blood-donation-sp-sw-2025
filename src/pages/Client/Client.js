@@ -3,8 +3,7 @@ import Header from '../Client/pages/Header'
 import HomePage from '../Client/pages/Home'
 import BlogPage from '../Client/pages/Blog'
 import DocPage from '../Client/pages/Doc'
-import LoginPage from '../Client/pages/Login'
-import Register from '../Client/pages/Register'
+import Auth from '../Client/pages/Auth'
 
 import './Client.scss'
 function Client () {
@@ -15,8 +14,7 @@ function Client () {
             <Route path='/' element={<HomePage/>}/>
             <Route path='/blog' element={<BlogPage/>}/>
             <Route path='/doc' element={<DocPage/>}/>
-            <Route path='/login' element={<LoginPage/>}/>
-            <Route path='/register' element={<Register/>}/>
+            <Route path='/login' element={<Auth/>}/>
             </Routes>
         </div>
     )
