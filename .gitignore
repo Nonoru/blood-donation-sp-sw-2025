@@ -12,7 +12,6 @@ target/
 *.iml
 *.ipr
 *.properties
-*.xml
 .idea
 
 ### Eclipse ###

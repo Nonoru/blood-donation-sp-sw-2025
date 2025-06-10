@@ -19,15 +19,4 @@ public class RoleAccount {
 
     @Column(nullable = false, length = 12)
     private String roleName;
-
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "role")
-//    private List<UserAccount> users = new ArrayList<>();
-
-    @Override
-    public String toString() {
-        return "RoleAccount{" +
-                "roleId=" + roleId +
-                ", roleName='" + roleName + '\'' +
-                '}';
-    }
 }

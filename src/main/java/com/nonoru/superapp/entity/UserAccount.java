@@ -25,6 +25,9 @@ public class UserAccount {
     @Column(unique = true, nullable = false, columnDefinition = "VARCHAR(60)")
     private String email;
 
+    @Column(nullable = false, columnDefinition = "NVARCHAR(60)")
+    private String fullName;
+
     @Column(nullable = false, columnDefinition = "DATETIME")
     private LocalDateTime createdAt;
 
@@ -37,7 +40,8 @@ public class UserAccount {
     @JoinColumn(name = "role")
     private RoleAccount role;
 
-    public UserAccount(String username, String hashPassword, String email, RoleAccount role) {
+    public UserAccount(String fullName, String username, String hashPassword, String email, RoleAccount role) {
+        this.fullName = fullName;
         this.username = username;
         this.hashPassword = hashPassword;
         this.email = email;
