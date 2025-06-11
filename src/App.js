@@ -8,8 +8,8 @@ function App() {
   return (
     <div className="App">
       <ClientPage/>
-      {/* <AdminPage/> */}
+      {/*<AdminPage/>*/}
     </div>
   )
 }
-export default App;
+export default App; 
