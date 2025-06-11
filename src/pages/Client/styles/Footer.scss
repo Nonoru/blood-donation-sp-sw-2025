@@ -1,14 +1,9 @@
 .footer {
     background-color: #4a4a4a;
     color: white;
-
-    padding: 130px !important; 
-    margin-top: 50px !important;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-top:60px !important;
-    height: 400px;
+
     .footer-container {
         max-width: 1200px;
         margin: 0 auto;
@@ -131,9 +126,8 @@
                 }
             }
         }
-    }      
-    
-    //Left Contact Info 
+    }
+      //Left Contact Info 
     .footer-contact {
         display: flex;
         justify-content: flex-end;
@@ -147,8 +141,9 @@
                 font-size: 16px;
                 margin: 0 0 8px 0;
                 line-height: 1.4;
-                
-                a {
+            }
+
+            a {
                     color: #e0e0e0;
                     text-decoration: underline;
                     transition: color 0.3s ease;
@@ -158,7 +153,6 @@
                         text-decoration: underline;
                     }
                 }
-            }
         }    
     }
 }
