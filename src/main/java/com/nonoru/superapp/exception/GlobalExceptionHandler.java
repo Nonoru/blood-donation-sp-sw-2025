@@ -31,8 +31,8 @@ public class GlobalExceptionHandler {
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         List<String> priorityOrder = List.of(
                 "USER_EMPTY", "USER_LENGTH_INVALID", "USER_CONTAIN_ERROR_SYMBOL",
-                "PASSWORD_LENGTH_INVALID", "PASSWORD_CONTAIN_ERROR_SYMBOL","PASSWORD_CONFIRM_EMPTY",
-                "EMAIL_BLANK_CONTAIN", "EMAIL_INVALID",
+                "PASSWORD_EMPTY","PASSWORD_LENGTH_INVALID","PASSWORD_CONTAIN_ERROR_SYMBOL","PASSWORD_CONFIRM_EMPTY",
+                "EMAIL_EMPTY", "EMAIL_INVALID",
                 "FULL_NAME_EMPTY"
         );
 

@@ -14,6 +14,7 @@ public class RegisterAccountRequest {
     private String username;
 
     @Length(min = 6, max = 12, message = "PASSWORD_LENGTH_INVALID")
+    @NotBlank(message = "PASSWORD_EMPTY")
     @Pattern(regexp = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{}|;':\",./<>?`~]+$", message = "PASSWORD_CONTAIN_ERROR_SYMBOL")
     private String password;
 
@@ -23,8 +24,7 @@ public class RegisterAccountRequest {
     @NotBlank(message = "FULL_NAME_EMPTY")
     private String fullName;
 
-    @Email(message = "EMAIL_INVALID")
+    @NotBlank(message = "EMAIL_EMPTY")
     @Pattern(regexp = "^[a-zA-Z0-9._-]+@gmail\\.com$", message = "EMAIL_INVALID")
-    @NotBlank(message = "EMAIL_BLANK_CONTAIN")
     private String email;
 }

@@ -27,10 +27,11 @@ public class AuthAPI {
     private AuthService authService;
 
     @PostMapping("/register")
-    ApiResponse<UserAccount> register (@RequestBody @Valid RegisterAccountRequest request){
-        ApiResponse<UserAccount> apiResponse = new ApiResponse<>();
+    ApiResponse register (@RequestBody @Valid RegisterAccountRequest request){
         authService.registerUserAccount(request);
-        return apiResponse;
+        return ApiResponse.builder()
+                .message("Đăng ký thành công bạn hãy đăng nhập")
+                .build();
     }
 
     @PostMapping("/login")

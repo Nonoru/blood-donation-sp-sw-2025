@@ -9,6 +9,7 @@ import com.nimbusds.jwt.SignedJWT;
 import com.nonoru.superapp.dto.request.IntrospectRequest;
 import com.nonoru.superapp.dto.response.AuthResponse;
 import com.nonoru.superapp.dto.response.IntrospectResponse;
+import com.nonoru.superapp.dto.response.UserAccountResponse;
 import com.nonoru.superapp.entity.RoleAccount;
 import com.nonoru.superapp.exception.AppException;
 import com.nonoru.superapp.exception.ErrorCode;
@@ -93,9 +94,14 @@ public class AuthService {
             throw new AppException(ErrorCode.LOGIN_FAIL);
         }
         String token = generateToken(user);
-        return AuthResponse.builder()
+        UserAccountResponse userInfo = UserAccountResponse.builder()
+                .id(user.getId())
+                .fullName(user.getFullName())
+                .build();
+        return AuthResponse.<UserAccountResponse>builder()
                 .token(token)
                 .authenticated(true)
+                .data(userInfo)
                 .build();
     }
 
@@ -106,7 +112,7 @@ public class AuthService {
                 .issuer("bloodbridge.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
-                        Instant.now().plus(1, ChronoUnit.DAYS).toEpochMilli()
+                        Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
                 ))
                 .build();
         Payload payload = new Payload(claim.toJSONObject());
@@ -137,5 +143,4 @@ public class AuthService {
         }
         return "";
     }
-
 }
