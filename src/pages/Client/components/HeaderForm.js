@@ -3,7 +3,6 @@ export const items = [
     { key: 1, class: 'blog', name:'Blog' , path: 'blog' },
     { key: 2, class: 'doc', name:'Nghiên cứu', path: 'doc' },
     { key: 3, class: 'feature', name:'Tính năng', path:'feature' },
-    { key: 4, class: 'login', name:'Đăng nhập', path: 'login' },
 ]
 export const itemMenu = (a,b) => {
     return(

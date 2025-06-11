@@ -1,19 +1,21 @@
-export const LoginInput = () => {
+export const LoginInput = ({handleChangeLogin, formLogin}) => {
     const inputs = [
-        {key: 1, type: 'email', name: 'email', detail: 'Email', placeholder: 'Email'},
-        {key: 2, type: 'password', name: 'password', detail: 'Password', placeholder: 'Password'},
+        {key: 1, type: 'type', name: 'tk', detail: 'Tên tài khoản hoặc gmail'},
+        {key: 2, type: 'password', name: 'password', detail: 'Mật khẩu'},
     ]
     return(
         inputs.map(i => (
-            <div key={i.key} className='input-field'>
+            <label key={i.key} className='input-field'>
                 <input 
                     type={i.type} 
                     id={i.name} 
                     name={i.name}
-                    placeholder={i.placeholder}
-                    autoComplete={i.type === 'password' ? 'current-password' : 'email'}
+                    placeholder={i.detail}
+                    value={formLogin[i.name]}
+                    onChange={e => handleChangeLogin(e)}
+                    // autoComplete={i.type === 'password' ? 'current-password' : 'email'}
                 />
-            </div>
+            </label>
         ))
     )
 }

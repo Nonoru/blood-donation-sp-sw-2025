@@ -6,15 +6,15 @@ import DocPage from '../Client/pages/Doc'
 import Auth from '../Client/pages/Auth'
 
 import './Client.scss'
-function Client () {
+function Client ({userInfo, setUserInfo}) {
     return(
         <div className="client-page">
-            <Header/>
+            <Header userInfo={userInfo} setUserInfo={setUserInfo}/>
             <Routes>
             <Route path='/' element={<HomePage/>}/>
             <Route path='/blog' element={<BlogPage/>}/>
             <Route path='/doc' element={<DocPage/>}/>
-            <Route path='/login' element={<Auth/>}/>
+            <Route path='/login' element={<Auth userInfo={userInfo} setUserInfo={setUserInfo}/>}/>
             </Routes>
         </div>
     )

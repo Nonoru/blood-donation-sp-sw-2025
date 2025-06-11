@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    background-color: #f5f5f5;
     font-family: 'Arial', sans-serif;
     position: relative;
     .show-status{
@@ -28,40 +28,14 @@
     }
 
 
-    // Background image layer - behind everything
-    &::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-image: url('https://images.pexels.com/photos/668300/pexels-photo-668300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        z-index: -2;
-    }
-
-    // Overlay layer for better contrast
-    &::after {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.3);
-        z-index: -1;
-    }    .auth-container {
+    .auth-container {
         position: relative;
         width: 900px;
         height: 600px;
         border-radius: 25px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         overflow: hidden;
         background: white;
-        z-index: 10;
     }
 
     // Form Sections

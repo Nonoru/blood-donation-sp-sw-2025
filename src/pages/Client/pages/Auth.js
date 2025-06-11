@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import {LoginInput} from '../components/LoginInput'
 import {RegisterInput} from '../components/RegisterInput'
-import * as RegisterRequest from '../services/RegisterRequest'
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { jwtDecode } from 'jwt-decode';
+import * as AuthApi from '../services/AuthApi'
 import '../styles/Login.scss'
 
-function Login() {
+function Login({userInfo, setUserInfo}) {
+    const navigate = useNavigate();
     const [isRegisterMode, setIsRegisterMode] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const toggleMode = () => {
@@ -14,7 +18,7 @@ function Login() {
     // REG
 
     const [formData, setFormData] = useState({
-        fullname: '',
+        fullName: '',
         username: '',
         password: '',
         passwordConfirm: '',
@@ -26,23 +30,70 @@ function Login() {
         setFormData(prev => ({ ...prev, [name]: value }));
     }
 
-    const [errors, setErrors] = useState({})
     // const [blurForm, setBlurForm] = useState(false)
-    const handleSubmit = async (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault()
         try{
-            const response = await RegisterRequest.register(formData)
-            if(response.status === 200 || response.status === 201){
-                // setBlurForm(true)
+            const response = await AuthApi.register(formData);
+            
+            if (response.data.code === 200) {
+                toast.success(response.data.message, { className: 'my-toast' })
+                setTimeout(() => {
+                    toggleMode();
+                }, 2000)
+                setFormData({
+                    fullName: '',
+                    username: '',
+                    password: '',
+                    passwordConfirm: '',
+                    email: '',
+                })
             }
         }catch(error){
-            if (error.response && error.response.data) {
-                setErrors(error.response.data);
-                setTimeout(() => {
-                    setErrors({});
-                }, 4000);
+            if (error.response) {
+                toast.error(error.response.data.message || "Đăng ký thất bại!", {className : 'my-toast'});
+            } else if (error.request) {
+                toast.error("Không nhận được phản hồi từ server");
+            } else {
+                toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
             }
-            console.log(errors)
+        }
+    }
+
+    const [formLogin, setFormLogin] = useState({
+        tk: '',
+        password: ''
+    })
+    const handleChangeLogin = (e) => {
+        const { name, value } = e.target;
+        setFormLogin(prev => ({ ...prev, [name]: value }));
+    }
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await AuthApi.login(formLogin)
+            if(response.data.data.authenticated === true){
+                localStorage.removeItem("token");
+                const token = response.data.data.token
+                localStorage.setItem("token", token);
+                const decoded = jwtDecode(token);
+                if(userInfo.isAuthenticated === false)
+                    setUserInfo(prev => ({...prev, isAuthenticated:true, username: decoded.sub}))
+                    
+
+                toast.success("Đăng nhập thành công" , {className : 'my-toast'})
+                 setTimeout(() => {
+                    navigate('/');
+                }, 2500);
+            }
+        } catch (error) {
+            if (error.response) {
+                toast.error(error.response.data.message || "Đăng nhập thất bại!", {className : 'my-toast'});
+            } else if (error.request) {
+                toast.error("Không nhận được phản hồi từ server");
+            } else {
+                toast.error("Lỗi không xác định:", error.message);
+            }
         }
     }
     return (
@@ -66,7 +117,7 @@ function Login() {
 
                     <p className='or-text'>Hoặc đăng nhập với</p>
                       <div className='input-block'>
-                        <LoginInput/>
+                        <LoginInput handleChangeLogin = {handleChangeLogin} formLogin = {formLogin}/>
                     </div>
 
                     <div className='remember-me'>
@@ -85,14 +136,14 @@ function Login() {
                         Quên mật khẩu?
                     </a>
 
-                    <button className='auth-btn'>Đăng nhập</button>
+                    <button className='auth-btn' onClick={e => handleLogin(e)}>Đăng nhập</button>
                 </div>
 
                 {/* REGISTER FORM */}
 
                 <div className={`register-form `} >
                     {/* ${blurForm ? 'blur-form':''} */}
-                    <form className='form-section register-form-section' onSubmit={handleSubmit}>
+                    <form className='form-section register-form-section' onSubmit={handleRegister}>
                         <h2 className='text-3xl'>Đăng ký</h2>
 
                         <div className ='input-block'>
@@ -126,13 +177,6 @@ function Login() {
                     </div>
                 </div>
             </div>
-            <div className='show-status'>
-                {Object.values(errors).map((msg, index) => (
-                    <div key={index} className="err-status">
-                        {msg} !
-                    </div>
-                ))}
-            </div> 
         </div>
     )
 }
