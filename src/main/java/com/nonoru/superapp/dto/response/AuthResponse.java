@@ -1,13 +1,11 @@
 package com.nonoru.superapp.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class AuthResponse {
     private String token;
     private boolean authenticated;

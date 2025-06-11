@@ -2,9 +2,13 @@ package com.nonoru.superapp.exception;
 
 import com.nonoru.superapp.dto.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.Comparator;
+import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -22,14 +26,34 @@ public class GlobalExceptionHandler {
         apiResponse.setMessage(errorCode.getMessage());
         return ResponseEntity.badRequest().body(apiResponse);
     }
-
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     ResponseEntity<ApiResponse> handlingMethodArgumentNotValidException(MethodArgumentNotValidException exception){
-        String enumKey = exception.getFieldError().getDefaultMessage();
-        ErrorCode errorCode = ErrorCode.valueOf(enumKey);
+        List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+        List<String> priorityOrder = List.of(
+                "USER_EMPTY", "USER_LENGTH_INVALID", "USER_CONTAIN_ERROR_SYMBOL",
+                "PASSWORD_LENGTH_INVALID", "PASSWORD_CONTAIN_ERROR_SYMBOL","PASSWORD_CONFIRM_EMPTY",
+                "EMAIL_BLANK_CONTAIN", "EMAIL_INVALID",
+                "FULL_NAME_EMPTY"
+        );
+
+        FieldError prioritizedError = fieldErrors.stream()
+                .sorted(Comparator.comparingInt(e -> {
+                    String code = e.getDefaultMessage();
+                    int index = priorityOrder.indexOf(code);
+                    return index < 0 ? Integer.MAX_VALUE : index;
+                }))
+                .findFirst()
+                .orElse(null);
+
         ApiResponse apiResponse = new ApiResponse();
+        String enumKey = prioritizedError.getDefaultMessage();
+        ErrorCode errorCode = ErrorCode.valueOf(enumKey);
+        if(errorCode == null){
+            errorCode = ErrorCode.valueOf("UNCATEGORIZED_NOT_FOUND");
+        }
         apiResponse.setCode(errorCode.getCode());
         apiResponse.setMessage(errorCode.getMessage());
+
         return ResponseEntity.badRequest().body(apiResponse);
     }
 }

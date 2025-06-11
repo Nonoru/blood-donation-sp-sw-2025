@@ -1,9 +1,14 @@
 package com.nonoru.superapp.service;
 
+import ch.qos.logback.core.spi.ErrorCodes;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
+import com.nonoru.superapp.dto.request.IntrospectRequest;
 import com.nonoru.superapp.dto.response.AuthResponse;
+import com.nonoru.superapp.dto.response.IntrospectResponse;
 import com.nonoru.superapp.entity.RoleAccount;
 import com.nonoru.superapp.exception.AppException;
 import com.nonoru.superapp.exception.ErrorCode;
@@ -12,10 +17,13 @@ import com.nonoru.superapp.dto.request.LoginAccountRequest;
 import com.nonoru.superapp.dto.request.RegisterAccountRequest;
 import com.nonoru.superapp.entity.UserAccount;
 import com.nonoru.superapp.repository.UserRepository;
+import lombok.experimental.NonFinal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -35,7 +43,9 @@ public class AuthService {
         return passwordEncoder.matches(rawPassword, hashedPassword);
     }
 
-    private final String SIGN_KEY = "wEDCBaS00Qr970TDN7svt2/B+ld6qx+f/UwOPdGbSRt3pTogLD4aX902srj8/J6V";
+    @NonFinal
+    @Value("${jwt.signerKey}")
+    private String signKey;
 
 /* Block-Code Register Account */
     public void registerUserAccount(RegisterAccountRequest request) {
@@ -56,47 +66,69 @@ public class AuthService {
                 roleRepository.findById(3).orElseThrow(() -> new RuntimeException("Role not existed"));
 
         if (checkPassword(rawPassword, hashedPassword)) {
-            UserAccount userAccount = new UserAccount(request.getFullName(),request.getUsername(), hashedPassword, request.getEmail(), role);
-
-            userRepository.save(userAccount);
+            UserAccount user = UserAccount.builder()
+                            .username(request.getUsername())
+                            .hashPassword(hashedPassword)
+                            .email(request.getEmail())
+                            .role(role)
+                            .fullName(request.getFullName())
+                            .build();
+            userRepository.save(user);
         }
     }
 
 
 /* Block-Code Login Account */
     public AuthResponse loginAccount (LoginAccountRequest request) {
-        boolean result = true;
-        UserAccount user = userRepository.findByUsername(request.getUsername());
-        if(!checkPassword(request.getPassword(), user.getHashPassword())){
-            result = false;
+        UserAccount user = userRepository.findByUsername(request.getTk());
+        if(user == null) {
+            user = userRepository.findByEmail(request.getTk());
         }
-        if(!result) {
-            throw new RuntimeException("Invalid username or password");
+        if(user == null) {
+            throw new AppException(ErrorCode.LOGIN_FAIL);
+        }
+        boolean wrongPassword = !checkPassword(request.getPassword(), user.getHashPassword());
+
+        if(wrongPassword) {
+            throw new AppException(ErrorCode.LOGIN_FAIL);
         }
         String token = generateToken(user);
-        AuthResponse authResponse = new AuthResponse(token, true);
-        return authResponse;
+        return AuthResponse.builder()
+                .token(token)
+                .authenticated(true)
+                .build();
     }
 
     private String generateToken(UserAccount userAccount) {
-        JWSHeader header = new JWSHeader(JWSAlgorithm.ES512);
-        JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
+        JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
+        JWTClaimsSet claim = new JWTClaimsSet.Builder()
                 .subject(userAccount.getUsername())
                 .issuer("bloodbridge.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
-                        Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
+                        Instant.now().plus(1, ChronoUnit.DAYS).toEpochMilli()
                 ))
                 .build();
-        Payload payload = new Payload(jwtClaimsSet.toJSONObject());
+        Payload payload = new Payload(claim.toJSONObject());
         JWSObject jwsObject = new JWSObject(header, payload);
-        try {
-            jwsObject.sign(new MACSigner(SIGN_KEY.getBytes()));
+        try{
+            jwsObject.sign(new MACSigner(signKey.getBytes()));
             return jwsObject.serialize();
-        }catch (JOSEException e){
-            e.printStackTrace();
-            throw new RuntimeException(e);
+        }catch (JOSEException e) {
+            throw new RuntimeException("Could not sign JWT object", e);
         }
+    }
+    public IntrospectResponse introspect (IntrospectRequest request)
+            throws JOSEException, ParseException {
+        String token = request.getToken();
+        JWSVerifier verifier = new MACVerifier(signKey.getBytes());
+        SignedJWT signedJWT = SignedJWT.parse(token);
+        Date expTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+
+        boolean verified = signedJWT.verify(verifier);
+        return IntrospectResponse.builder()
+                .valid(verified && expTime.after(new Date()))
+                .build();
     }
     private String buildScope(UserAccount userAccount) {
         RoleAccount role = userAccount.getRole(); // lấy role

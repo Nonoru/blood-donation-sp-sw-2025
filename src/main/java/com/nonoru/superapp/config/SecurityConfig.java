@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig {
-    private final String[] PUBLIC_URLS = {"/auth/login", "auth/register"};
+    private final String[] PUBLIC_URLS = {"/auth/login", "auth/register", "/auth/introspect"};
 
     private final String SIGN_KEY = "wEDCBaS00Qr970TDN7svt2/B+ld6qx+f/UwOPdGbSRt3pTogLD4aX902srj8/J6V";
 
