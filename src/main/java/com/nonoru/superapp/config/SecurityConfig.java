@@ -1,5 +1,6 @@
 package com.nonoru.superapp.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,10 +22,10 @@ import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig {
-    private final String[] PUBLIC_URLS = {"/auth/login", "auth/register", "/auth/introspect"};
+    private final String[] PUBLIC_URLS = {"/auth/login", "auth/register", "/auth/introspect","/admin/get-all", "/admin/create-account"};
 
-    private final String SIGN_KEY = "wEDCBaS00Qr970TDN7svt2/B+ld6qx+f/UwOPdGbSRt3pTogLD4aX902srj8/J6V";
-
+    @Value("${jwt.signerKey}")
+    private String signKey;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -56,7 +57,7 @@ public class SecurityConfig {
     }
     @Bean
     JwtDecoder jwtDecoder() {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(SIGN_KEY.getBytes(), "HS512");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(signKey.getBytes(), "HS512");
         return NimbusJwtDecoder
                 .withSecretKey(secretKeySpec)
                 .macAlgorithm(MacAlgorithm.HS512)

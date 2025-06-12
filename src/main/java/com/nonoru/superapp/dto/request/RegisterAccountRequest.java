@@ -27,4 +27,6 @@ public class RegisterAccountRequest {
     @NotBlank(message = "EMAIL_EMPTY")
     @Pattern(regexp = "^[a-zA-Z0-9._-]+@gmail\\.com$", message = "EMAIL_INVALID")
     private String email;
+
+    private int roleId;
 }
