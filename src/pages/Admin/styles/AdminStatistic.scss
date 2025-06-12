@@ -1,5 +1,5 @@
 .blood-statistic {
-  width: 100vw;
+  width: calc(100vw - 200px);
   height: 100vh;
   padding: 20px;
   display: flex;
@@ -7,6 +7,8 @@
   align-items: center;
   justify-content: center;
   gap: 30px;
+  position: relative;
+  left: 200px;
 
   .section-title {
     font-size: 32px;

@@ -7,15 +7,18 @@ const items = [
 
     {id: 2, name: 'Tài khoản', path: '/account',
         child: [
-            {id: 2.1, name: 'Danh sách', path: '/list-accounts'},
+            {id: 2.1, name: 'Danh sách', path: '/manage-accounts'},
             {id: 2.2, name: 'Vai trò'},
-            {id: 2.3, name: 'Phân quyền'}
         ]
     },
     {id: 3, name: 'Dịch vụ',
         child: [
-            {id: 3.1, name: 'Đơn hiến máu'},
-            {id: 3.2, name: 'Đơn nhận máu'},
+            {id: 3.1, name: 'Đơn yêu cầu hiến máu'},
+            {id: 3.2, name: 'Lịch hẹn hiến máu'},
+            {id: 3.3, name: 'Lịch sử hiến máu'},
+            {id: 3.4, name: 'Đơn yêu cầu nhận máu'},
+            {id: 3.5, name: 'Lịch hẹn nhận máu'},
+            {id: 3.6, name: 'Lịch sử nhận máu'},
         ]
     },
     {id: 4, name: 'Kho',

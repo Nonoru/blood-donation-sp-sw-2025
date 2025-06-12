@@ -8,7 +8,6 @@ import { isTokenValid, getUsernameFromToken } from './Token';
 
 import { useState } from 'react';
 
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -19,8 +18,7 @@ function App() {
   return (
     <div className="App">
       <ClientPage userInfo={userInfo} setUserInfo={setUserInfo}/>
-      {/*<AdminPage/>*/}
-       <ToastContainer position="top-center" autoClose={2000} />
+      {/* <AdminPage/> */}
     </div>
   )
 }

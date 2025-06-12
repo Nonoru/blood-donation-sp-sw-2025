@@ -23,7 +23,7 @@ function Login({userInfo, setUserInfo}) {
         password: '',
         passwordConfirm: '',
         email: '',
-    });
+    })
 
     const handleChange = (e) => {
         const { name, value } = e.target;
