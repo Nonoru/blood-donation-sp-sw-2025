@@ -1,13 +1,12 @@
 .footer {
-    background-color: #4a4a4a;
+    background-color: #4a4a4a !important;
     color: white;
     display: flex;
     justify-content: center;
-
+    padding: 130px !important; 
+    margin-top: 50px !important;
     .footer-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 40px;
+        padding: 0 40px !important;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         gap: 60px;
