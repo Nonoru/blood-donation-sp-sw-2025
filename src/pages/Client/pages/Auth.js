@@ -1,15 +1,11 @@
 import { useState } from 'react';
 import {LoginInput} from '../components/LoginInput'
 import {RegisterInput} from '../components/RegisterInput'
-<<<<<<< HEAD
 import { motion } from 'framer-motion'
-import * as RegisterRequest from '../services/RegisterRequest'
-=======
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
 import * as AuthApi from '../services/AuthApi'
->>>>>>> 559887d6f24e4a74a5cc597964dabafa2b21e017
 import '../styles/Login.scss'
 
 function Login({userInfo, setUserInfo}) {
