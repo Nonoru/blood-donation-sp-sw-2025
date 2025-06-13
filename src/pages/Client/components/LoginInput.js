@@ -1,6 +1,6 @@
 export const LoginInput = () => {
     const inputs = [
-        {key: 1, type: 'email', name: 'email', detail: 'Email', placeholder: 'Email'},
+        {key: 1, type: 'text', name: 'email', detail: 'Email', placeholder: 'Email'},
         {key: 2, type: 'password', name: 'password', detail: 'Password', placeholder: 'Password'},
     ]
     return(

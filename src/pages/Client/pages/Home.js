@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import Footer from './Footer'
 
 import '../styles/Home.scss'
@@ -6,6 +8,7 @@ const imgSection1 = [
     {src: 'https://images.pexels.com/photos/6753457/pexels-photo-6753457.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}
     ]
 function Home(){
+    const navigate = useNavigate();
     const [imgIndex, setImgIndex] = useState(0)
     const changeImg = (index) => {
         const newImgIndex = ((index + imgSection1.length) % imgSection1.length);
@@ -24,10 +27,19 @@ function Home(){
         if (section2) {
             section2.scrollIntoView({ behavior: 'smooth' });
         }
+    };    
+    
+    const navigateToFeatures = () => {
+        navigate('/feature');
     };
 
     return(
-        <>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: 'easeInOut' }}
+        >
         <main className='home-page'>
             <section className='section-1'>
                 <div className="section-1-gray-overlay"></div>
@@ -39,8 +51,8 @@ function Home(){
                       <p className='title-main'>Phần mềm Quản lý Y tế Học đường</p>
                       <div className='title-sub'>
                           <p>Giải pháp toàn diện giúp nhà trường quản lý sức khỏe học sinh hiệu quả, kết nối giữa nhà trường, phụ huynh và các đơn vị y tế.</p>
-                      </div>
-                      <div className='section-1-buttons'>
+                      </div>                      <div className='section-1-buttons'>
+                        <button className='btn-primary' onClick={navigateToFeatures}>Dịch vụ của chúng tôi</button>
                         <button className='btn-outline' onClick={scrollToSection2}>Tìm hiểu thêm</button>
                       </div>
                   </div>
@@ -382,7 +394,7 @@ function Home(){
             
         </main>
         <Footer/>
-        </>
+        </motion.div>
     )
 }
 export default Home
