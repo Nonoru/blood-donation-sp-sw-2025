@@ -9,11 +9,13 @@ import DonateBlood from '../Client/features/subs/DonateBlood'
 import ReceiveBlood from '../Client/features/subs/ReceiveBlood'
 import OrderHistory from '../Client/features/subs/OrderHistory'
 import GiftExchange from '../Client/features/subs/GiftExchange'
+import { ToastContainer } from 'react-toastify';
 
 import './Client.scss'
-function Client () {
+function Client ({userInfo, setUserInfo}) {
     return(
         <div className="client-page">
+<<<<<<< HEAD
             <Header/>            <Routes>
             <Route path='/' element={<HomePage/>}/>
             <Route path='/blog' element={<BlogPage/>}/>
@@ -24,6 +26,15 @@ function Client () {
             <Route path='/feature/receive-blood' element={<ReceiveBlood/>}/>
             <Route path='/feature/order-history' element={<OrderHistory/>}/>
             <Route path='/feature/gift-exchange' element={<GiftExchange/>}/>
+=======
+            <ToastContainer position="top-center" autoClose={2000} />
+            <Header userInfo={userInfo} setUserInfo={setUserInfo}/>
+            <Routes>
+            <Route path='/' element={<HomePage/>}/>
+            <Route path='/blog' element={<BlogPage/>}/>
+            <Route path='/doc' element={<DocPage/>}/>
+            <Route path='/login' element={<Auth userInfo={userInfo} setUserInfo={setUserInfo}/>}/>
+>>>>>>> 559887d6f24e4a74a5cc597964dabafa2b21e017
             </Routes>
         </div>
     )

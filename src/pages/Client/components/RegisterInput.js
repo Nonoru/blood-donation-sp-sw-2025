@@ -1,10 +1,10 @@
 import { useState } from "react"
 const inputs = [
-    {type: 'text', name:'fullname', detail:'Họ và tên', require:''},
     {type: 'text', name:'username', detail:'Tài khoản', require:'Username phải có độ dài từ 6-12 và không chứa kí tự đặc biệt'},
     {type: 'password', name: 'password', detail: 'Mật khẩu', require:'Mật khẩu phải có độ dài từ 6-12 và không chứa lạ và khoảng trắng'},
     {type: 'password', name: 'passwordConfirm', detail: 'Nhập lại mật khẩu', require:'Nhập lại mật khẩu chính xác'},
-    {type: 'email', name: 'email', detail:'Email', require:'Nhập địa chỉ có đinh dạng của một email'},
+    {type: 'text', name: 'email', detail:'Email', require:'Nhập địa chỉ có đuôi @gmail.com'},
+    {type: 'text', name:'fullName', detail:'Họ và tên', require:''},
 ]
 
 export const RegisterInput = ({formData, handleChange, /*errorByUser*/}) =>{
@@ -13,12 +13,12 @@ export const RegisterInput = ({formData, handleChange, /*errorByUser*/}) =>{
     return(
         inputs.map(i => (
             <label key={i.name} htmlFor={i.name} className='input-child'>
-                <p>{i.detail}</p>
                 <input 
                     type={i.name !== 'password' ? (i.name != 'passwordConfirm' ?  i.type : showPassConfirm ? 'text':'password' ):(showPass ? 'text':'password')} 
                     id={i.name} 
                     value={formData[i.name]}
                     name = {i.name}
+                    placeholder={i.detail}
                     onChange={e => handleChange(e)}
                 />
                 {/* {errorByUser[i.name] && 

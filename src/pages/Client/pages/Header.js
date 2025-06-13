@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import {itemMenu, items} from '../components/HeaderForm'
 import '../styles/Header.scss'
 
-function Header(){    const [isVisible, setIsVisible] = useState(true);
+function Header({userInfo, setUserInfo}){    const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [hasScrolled, setHasScrolled] = useState(false);
 
@@ -27,6 +27,11 @@ function Header(){    const [isVisible, setIsVisible] = useState(true);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [lastScrollY]);
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        if(userInfo.isAuthenticated === true)
+            setUserInfo(prev => ({...prev, isAuthenticated:false}))
+    }
     return(
         <header className={`header ${isVisible ? 'header-visible' : 'header-hidden'} ${hasScrolled ? 'header-scrolled' : ''}`}>
             <div className="other"></div>
@@ -40,6 +45,26 @@ function Header(){    const [isVisible, setIsVisible] = useState(true);
                     </Link>
                 </div>
                 {itemMenu(2,items.length)}
+                {userInfo.isAuthenticated === false && 
+                    <div className="login">
+                        <Link to ={`/login`} className="link">
+                            <img src={`/img/icons/login.svg`} style={{ transform: 'rotate(180deg)'}} className ='icon'/>
+                            <span>Đăng nhập</span>
+                        </Link>
+                    </div>
+                }
+                {userInfo.isAuthenticated === true && 
+                    <div className="logout" onClick={handleLogout} style={{cursor: "pointer"}}>
+                        <div className='user-info link'>
+                            <img src={`/img/icons/user.svg`}  className ='icon'/>
+                            {userInfo.username}
+                        </div>
+                        <div className="link" onClick={handleLogout} style={{cursor: "pointer"}}>
+                            <img src={`/img/icons/login.svg`}  className ='icon'/>
+                            <span>Đăng xuất</span>
+                        </div>
+                    </div>
+                }
             </div>
         </header>
     )

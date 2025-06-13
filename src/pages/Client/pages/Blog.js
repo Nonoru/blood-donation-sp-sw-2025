@@ -1,32 +1,55 @@
-import '../styles/Blog.css'
+import '../styles/Blog.css';
+import { Link } from 'react-router-dom';
 
-function Blog(){
-    return(
-          <div className="blog-page">
-            <section className="card-block">
-                <img src="/img/pics/blog1.jpg" alt="Những chia sẻ đáng yêu"/>
-                <div className="card-content">
-                    <h3><strong>Những chia sẻ đáng yêu về hiến máu</strong></h3>
-                    <p>Mỗi ngày luôn có hàng nghìn người bệnh đang cần máu, và may mắn rằng cũng có hàng ngàn người sẵn lòng hiến máu, hàng trăm tình nguyện viên dốc sức cho hoạt động của hội máu, tham gia vận động, chăm sóc người hiến máu ...</p>
-                </div>
-            </section>
+const posts = [
+  {
+    id: 1,
+    title: 'Những chia sẻ đáng yêu về hiến máu',
+    subtitle: 'Mỗi ngày luôn có hàng nghìn người bệnh đang cần máu...',
+    image: '/img/pics/blog1.jpg',
+    date: 'Jun 10, 2025',
+  },
+  {
+    id: 2,
+    title: 'Tình nguyện viên góp sức cứu người qua từng đơn vị máu',
+    subtitle: 'Những hành động thiết thực như hiến máu tình nguyện...',
+    image: '/img/pics/blog2.jpg',
+    date: 'Jun 5, 2025',
+  },
+  {
+    id: 3,
+    title: 'Chiến sĩ công an – người hùng thầm lặng',
+    subtitle: 'Không chỉ giữ gìn an ninh trật tự, họ còn tích cực hiến máu...',
+    image: '/img/pics/blog3.jpg',
+    date: 'May 28, 2025',
+  }
+];
 
-            <section className="card-block">
-                <img src="/img/pics/blog2.jpg" alt="Tình nguyện viên"/>
-                <div className="card-content">
-                    <h3><strong>Tình nguyện viên đang góp sức cứu người qua từng đơn vị máu</strong></h3>
-                    <p>Những hành động thiết thực như hiến máu tình nguyện tại các sự kiện y tế đã và đang mang lại cơ hội sống cho hàng ngàn bệnh nhân, thể hiện tinh thần nhân ái và trách nhiệm cộng đồng.</p>
-                </div>
-            </section>
-
-            <section className="card-block">
-                <img src="/img/pics/blog3.jpg" alt="Chiến sĩ công an"/>
-                <div className="card-content">
-                    <h3><strong>Chiến sĩ công an – những người hùng thầm lặng trong hành trình hiến máu cứu người</strong></h3>
-                    <p>Không chỉ giữ gìn an ninh trật tự, các chiến sĩ công an còn tích cực tham gia các hoạt động nhân đạo như hiến máu tình nguyện. Họ chính là biểu tượng của sự dũng cảm và lòng nhân ái trong đời sống thường nhật.</p>
-                </div>
-            </section>
-        </div>
-    )
+function Blog() {
+  return (
+    <div className="blog-page">
+      <h2 className="section-title">Bài viết nổi bật</h2>
+      <div className="blog-list">
+        {posts.map(post => (
+          <div key={post.id} className="blog-card">
+            <img src={post.image} alt={post.title} className="blog-image" />
+            <div className="blog-content">
+              <div className="blog-meta">
+                <span className="author">{post.author}</span>
+                <span className="dot">•</span>
+                <span>{post.date}</span>
+              </div>
+              {/* Chuyển tiêu đề thành thẻ Link */}
+              <Link to={`/blog/${post.id}`} className="blog-title">
+                <h3>{post.title}</h3>
+              </Link>
+              <p className="blog-subtitle">{post.subtitle}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
-export default Blog
+
+export default Blog;
