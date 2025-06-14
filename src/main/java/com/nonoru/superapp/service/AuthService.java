@@ -21,6 +21,8 @@ import com.nonoru.superapp.repository.UserRepository;
 import lombok.experimental.NonFinal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.StringJoiner;
 
 @Service
 
@@ -78,7 +81,6 @@ public class AuthService {
         }
     }
 
-
 /* Block-Code Login Account */
     public AuthResponse loginAccount (LoginAccountRequest request) {
         UserAccount user = userRepository.findByUsername(request.getTk());
@@ -94,14 +96,10 @@ public class AuthService {
             throw new AppException(ErrorCode.LOGIN_FAIL);
         }
         String token = generateToken(user);
-        UserAccountResponse userInfo = UserAccountResponse.builder()
-                .id(user.getId())
-                .fullName(user.getFullName())
-                .build();
-        return AuthResponse.<UserAccountResponse>builder()
+
+        return AuthResponse.builder()
                 .token(token)
                 .authenticated(true)
-                .data(userInfo)
                 .build();
     }
 
@@ -114,6 +112,9 @@ public class AuthService {
                 .expirationTime(new Date(
                         Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
                 ))
+                .claim("id", userAccount.getId())
+                .claim("role", userAccount.getRole().getRoleName().toUpperCase())
+                .claim("fullName", userAccount.getFullName())
                 .build();
         Payload payload = new Payload(claim.toJSONObject());
         JWSObject jwsObject = new JWSObject(header, payload);
@@ -136,11 +137,10 @@ public class AuthService {
                 .valid(verified && expTime.after(new Date()))
                 .build();
     }
-    private String buildScope(UserAccount userAccount) {
-        RoleAccount role = userAccount.getRole(); // lấy role
-        if (role != null) {
-            return role.getRoleName();
-        }
-        return "";
+
+    @PostAuthorize("returnObject.username == authentication.name")
+    public UserAccount getUserAccount(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
     }
+
 }

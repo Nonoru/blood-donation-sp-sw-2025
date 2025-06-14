@@ -1,6 +1,7 @@
 package com.nonoru.superapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,6 +41,9 @@ public class UserAccount {
     @ManyToOne
     @JoinColumn(name = "role")
     private RoleAccount role;
+
+    @Column(nullable = false)
+    private boolean status = true;
 
     @Builder
     public UserAccount(String fullName, String username, String hashPassword, String email, RoleAccount role) {

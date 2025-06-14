@@ -1,15 +1,17 @@
 package com.nonoru.superapp.controller;
 
 import com.nonoru.superapp.dto.request.RegisterAccountRequest;
+import com.nonoru.superapp.dto.request.UpdateAccountRequest;
 import com.nonoru.superapp.dto.response.ApiResponse;
 import com.nonoru.superapp.dto.response.UserAccountManageResponse;
-import com.nonoru.superapp.entity.UserAccount;
 import com.nonoru.superapp.service.ManageAccountService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
@@ -18,17 +20,35 @@ public class AdminAPI {
     @Autowired
     private ManageAccountService service;
 
-    @PostMapping("/get-all")
-    ApiResponse<List<UserAccountManageResponse>> getall(){
+    @GetMapping("/list")
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    ApiResponse<List<UserAccountManageResponse>> getAll(){
         return ApiResponse.<List<UserAccountManageResponse>>builder()
                 .data(service.listAll())
                 .build();
     }
-    @PostMapping("/create-account")
-    ApiResponse register (@RequestBody @Valid RegisterAccountRequest request){
-        service.registerUserAccount(request);
+    @PostMapping("/create")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    ApiResponse create (@RequestBody @Valid RegisterAccountRequest request){
+        service.create(request);
         return ApiResponse.builder()
                 .message("Đăng ký thành công bạn hãy đăng nhập")
+                .build();
+    }
+    @PutMapping("/update/{id}")
+    ApiResponse update (@PathVariable("id") long id, @RequestBody @Valid UpdateAccountRequest request){
+        System.out.println(request.toString());
+        int count = service.update(id,request);
+        String msg = "Hoàn tất ! Có "+ count +" thay đổi";
+        return ApiResponse.<Map<String, Integer> >builder()
+                .message(msg)
+                .build();
+    }
+
+    @DeleteMapping("/delete")
+    ApiResponse delete (@RequestBody @Valid RegisterAccountRequest request){
+        return ApiResponse.builder()
+                .message("Đã xóa thông tin account có id")
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.nonoru.superapp.exception;
 
+import ch.qos.logback.core.spi.ErrorCodes;
 import com.nonoru.superapp.dto.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -13,8 +14,10 @@ import java.util.List;
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = RuntimeException.class)
-    ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception){
+    ResponseEntity<ApiResponse> handlingRuntimeException(){
         ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setCode(ErrorCode.UNCATEGORIZED_NOT_FOUND.getCode());
+        apiResponse.setMessage(ErrorCode.UNCATEGORIZED_NOT_FOUND.getMessage());
         return ResponseEntity.badRequest().body(apiResponse);
     }
 

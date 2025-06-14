@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public enum ErrorCode {
-    UNCATEGORIZED_NOT_FOUND(0, "Lỗi hệ thống"),
+    UNCATEGORIZED_NOT_FOUND(0, "Có lỗi xảy ra"),
     USER_EMPTY(1, "Tên tài khoản không được bỏ trống"),
     USER_LENGTH_INVALID(2, "Độ dài tên tài khoản không hợp lệ"),
     USER_CONTAIN_ERROR_SYMBOL(3, "Tên tài khoản chứa các kí tự không hợp lệ"),
@@ -25,8 +25,9 @@ public enum ErrorCode {
 
     FULL_NAME_EMPTY(13, "Họ và tên không thể bỏ trống"),
 
-    LOGIN_FAIL(14, "Thông tin đăng nhập không chính xác");
+    LOGIN_FAIL(14, "Thông tin đăng nhập không chính xác"),
 
+    USER_NOTFOUND(15, "Không tìm thấy người dùng");
     private int code;
     private String message;
 
