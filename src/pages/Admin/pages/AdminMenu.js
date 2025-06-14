@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import '../styles/AdminMenu.scss'
 
 const items = [
-    {id: 1, name: 'Thống kê', path: '/statistic'},
+    {id: 1, name: 'Thống kê', path: '/admin/statistic'},
 
-    {id: 2, name: 'Tài khoản', path: '/account',
+    {id: 2, name: 'Tài khoản', path: '/admin/account',
         child: [
             {id: 2.1, name: 'Danh sách', path: '/manage-accounts'},
             {id: 2.2, name: 'Vai trò'},

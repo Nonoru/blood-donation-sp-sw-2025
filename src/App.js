@@ -17,8 +17,10 @@ function App() {
   })
   return (
     <div className="App">
-      <ClientPage userInfo={userInfo} setUserInfo={setUserInfo}/>
-      {/* <AdminPage/> */}
+      <Routes>
+        <Route path='/*' element={<ClientPage userInfo={userInfo} setUserInfo={setUserInfo}/>}/>
+        <Route path='/admin/*' element={<AdminPage/>}/>
+      </Routes>
     </div>
   )
 }
