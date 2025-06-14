@@ -65,6 +65,7 @@
 
   // Styling cho table
   table {
+    border-radius: 12px;
     width: 100%;
     border-collapse: collapse;
     background: white;
@@ -74,7 +75,6 @@
     }
     thead {
       background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-      
       th {
         padding: 16px 20px !important;
         text-align: left;
@@ -132,31 +132,6 @@
       }
     }
     
-    tfoot {
-      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-      border-top: 2px solid #dee2e6;
-      tr{background-color: white;}
-      td {
-        padding: 26px 20px !important;
-        font-weight: 600;
-        color: #495057;
-        &:first-child {
-          color: #667eea;
-          width: 180px;
-        }
-        
-        &:nth-child(2) {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          background-clip: content-box;
-          padding: 10px !important;
-          color: white;
-          border-radius: 20px;
-          text-align: center;
-          font-size: 16px;
-          font-weight: 700;
-        }
-      }
-    }
   }
 
   // Button styling
@@ -482,6 +457,177 @@
       label{
         display: flex;
         flex-direction: column;
+      }
+    }
+  }
+  .switch-btn {
+    position: absolute;
+    width: 140px;
+    height: 40px;
+    right: 0;
+    display: inline-flex;
+    background-color: #e2e8f0;
+    border: none;
+    border-radius: 24px;
+    padding: 0px !important;
+    transition: all 0.3s ease;
+    font-family: 'Arial', sans-serif;
+    border: 5px solid #f4f2f3;
+    box-sizing: content-box !important;
+    
+    div {
+      position: absolute;
+      width: 70px;
+      height: 40px;
+      background: linear-gradient(135deg, #66ead8 0%, #764ba2 100%);
+      border-radius: 20px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      z-index: 1;
+    }
+    
+    span {
+      position: relative;
+      width: 70px;
+      height: 40px;
+      z-index: 2;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 18px;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      b
+      &:first-of-type {
+        color: #ffffff;
+      }
+      
+      &:last-of-type {
+        color: #9a9fa6;
+      }
+    }
+    
+    &.active {
+      div {
+        right: 0;
+      }
+      
+      span {
+        &:first-of-type {
+          color: #9a9fa6;
+        }
+        
+        &:last-of-type {
+          color: #ffffff;
+        }
+      }
+    }
+    
+    &:hover {
+      background-color: #cbd5e1;
+      
+      div {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+  
+  .hide-table{
+    display: none;
+  }
+  .prevent-ui{
+    pointer-events: none;
+    filter: blur(1px);
+  }
+  .normal-ui{
+    pointer-events: auto;
+    filter: blur(0px);
+  }
+
+  @media (max-width: 768px) {
+    .switch-btn {
+      span {
+        font-size: 12px;
+        padding: 6px 12px;
+        min-width: 45px;
+      }
+      
+      div {
+        width: 45px;
+        height: 28px;
+      }
+      
+      &.active div {
+        transform: translateX(49px);
+      }
+    }
+  }
+
+  // Dark mode support
+  @media (prefers-color-scheme: dark) {
+    .switch-btn {
+      background-color: #374151;
+      
+      &:hover {
+        background-color: #4b5563;
+      }
+      
+      span {
+        &:first-of-type {
+          color: #ffffff;
+        }
+        
+        &:last-of-type {
+          color: #9ca3af;
+        }
+      }
+      
+      &.active span {
+        &:first-of-type {
+          color: #9ca3af;
+        }
+        
+        &:last-of-type {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+  .account-count {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f4f6f8;
+    border: 1px solid #ddd;
+    padding: 12px 20px !important;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 16px;
+    color: #333;
+    transition: all 0.3s ease;
+    height: 50px;
+    cursor: default;
+    &:hover {
+      background: #e9eff4;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    span:first-child {
+      font-weight: 500;
+    }
+
+    span:last-child {
+      font-weight: bold;
+      font-size: 18px;
+      color: #0077cc;
+      background: #e0f3ff;
+      padding: 6px 12px;
+      border-radius: 8px;
+
+      &:hover {
+        background: #cce7fa;
       }
     }
   }

@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {itemMenu, items} from '../components/HeaderForm'
+import logo from '../../../assets/logo/logo.png'
+import title from '../../../assets/logo/title.png'
 import '../styles/Header.scss'
 
 function Header({userInfo, setUserInfo}){    const [isVisible, setIsVisible] = useState(true);
@@ -40,8 +42,8 @@ function Header({userInfo, setUserInfo}){    const [isVisible, setIsVisible] = u
                 {itemMenu(0,2)}
                 <div className="logo">
                     <Link to="/" className="link">
-                        <img src="./img/logo.png" alt="Logo"/>
-                        <img src ="./img/title.png" alt="Blood Bridge"/>
+                        <img src={logo} alt="Logo"/>
+                        <img src ={title} alt="Blood Bridge"/>
                     </Link>
                 </div>
                 {itemMenu(2,items.length)}

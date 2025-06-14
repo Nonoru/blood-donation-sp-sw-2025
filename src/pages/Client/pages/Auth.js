@@ -83,9 +83,17 @@ function Login({userInfo, setUserInfo}) {
                     
 
                 toast.success("Đăng nhập thành công" , {className : 'my-toast'})
-                 setTimeout(() => {
-                    navigate('/');
-                }, 2500);
+                if(decoded.role === "ADMIN" || decoded.role === "STAFF") {
+                    console.log(decoded.role);
+                    setTimeout(() => {
+                        navigate('/admin');
+                    }, 2500);
+                }
+                else{
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 2500);
+                }
             }
         } catch (error) {
             if (error.response) {
@@ -122,8 +130,7 @@ function Login({userInfo, setUserInfo}) {
                         </button>
                     </div>
 
-                    <p className='or-text'>Hoặc đăng nhập với</p>
-                      <div className='input-block'>
+                    <div className='input-block'>
                         <LoginInput handleChangeLogin = {handleChangeLogin} formLogin = {formLogin}/>
                     </div>
 

@@ -7,7 +7,7 @@ import '../styles/AdminManageAccount.scss'
 
 const attrTableHead = ['ID','Tên tài khoản','Địa chỉ Email','Họ và tên', 'Vai trò', 'Ngày tạo']
 
-function AdminListAccount(){
+function AdminManageAccount(){
     const [userAccounts, setUserAccounts] = useState([])
     const [empAccounts, setEmpAccounts] = useState([])
     const [refreshKey, setRefreshKey] = useState(0);
@@ -148,10 +148,16 @@ function AdminListAccount(){
         e.preventDefault()
         console.log(formUpdData)
     }
+
+    const [setTable, setSetTable] = useState(false)
+    const swithchBtn = () => {
+        document.querySelector('.switch-btn').classList.toggle('active')
+        setSetTable(prev => !prev)
+    }
     return(
         <div className="list-account-page">  
             {/* BUTTON */}
-            <div className="function-btn">
+            <div className={`function-btn ${stateAddBtn ? 'prevent-ui' : 'normal-ui'}`}>
                 <button className="add-btn btn" onClick={e => setStateAddBtn(!stateAddBtn)}>    
                     <img src="/img/icons/add.svg"></img>
                 <span>Thêm tài khoản</span>
@@ -164,6 +170,16 @@ function AdminListAccount(){
                 <button className="refresh-btn btn" onClick= {getList} >    
                     <img src="/img/icons/refresh.svg"></img>
                     <span>Tải lại trang</span>
+                </button>
+                <div className="account-count">
+                    <span>Số tài khoản</span>
+                    {!setTable ? <span>{empAccounts.length}</span> : <span>{userAccounts.length}</span>}
+                </div>
+                
+                <button onClick={swithchBtn} className={`switch-btn ${stateAddBtn ? 'prevent-ui' : 'normal-ui'}`}>
+                    <div></div>
+                    <span>Emp</span>
+                    <span>User</span>
                 </button>
             </div>
             {/* CREATE */}
@@ -187,7 +203,11 @@ function AdminListAccount(){
                 </button>
             </div>
             {/* TABLE EMPLOYEE */}
-            <div style={{pointerEvents : stateAddBtn ? 'none':'auto', filter: stateAddBtn ? 'blur(1px)' : 'none'}}>
+            <div className={`
+                        ${stateAddBtn ? 'prevent-ui' : 'normal-ui'}
+                        ${setTable === true && 'hide-table'}
+                    `}
+            >
                 <p>Danh sách nhân viên</p>
                 <table>
                     <thead>
@@ -223,48 +243,38 @@ function AdminListAccount(){
                             )
                         }
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Số lượng tài khoản</td>
-                            <td>{empAccounts.length}</td>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
-            <br/>
-            <div style={{pointerEvents : stateAddBtn ? 'none':'auto', filter: stateAddBtn ? 'blur(1px)' : 'none'}}>
-                <p>Danh sách người dùng</p>
-                <table>
-                    <thead>
-                        <tr>
-                            {attrTableHead.map((a, index) => (
-                                <th key={index}> {a} </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            userAccounts.map( acc =>
-                                <tr key={acc.id}>
-                                    <th>{acc.id}</th>
-                                    <th>{acc.username}</th>
-                                    <td>{acc.email}</td>
-                                    <th>{acc.fullName}</th>
-                                    <th>{acc.role.roleName}</th>
-                                    <th>{acc.createAt}</th>
-                                </tr>
-                            )
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Số lượng tài khoản</td>
-                            <td>{userAccounts.length}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+
+            <div className={`${setTable === false && 'hide-table'}
+                 ${stateAddBtn ? 'prevent-ui' : 'normal-ui'}`}
+            >
+            <p>Danh sách người dùng</p>
+            <table>
+                <thead>
+                    <tr>
+                        {attrTableHead.map((a, index) => (
+                            <th key={index}> {a} </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        userAccounts.map( acc =>
+                            <tr key={acc.id}>
+                                <th>{acc.id}</th>
+                                <th>{acc.username}</th>
+                                <td>{acc.email}</td>
+                                <th>{acc.fullName}</th>
+                                <th>{acc.role.roleName}</th>
+                                <th>{acc.createAt}</th>
+                            </tr>
+                        )
+                    }
+                </tbody>
+            </table>
+        </div>
         </div>
     )
 }
-export default AdminListAccount
+export default AdminManageAccount 

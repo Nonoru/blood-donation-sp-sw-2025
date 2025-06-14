@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import title from '../../../assets/logo/title.png'
 import '../styles/AdminMenu.scss'
 
 const items = [
-    {id: 1, name: 'Thống kê', path: '/admin/statistic'},
+    {id: 1, name: 'Thống kê', path: '/admin/'},
 
     {id: 2, name: 'Tài khoản', path: '/admin/account',
         child: [
-            {id: 2.1, name: 'Danh sách', path: '/manage-accounts'},
-            {id: 2.2, name: 'Vai trò'},
+            {id: 2.1, name: 'Tài khoản nhân viên', path: '/manage'},
+            {id: 2.1, name: 'Vai trò', path: '/manage-roles'},
         ]
     },
     {id: 3, name: 'Dịch vụ',
@@ -47,7 +48,7 @@ function AdminMenu() {
 
     return (
         <nav className="admin-navbar">
-            <img src='/img/title.png'/>
+            <img src={title}/>
             {items.map((item) => (
                 <ul 
                     key={item.id} 
