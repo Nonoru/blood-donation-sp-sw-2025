@@ -20,4 +20,5 @@ public class UserAccountManageResponse {
     private String email;
     private String createAt;
     private RoleAccount role;
+    private boolean status;
 }

@@ -51,6 +51,7 @@ public class ManageAccountService {
                             .fullName(x.getFullName())
                             .createAt(date)
                             .role(x.getRole())
+                            .status(x.isStatus())
                             .build());
         });
         return responses.stream()
@@ -95,10 +96,6 @@ public class ManageAccountService {
     public int update(Long id,UpdateAccountRequest request) {
         UserAccount user = manage.findById
                 (id).orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
-
-        if(!request.getPassword().equals(request.getPasswordConfirm())) {
-            throw new AppException(ErrorCode.PASSWORD_CONFIRM_INCORRECT);
-        }
         if(
             userRepository.existsByEmail(request.getEmail()) &&
                     !request.getEmail().equals(user.getEmail())
@@ -106,34 +103,31 @@ public class ManageAccountService {
             throw new AppException(ErrorCode.EMAIL_EXISTED);
         }
 
-        String rawPassword = request.getPassword();
-
-        String hashedPassword = passwordEncoder.encode(rawPassword);
-
         RoleAccount role =
                 roleRepository.findById(request.getRoleId()).orElseThrow(() -> new RuntimeException("Role not existed"));
 
         int countChange = 0;
 
-        if (checkPassword(rawPassword, hashedPassword)) {
-            if(!user.getEmail().equals(request.getEmail())) {
-                user.setEmail(request.getEmail());
-                countChange+=1;
-            }
-            if(!user.getFullName().equals(request.getFullName())) {
-                user.setFullName(request.getFullName());
-                countChange+=1;
-            }
-            if(user.getRole().getRoleId() != request.getRoleId()) {
-                user.setRole(role);
-                countChange+=1;
-            }
-            if(!checkPassword(request.getPassword(), user.getHashPassword())){
-                user.setHashPassword(hashedPassword);
-                countChange+=1;
-            }
-            roleRepository.save(role);
+        if(!user.getEmail().equals(request.getEmail())) {
+            user.setEmail(request.getEmail());
+            countChange+=1;
         }
+        if(!user.getFullName().equals(request.getFullName())) {
+            user.setFullName(request.getFullName());
+            countChange+=1;
+        }
+        if(user.getRole().getRoleId() != request.getRoleId()) {
+            user.setRole(role);
+            countChange+=1;
+        }
+        roleRepository.save(role);
         return countChange;
+    }
+
+    public void deleteStillExist(Long id) {
+        UserAccount user = manage.findById
+                (id).orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
+        user.setStatus(false);
+        userRepository.save(user);
     }
 }

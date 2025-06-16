@@ -1,5 +1,7 @@
 package com.nonoru.superapp.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.nonoru.superapp.entity.RoleAccount;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
@@ -18,14 +20,6 @@ public class UpdateAccountRequest {
     @Pattern(regexp = "^[a-zA-Z0-9._-]+@gmail\\.com$", message = "EMAIL_INVALID")
     private String email;
 
-    @Length(min = 6, max = 12, message = "PASSWORD_LENGTH_INVALID")
-    @NotBlank(message = "PASSWORD_EMPTY")
-    @Pattern(regexp = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{}|;':\",./<>?`~]+$", message = "PASSWORD_CONTAIN_ERROR_SYMBOL")
-    private String password;
-
-    @NotBlank(message = "PASSWORD_CONFIRM_EMPTY")
-    private String passwordConfirm;
-    
     private int roleId;
 
 }

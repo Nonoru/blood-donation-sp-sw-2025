@@ -21,14 +21,12 @@ public class AdminAPI {
     private ManageAccountService service;
 
     @GetMapping("/list")
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     ApiResponse<List<UserAccountManageResponse>> getAll(){
         return ApiResponse.<List<UserAccountManageResponse>>builder()
                 .data(service.listAll())
                 .build();
     }
     @PostMapping("/create")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     ApiResponse create (@RequestBody @Valid RegisterAccountRequest request){
         service.create(request);
         return ApiResponse.builder()
@@ -36,7 +34,7 @@ public class AdminAPI {
                 .build();
     }
     @PutMapping("/update/{id}")
-    ApiResponse update (@PathVariable("id") long id, @RequestBody @Valid UpdateAccountRequest request){
+    ApiResponse<Map<String, Integer>> update (@PathVariable("id") long id, @RequestBody @Valid UpdateAccountRequest request){
         System.out.println(request.toString());
         int count = service.update(id,request);
         String msg = "Hoàn tất ! Có "+ count +" thay đổi";
@@ -45,10 +43,11 @@ public class AdminAPI {
                 .build();
     }
 
-    @DeleteMapping("/delete")
-    ApiResponse delete (@RequestBody @Valid RegisterAccountRequest request){
-        return ApiResponse.builder()
-                .message("Đã xóa thông tin account có id")
+    @DeleteMapping("/delete/{id}")
+    ApiResponse<Void> delete (@PathVariable("id") long id){
+        service.deleteStillExist(id);
+        return ApiResponse.<Void> builder()
+                .message("Đã xóa thông tin account có id " + id)
                 .build();
     }
 }

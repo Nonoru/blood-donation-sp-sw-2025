@@ -28,7 +28,8 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
     private final String[] PUBLIC_URLS =
-            {"/auth/login", "auth/register", "/auth/introspect", "/auth/user/**", "/admin/list"};
+            {"/auth/login", "auth/register", "/auth/introspect", "/auth/user/**",
+                    "/admin/list", "admin/update/**", "/admin/delete/**"};
 
             /*, "/admin/get-all", "/admin/create-account", "/admin/update-account",*/
 
@@ -44,9 +45,11 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(request -> request
             .requestMatchers(HttpMethod.POST, PUBLIC_URLS).permitAll()
             .requestMatchers(HttpMethod.GET, PUBLIC_URLS).permitAll()
+            .requestMatchers(HttpMethod.PUT, PUBLIC_URLS).permitAll()
+            .requestMatchers(HttpMethod.DELETE, PUBLIC_URLS).permitAll()
 //            .requestMatchers(HttpMethod.GET, "/admin/list").hasAuthority("ROLE_ADMIN")
             .requestMatchers(HttpMethod.POST, "/admin/create").hasAuthority("ROLE_ADMIN")
-            .requestMatchers(HttpMethod.PUT, "/admin/update/**").hasAuthority("ROLE_ADMIN")
+//            .requestMatchers(HttpMethod.PUT, "/admin/update/**").hasAuthority("ROLE_ADMIN")
             .anyRequest().authenticated());
         httpSecurity.oauth2ResourceServer(oauth2 ->
                 oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));

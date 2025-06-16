@@ -46,11 +46,12 @@ public class UserAccount {
     private boolean status = true;
 
     @Builder
-    public UserAccount(String fullName, String username, String hashPassword, String email, RoleAccount role) {
+    public UserAccount(String fullName, String username, String hashPassword, String email, RoleAccount role, boolean status) {
         this.fullName = fullName;
         this.username = username;
         this.hashPassword = hashPassword;
         this.email = email;
         this.role = role;
+        this.status = status;
     }
 }
