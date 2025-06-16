@@ -1,34 +1,36 @@
 const inputs = [
-    {type: 'text', name: 'id', detail:'ID'},
-    {type: 'text', name:'username', detail:'Tài khoản'},
-    {type: 'password', name: 'password', detail: 'Mật khẩu mới'},
-    {type: 'password', name: 'passwordConfirm', detail: 'Nhập lại mật khẩu mới'},
-    {type: 'text', name: 'email', detail:'Email'},
-    {type: 'text', name: 'fullName', detail:'Họ tên'},
-    {type: 'text', name: 'roleId', detail:'Vai trò'},
+    {id: 'upd-1', type: 'text', name: 'id', detail:'ID'},
+    {id: 'upd-2', type: 'text', name:'username', detail:'Tài khoản'},
+    {id: 'upd-5', type: 'text', name: 'email', detail:'Email'},
+    {id: 'upd-6', type: 'text', name: 'fullName', detail:'Họ tên'},
+    {id: 'upd-7', type: 'text', name: 'roleId', detail:'Vai trò'},
 ]
-export const AdminUpdateAccount = ({formUpdData}) => {
+export const AdminUpdateAccount = ({formUpdData, handleUpdChange}) => {
     return (
         inputs.map(i => (
             <label
-                key={i.name}
+                key={i.id}
                 className={`${i.name === 'roleId' ? 'label-role' : ''}`}
             >
-                <span>{i.detail}<br/>
-                    {i.name === 'id' && formUpdData[i.name]}
-                    {i.name === 'username' && formUpdData[i.name]}
-                </span>
+                {i.name === 'id' || i.name === 'username' ?
+                 <div className="flex items-center gap-2 ">
+                    <span>{i.detail}</span>
+                    <span className="text-sky-700">{formUpdData[i.name]}</span>
+                 </div>
+                :
+                 <span>{i.detail}</span> 
+                }
                 {(i.name !== "roleId" && i.name !=="id" && i.name !=="username") &&
                     <input 
                         type={i.type}
-                        value={formUpdData[i.name]}
+                        value={formUpdData[i.name] ?? ''}
                         name={i.name}
-                        // onChange={ e => handleChange(e)}
+                        onChange={ e => handleUpdChange(e)}
                     />
                 }
                 {i.name === "roleId" && 
                     <select name="roleId" 
-                        // value={formData[i.name]} onChange={e => handleChange(e)} 
+                        value={formUpdData[i.name]} onChange={e => handleUpdChange(e)} 
                     >
                         <option value="1">Admin</option>
                         <option value="2">Staff</option>

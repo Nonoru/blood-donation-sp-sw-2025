@@ -288,7 +288,7 @@
       background-size: cover;
       border-radius: 50%;
     }
-  .form-create-container{
+  .form-create-container, .form-update-container, .delete-container {
     width: 400px;
     position: fixed;
     z-index: 1;
@@ -299,7 +299,7 @@
     background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
     border-radius: 15px;
     
-    .form-create {
+    .form-create, .form-upd {
       display: flex;
       flex-direction: column;
       gap: 15px;
@@ -447,16 +447,15 @@
     }
   }
   .form-update-container{
-    height: 500px;
-    width: 500px;
-    background-color: #4299e1;
-    position: relative;
     .form-upd{
       display: flex;
       flex-direction: column;
       label{
         display: flex;
         flex-direction: column;
+      }
+      button{
+        width: max-content;
       }
     }
   }

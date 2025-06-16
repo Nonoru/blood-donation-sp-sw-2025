@@ -9,7 +9,7 @@ const items = [
     {id: 2, name: 'Tài khoản', path: '/admin/account',
         child: [
             {id: 2.1, name: 'Tài khoản nhân viên', path: '/manage'},
-            {id: 2.1, name: 'Vai trò', path: '/manage-roles'},
+            {id: 2.2, name: 'Vai trò', path: '/manage-roles'},
         ]
     },
     {id: 3, name: 'Dịch vụ',
