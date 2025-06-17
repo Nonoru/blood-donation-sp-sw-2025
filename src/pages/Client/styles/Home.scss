@@ -93,18 +93,13 @@
                 align-items: center;
                 text-shadow: 0 2px 8px rgba(0,0,0,0.4);
             }
-        }        .section-1-buttons {
+        }        
+        .section-1-buttons {
             display: flex;
             gap: 16px;
             justify-content: center;
             margin-top: 10px !important;
             flex-wrap: wrap;
-            
-            @media (max-width: 768px) {
-                flex-direction: column;
-                align-items: center;
-                gap: 12px;
-            }
             
             .btn-primary {
                 background: linear-gradient(135deg, #B63B3B, #ff6b6b);
@@ -212,7 +207,7 @@
         }
         
         .benefits-section {      
-            
+
             .benefits-grid {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);

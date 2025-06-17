@@ -10,8 +10,8 @@ import ReceiveBlood from '../Client/features/subs/ReceiveBlood'
 import OrderHistory from '../Client/features/subs/OrderHistory'
 import GiftExchange from '../Client/features/subs/GiftExchange'
 import { ToastContainer } from 'react-toastify';
-
 import './Client.scss'
+
 function Client ({userInfo, setUserInfo}) {
     return(
         <div className="client-page">

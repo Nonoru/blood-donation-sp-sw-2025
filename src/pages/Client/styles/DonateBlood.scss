@@ -1,4 +1,309 @@
-/* DonateBlood page styles */
 .donate-blood-page {
-  /* Thêm style cho trang hiến máu ở đây */
-} 
+  max-width: 1220px; // Mở rộng chiều rộng page
+  margin: 100px auto 0 auto !important;
+  background: #fff;
+  border-radius: 30px;
+  box-shadow: 0 4px 32px rgba(182,59,59,0.10);
+  padding: 32px 24px 24px 24px !important;
+  font-family: 'Roboto', Arial, sans-serif;
+
+
+  h2 {
+    text-align: center;
+    color: #B63B3B;
+    margin-bottom: 24px !important;
+    font-size: 2.5rem;
+    font-weight: 800;
+  }
+
+  .donate-blood-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    fieldset {
+      border: 1.5px solid #ff6b6b;
+      border-radius: 10px;
+      padding: 18px 16px 12px 16px !important;
+      margin-bottom: 12px;
+
+      legend {
+        color: #B63B3B;
+        font-weight: 700;
+        font-size: 1.5rem;
+        margin-bottom: 15px !important;
+      }
+    }
+
+    .form-row {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 10px !important;
+      flex-wrap: wrap;
+
+      label {
+        flex: 1 1 220px;
+        display: flex;
+        flex-direction: column;
+        font-weight: 500;
+        color: #333;
+        > span {
+          color: #ff6b6b;
+          margin-left: 4px;
+          font-size: 1.1em;
+        }
+
+        & > span, & > input, & > select {
+          display: inline-block;
+        }
+
+        & > .label-row {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: 2px;
+          color: #222;
+          font-weight: 500;
+          font-size: 1rem;
+          span {
+            color: #ff6b6b;
+            font-size: 1.1em;
+            font-weight: 700;
+          }
+        }
+        
+        input, select {
+          margin-top: 4px !important;
+          padding: 8px 10px !important;
+          border: 1.2px solid #ccc;
+          border-radius: 6px;
+          font-size: 1.1rem;
+          transition: border 0.2s;
+          &:focus {
+            border-color: #B63B3B;
+            outline: 1px solid #B63B3B;
+          }
+        }
+      }
+    }
+
+    .health-question {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 20px !important;
+
+      span {
+        margin-top: 20px !important;
+        flex: 1;
+        font-size: 1rem;
+      }
+
+      label {
+        font-weight: 400;
+        color: #444;
+        margin: 0 8px 0 0;
+        input[type='radio'] {
+          margin-right: 10px !important;
+        }
+      }
+    }
+
+    .agree-row {
+      margin-top: 10px !important;
+      
+      .agree-label {
+        font-size: 1rem;
+        color: #B63B3B !important;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        flex-direction: row !important;
+        gap: 8px;
+        line-height: 1.5;
+        
+        input[type='checkbox'] {
+          margin: 0 3px 0 0 !important;
+          flex-shrink: 0 !important;
+          width: 18px;
+          height: 18px;
+          outline: none ;
+        }
+      }
+    }
+
+    .submit-btn {
+      margin: 18px auto 0 auto !important;
+      background: linear-gradient(90deg, #B63B3B, #ff6b6b);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 36px !important;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(182,59,59,0.10);
+
+      &:hover {
+        background: linear-gradient(90deg, #ff6b6b, #B63B3B);
+        transform: translateY(-2px) scale(1.03);
+      }
+    }
+
+    .form-success {
+      color: #4CAF50;
+      text-align: center;
+      font-weight: 700;
+      margin-top: 12px;
+      font-size: 1.1rem;
+    }
+
+    // Styling cho thông tin tra cứu
+    .lookup-section {
+      .lookup-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+    
+    .lookup-row {
+      margin-bottom: 1.5rem;
+      
+      .lookup-label {
+          display: block;
+          font-weight: 700 !important;
+          color: #333;
+          margin-bottom: 10px !important;
+        }
+        
+        .checkbox-group, .test-result-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        
+        .checkbox-label {
+          display: flex;
+          align-items: center;
+          flex-direction: row ;
+          gap: 0.5rem;
+          font-weight: 400 !important;
+          
+          input[type='checkbox'] {
+            margin: 10px !important;
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            outline: none !important;
+            border: none !important;
+            
+            &:focus {
+              outline: none !important;
+              border: none !important;
+              box-shadow: none !important;
+            }
+          }
+        }
+        
+        .lookup-input-label {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          
+          span {
+            font-weight: 600;
+            color: #333;
+          }
+          
+          input[type='date'] {
+            padding: 0.5rem !important;
+            border: 1.2px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            
+            &:focus {
+              border-color: #B63B3B;
+              outline: 1px solid #B63B3B;
+            }
+          }
+        }
+        
+        .fail-reason-input {
+          margin-top: 0.5rem !important;
+          padding: 0.5rem !important;
+          border: 1.2px solid #ccc;
+          border-radius: 6px;
+          font-size: 1rem;
+          width: 100%;
+          
+          &:focus {
+            border-color: #B63B3B;
+            outline: 1px solid #B63B3B;
+          }
+          
+          &::placeholder {
+            color: #999;
+            font-style: italic;
+          }
+        }
+    }
+    
+    
+      // Required asterisk styling
+      .required {
+        color: #ff6b6b !important;
+        font-weight: bold;
+        margin-left: 2px;
+      }
+      
+      // Ensure required asterisk is red in all contexts
+      span.required, .lookup-input-label .required {
+        color: #ff6b6b !important;
+        font-weight: bold;
+        margin-left: 2px;
+      }
+      
+      // Error message styling
+      .error-message {
+        color: #ff6b6b;
+        font-size: 0.9rem;
+        margin-top: 0.5rem !important;
+        font-weight: 500;
+        display: block;
+        animation: fadeIn 0.3s ease-in;
+      }
+      
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      // Highlight fields with errors
+      .lookup-row:has(.error-message) {
+        .checkbox-group, .test-result-group {
+          border: 1px solid #ff6b6b;
+          border-radius: 6px;
+          padding: 0.5rem;
+          background-color: rgba(255, 107, 107, 0.05);
+        }
+        
+        .fail-reason-input {
+          border-color: #ff6b6b !important;
+          background-color: rgba(255, 107, 107, 0.05);
+        }
+        
+        input[type="date"] {
+          border-color: #ff6b6b !important;
+          background-color: rgba(255, 107, 107, 0.05);
+        }
+      }
+    }
+}
