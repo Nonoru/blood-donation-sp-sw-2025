@@ -119,14 +119,8 @@ function Login({userInfo, setUserInfo}) {
                     <h2>Đăng nhập</h2>
                     
                     <div className='social-login'>
-                        <button className='social-btn facebook'>
-                            <i className='fab fa-facebook-f'></i>
-                        </button>
                         <button className='social-btn google'>
                             <i className='fab fa-google'></i>
-                        </button>
-                        <button className='social-btn linkedin'>
-                            <i className='fab fa-linkedin-in'></i>
                         </button>
                     </div>
 

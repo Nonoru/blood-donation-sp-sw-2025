@@ -62,14 +62,13 @@
 
         .social-login {
             display: flex;
-            gap: 15px;
-            margin-bottom: 20px !important;
+            margin-bottom: 25px !important;
 
             .social-btn {
-                width: 45px;
+                width: 350px;
                 height: 45px;
                 border: 1px solid #ddd;
-                border-radius: 50%;
+                border-radius: 10px;
                 background: white;
                 display: flex;
                 align-items: center;
@@ -82,26 +81,11 @@
                     transform: translateY(-2px);
                 }
 
-                i {
-                    font-size: 16px;
-                    color: #666;
-                }
-                &.facebook {
-                    border-color: black;
-                    i {
-                        color: black;
-                    }
-                }
                 &.google {
                     border-color: black;
                     i {
                         color: black;
-                    }
-                }
-                &.linkedin {
-                    border-color: black;
-                    i {
-                        color: black;
+                        font-size: 25px;
                     }
                 }
             }
@@ -235,7 +219,7 @@
                     height: 18px;
                     border: 2px solid #ddd;
                     border-radius: 3px;
-                    margin-right: 8px;
+                    margin-right: 6px !important;
                     position: relative;
                     background: white;
                     transition: all 0.3s ease;
