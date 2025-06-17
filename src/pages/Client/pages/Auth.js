@@ -173,7 +173,7 @@ function Login({userInfo, setUserInfo}) {
                     <div className='overlay'>
                         {/* Left Overlay Panel */}
                         <div className='overlay-panel overlay-left'>
-                            <h2>Chào mừng trở lại!</h2>
+                            <h2>Hãy đăng ký!</h2>
                             <p>Để tiếp tục kết nối với chúng tôi, vui lòng đăng ký với thông tin cá nhân của bạn</p>
                             <button className='ghost-btn' onClick={toggleMode}>
                                 Đăng nhập
