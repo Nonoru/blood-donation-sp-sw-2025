@@ -9,6 +9,7 @@ import DonateBlood from '../Client/features/subs/DonateBlood'
 import ReceiveBlood from '../Client/features/subs/ReceiveBlood'
 import OrderHistory from '../Client/features/subs/OrderHistory'
 import GiftExchange from '../Client/features/subs/GiftExchange'
+import ErrorPage from '../Client/pages/ErrorPage'
 import { ToastContainer } from 'react-toastify';
 import './Client.scss'
 
@@ -27,6 +28,7 @@ function Client ({userInfo, setUserInfo}) {
                 <Route path='/feature/receive-blood' element={<ReceiveBlood/>}/>
                 <Route path='/feature/order-history' element={<OrderHistory/>}/>
                 <Route path='/feature/gift-exchange' element={<GiftExchange/>}/>
+                <Route path='*' element={<ErrorPage/>}/>
             </Routes>
         </div>
     )

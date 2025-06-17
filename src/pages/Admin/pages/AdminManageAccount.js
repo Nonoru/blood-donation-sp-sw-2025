@@ -7,7 +7,7 @@ import '../styles/AdminManageAccount.scss'
 
 const attrTableHead = ['ID','Tên tài khoản','Địa chỉ Email','Họ và tên', 'Vai trò', 'Ngày tạo']
 
-function AdminListAccount(){
+function AdminManageAccount(){
     const [userAccounts, setUserAccounts] = useState([])
     const [empAccounts, setEmpAccounts] = useState([])
     const [refreshKey, setRefreshKey] = useState(0);
@@ -62,8 +62,10 @@ function AdminListAccount(){
                         const empList = [];
 
                         data.data.data.forEach(acc => {
-                            if (acc.role.roleId === 3) userList.push(acc);
-                            else empList.push(acc);
+                            if(acc.status === true){
+                                if (acc.role.roleId === 3) userList.push(acc);
+                                else empList.push(acc);
+                            }
                         });
 
                         setUserAccounts(userList);
@@ -100,7 +102,6 @@ function AdminListAccount(){
         setFormData(prev => ({ ...prev, [name]: value }));
     }
     const handleCreateAccount = async (e) => {
-        console.log(formData)
         e.preventDefault()
         try{
             const response = await AdminRequest.createAccount(formData);
@@ -134,24 +135,109 @@ function AdminListAccount(){
         id: '',
         fullName: '',
         username: '',
-        password: '',
-        passwordConfirm: '',
         email: '',
-        roleId: 0
+        roleId: 1
     })
     const clickToUpdForm = (e, acc) => {
+        const fixForm = {
+            id: acc.id,
+            username: acc.username,
+            email: acc.email,
+            fullName: acc.fullName,
+            roleId: acc.role?.roleId ?? '', 
+        };
+
         e.preventDefault()
         setStateUpdBtn(prev => !prev)
-        setFormUpdData(acc)
+        setFormUpdData(fixForm)
+            console.log(JSON.stringify(formUpdData))
+
     }
-    const handleUpdAccount = (e) => {
+    const handleUpdChange = (e) => {
         e.preventDefault()
-        console.log(formUpdData)
+        const { name, value } = e.target;
+        setFormUpdData(prev => ({ ...prev, [name]: value }));
+    }
+
+    const [setTable, setSetTable] = useState(false)
+    const swithchBtn = () => {
+        document.querySelector('.switch-btn').classList.toggle('active')
+        setSetTable(prev => !prev)
+    }
+    const handleUpdAccount = async (e) => {
+        e.preventDefault()
+        try{
+
+            const { email, fullName, roleId} = formUpdData;
+            const jsonForm = { email, fullName, roleId};
+        console.log(JSON.stringify(jsonForm))
+
+            const response = await AdminRequest.updateAccount(jsonForm, formUpdData.id);
+
+            if (response.data.code === 200) {
+                setFormUpdData({
+                    id: '',
+                    fullName: '',
+                    username: '',
+                    email: '',
+                    roleId: 1
+                })
+                setStateUpdBtn(prev => !prev)
+                toast.success(response.data.message, { className: 'my-toast' })
+                toast.success("Tải lại trang để cập nhật", { className: 'my-toast' })
+            }
+        }catch(error){
+            if (error.response) {
+                toast.error(error.response.data.message || "Cập nhật tài khoản thất bại!", {className : 'my-toast'});
+            } else if (error.request) {
+                toast.error("Không nhận được phản hồi từ server");
+            } else {
+                toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
+            }
+        }
+    }
+    const [formDelData, setFormDelData] = useState({})
+    const [stateDelBtn, setStateDelBtn] = useState(false)
+    const clickToDelForm = (e, acc) => {
+        const fixForm = {
+            id: acc.id,
+            username: acc.username,
+            fullName: acc.fullName
+        }
+        e.preventDefault()
+        setStateDelBtn(prev => !prev)
+        setFormDelData(acc)
+    }
+    const handleDeleteAccount = async (e) => {
+        e.preventDefault()
+        try{
+            const response = await AdminRequest.deleteAccount(formDelData.id);
+
+            if (response.data.code === 200) {
+                setFormDelData({
+                    id: '',
+                    username: '',
+                    fullName: ''
+                })
+                setStateDelBtn(prev => !prev)
+                toast.success(response.data.message, { className: 'my-toast' })
+                toast.success("Tải lại trang để cập nhật", { className: 'my-toast' })
+            }
+        }catch(error){
+            if (error.response) {
+                toast.error(error.response.data.message || "Cập nhật tài khoản thất bại!", {className : 'my-toast'});
+            } else if (error.request) {
+                toast.error("Không nhận được phản hồi từ server");
+            } else {
+                toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
+            }
+        }
     }
     return(
         <div className="list-account-page">  
             {/* BUTTON */}
-            <div className="function-btn">
+            <div className=
+            {`function-btn ${stateAddBtn || stateUpdBtn || stateDelBtn ? 'prevent-ui' : 'normal-ui'}`}>
                 <button className="add-btn btn" onClick={e => setStateAddBtn(!stateAddBtn)}>    
                     <img src="/img/icons/add.svg"></img>
                 <span>Thêm tài khoản</span>
@@ -164,6 +250,16 @@ function AdminListAccount(){
                 <button className="refresh-btn btn" onClick= {getList} >    
                     <img src="/img/icons/refresh.svg"></img>
                     <span>Tải lại trang</span>
+                </button>
+                <div className="account-count">
+                    <span>Số tài khoản</span>
+                    {!setTable ? <span>{empAccounts.length}</span> : <span>{userAccounts.length}</span>}
+                </div>
+                
+                <button onClick={swithchBtn} className={`switch-btn ${stateAddBtn || stateUpdBtn || stateDelBtn ? 'prevent-ui' : 'normal-ui'}`}>
+                    <div></div>
+                    <span>Emp</span>
+                    <span>User</span>
                 </button>
             </div>
             {/* CREATE */}
@@ -178,16 +274,31 @@ function AdminListAccount(){
             </div>
             {/* UPDATE */}
             <div className="form-update-container" style={{display: stateUpdBtn ? 'block':'none'}}>
-                <h2>Tạo tài khoản mới</h2>
+                <h2>Cập nhật tài khoản</h2>
                 <div className="form-upd">
-                    <AdminUpdateAccount formUpdData={formUpdData}/>   
+                    <AdminUpdateAccount formUpdData={formUpdData} handleUpdChange={handleUpdChange}/>   
                     <button type="none" onClick={handleUpdAccount}>Cập nhật tài khoản</button>
                 </div>
                 <button type="none" className="close-btn" onClick={e => setStateUpdBtn(!stateUpdBtn)}>
                 </button>
             </div>
+
+            {/* DELETE */}
+            <div className="delete-container" style={{display: stateDelBtn ? 'block':'none'}}>
+                <h2>Xóa tài khoản</h2>
+                <div className="form-upd">
+                    <span className="text-w">Bạn có chắc chắn muốn xóa tài khoản này?</span>
+                    <button type="none" onClick={handleDeleteAccount}>Xóa</button>
+                </div>
+                <button type="none" className="close-btn"  onClick={e => setStateDelBtn(!stateDelBtn)}>
+                </button>
+            </div>
             {/* TABLE EMPLOYEE */}
-            <div style={{pointerEvents : stateAddBtn ? 'none':'auto', filter: stateAddBtn ? 'blur(1px)' : 'none'}}>
+            <div className={`
+                        ${stateAddBtn || stateUpdBtn || stateDelBtn ? 'prevent-ui' : 'normal-ui'}
+                        ${setTable === true && 'hide-table'}
+                    `}
+            >
                 <p>Danh sách nhân viên</p>
                 <table>
                     <thead>
@@ -215,7 +326,7 @@ function AdminListAccount(){
                                         </button>
                                     </td>
                                     <td>
-                                        <button className="delete-btn" >    
+                                        <button className="delete-btn" onClick={e => clickToDelForm(e, acc)} >    
                                             <img src="/img/icons/delete.svg"></img>
                                         </button>
                                     </td>
@@ -223,48 +334,38 @@ function AdminListAccount(){
                             )
                         }
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Số lượng tài khoản</td>
-                            <td>{empAccounts.length}</td>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
-            <br/>
-            <div style={{pointerEvents : stateAddBtn ? 'none':'auto', filter: stateAddBtn ? 'blur(1px)' : 'none'}}>
-                <p>Danh sách người dùng</p>
-                <table>
-                    <thead>
-                        <tr>
-                            {attrTableHead.map((a, index) => (
-                                <th key={index}> {a} </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            userAccounts.map( acc =>
-                                <tr key={acc.id}>
-                                    <th>{acc.id}</th>
-                                    <th>{acc.username}</th>
-                                    <td>{acc.email}</td>
-                                    <th>{acc.fullName}</th>
-                                    <th>{acc.role.roleName}</th>
-                                    <th>{acc.createAt}</th>
-                                </tr>
-                            )
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Số lượng tài khoản</td>
-                            <td>{userAccounts.length}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+
+            <div className={`${setTable === false && 'hide-table'}
+                 ${stateAddBtn || stateUpdBtn || stateDelBtn ? 'prevent-ui' : 'normal-ui'}`}
+            >
+            <p>Danh sách người dùng</p>
+            <table>
+                <thead>
+                    <tr>
+                        {attrTableHead.map((a, index) => (
+                            <th key={index}> {a} </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        userAccounts.map( acc =>
+                            <tr key={acc.id}>
+                                <th>{acc.id}</th>
+                                <th>{acc.username}</th>
+                                <td>{acc.email}</td>
+                                <th>{acc.fullName}</th>
+                                <th>{acc.role.roleName}</th>
+                                <th>{acc.createAt}</th>
+                            </tr>
+                        )
+                    }
+                </tbody>
+            </table>
+        </div>
         </div>
     )
 }
-export default AdminListAccount
+export default AdminManageAccount 

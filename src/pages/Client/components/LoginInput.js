@@ -8,12 +8,11 @@ export const LoginInput = ({handleChangeLogin, formLogin}) => {
             <label key={i.key} className='input-field'>
                 <input 
                     type={i.type} 
-                    id={i.name} 
+                    id={i.key} 
                     name={i.name}
                     placeholder={i.detail}
                     value={formLogin[i.name]}
                     onChange={e => handleChangeLogin(e)}
-                    // autoComplete={i.type === 'password' ? 'current-password' : 'email'}
                 />
             </label>
         ))
