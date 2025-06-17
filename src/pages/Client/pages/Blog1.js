@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import '../styles/BlogDetail.scss';
+import '../styles/Blog1.scss';
 
-function BlogDetail() {
+function Blog1() {
   return (
     <div className="blog-detail">
       <h1 className="blog-detail-title">Những chia sẻ đáng yêu về hiến máu</h1>
-      <p className="blog-meta"><em>Admin • Jun 10, 2025 • 2 min read</em></p>
-      <img src="/img/pics/blog1.jpg" alt="Hiến máu" className="detail-image" />
+      <p className="blog-meta"><em>Jun 10, 2025</em></p>
+      <img src="/img/pics/blog11.jpg" alt="Hiến máu" className="detail-image" />
 
       <p className="blog-content">
         <strong>"Hiến máu không chỉ là một hành động thiện nguyện, mà còn là một câu chuyện tử tế lan tỏa từ trái tim đến trái tim."</strong>
@@ -43,9 +43,9 @@ function BlogDetail() {
 
       <p><strong>🩷 Mỗi giọt máu cho đi – Một cuộc đời ở lại.</strong></p>
 
-      <Link to="/blog" className="back-link">← Quay lại danh sách</Link>
+      <Link to="/blog" className="back-link">← Quay lại</Link>
     </div>
   );
 }
 
-export default BlogDetail;
+export default Blog1;

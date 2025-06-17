@@ -1,79 +1,92 @@
-
 .blog-page {
-  padding: 40px 10%;
-  background: #f8f8f8;
-  font-family: 'Arial', sans-serif;
+  padding: 60px 12% !important;
+  font-family: 'Arial', serif;
+  background-color: #f9f9f9;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  min-height: 92vh;
+  position: relative;
+  top: 8vh;
 }
 
 .section-title {
-  font-size: 28px;
-  margin-bottom: 24px;
-  color: #333;
+  font-size: 36px;
+  margin-bottom: 36px !important;
+  color: #222;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  padding-bottom: 12px;
+  width: fit-content;
 }
 
 .blog-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Tự động căn các card */
-  gap: 24px;
-  justify-items: center; /* Căn giữa các card */
-  max-width: 1200px; /* Đảm bảo các card không bị giãn quá rộng */
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 32px;
+  max-width: 1280px;
   width: 100%;
 }
 
 .blog-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  width: 100%; /* Đảm bảo card chiếm toàn bộ không gian có sẵn */
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  transition: 0.3s ease;
-  margin-bottom: 24px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .blog-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
 .blog-image {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
 }
 
 .blog-content {
-  padding: 16px 20px;
+  padding: 20px 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .blog-meta {
   font-size: 13px;
-  color: #777;
-  margin-bottom: 8px;
-}
-
-.blog-meta .dot {
-  margin: 0 6px;
+  color: #999;
+  margin-bottom: 10px;
+  font-style: italic;
 }
 
 .blog-title {
-  font-size: 18px;
-  color: #222;
-  margin-bottom: 6px;
+  font-size: 20px;
+  color: #111;
+  font-weight: bold;
+  margin-bottom: 10px;
+  line-height: 1.4;
 }
 
 .blog-subtitle {
-  font-size: 14px;
-  color: #555;
-  line-height: 1.5;
-  margin-bottom: 12px;
+  font-size: 15px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: auto !important;
 }
 
 .blog-footer {
   font-size: 13px;
-  color: #888;
+  color: #aaa;
+  padding-top: 16px !important;
   display: flex;
   justify-content: space-between;
+  border-top: 1px solid #eee;
+  margin-top: 20px;
 }

@@ -2,6 +2,9 @@ import { Routes , Route } from 'react-router-dom'
 import Header from '../Client/pages/Header'
 import HomePage from '../Client/pages/Home'
 import BlogPage from '../Client/pages/Blog'
+import Blog1 from '../Client/pages/Blog1'
+import Blog2 from '../Client/pages/Blog2'
+import Blog3 from '../Client/pages/Blog3'
 import DocPage from '../Client/pages/Doc'
 import Auth from '../Client/pages/Auth'
 import FeaturesPage from '../Client/features/main/Features'
@@ -28,6 +31,10 @@ function Client ({userInfo, setUserInfo}) {
                 <Route path='/feature/receive-blood' element={<ReceiveBlood/>}/>
                 <Route path='/feature/order-history' element={<OrderHistory/>}/>
                 <Route path='/feature/gift-exchange' element={<GiftExchange/>}/>
+                <Route path='/blog/1' element={<Blog1/>}/>
+                <Route path='/blog/2' element={<Blog2/>}/>
+                <Route path='/blog/3' element={<Blog3/>}/>
+
                 <Route path='*' element={<ErrorPage/>}/>
             </Routes>
         </div>

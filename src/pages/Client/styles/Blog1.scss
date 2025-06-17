@@ -1,0 +1,74 @@
+
+ 
+ .blog-detail {
+  font-family: 'Arial', sans-serif;
+  padding: 20px !important;
+  background-color: #f2f4f6;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  height: auto;
+  position: absolute;
+  top: 70px; /* Điều chỉnh giá trị này tùy thuộc vào chiều cao của thanh menu */
+  left: 50%;
+  transform: translateX(-50%);
+   /* Giữ phần tử căn giữa theo chiều ngang */
+}
+
+
+
+.blog-detail-title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.blog-meta {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.detail-image {
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.blog-content {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.blockquote {
+  font-style: italic;
+  margin: 20px 0;
+  padding-left: 20px;
+  border-left: 4px solid #007bff;
+  text-align: left;
+}
+
+.blog-subtitle {
+  font-size: 1.3rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.blog-reasons {
+  list-style-type: disc;
+  margin-left: 20px;
+  text-align: left;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 20px;
+  color: #007bff;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
