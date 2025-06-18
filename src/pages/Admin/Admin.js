@@ -9,6 +9,10 @@ import './Admin.scss'
 function AdminPage(){
     return(
         <div className="admin-page">
+            <div className='user-info'>
+                <div className='user-name'>Xin chào, Admin</div>
+                <div className='user-role'>Quản trị viên</div>
+            </div>
             <ToastContainer position="top-right" autoClose={2000} />
             <AdminMenu/>
             <Routes>

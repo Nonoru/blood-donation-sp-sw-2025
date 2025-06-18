@@ -13,21 +13,13 @@ function App() {
     isAuthenticated : Token.isTokenValid(),
     username: Token.getUsernameFromToken(),
   })
-  const isEmploy = () =>{
-    const role = Token.getUserRole();
-    if(role === "ADMIN" || role === "STAFF") {
-      return true;
-    }
-    return false;
-  }
+
   return (
     <div className="App">
       <Routes>
         <Route path='/*' element={<ClientPage userInfo={userInfo} setUserInfo={setUserInfo}/>}/>
         <Route path="/admin/*" element={ <AdminRoute> <AdminPage /> </AdminRoute>}/>
-        { isEmploy() &&
-          <Route path="/admin/*" element={<AdminPage />} />
-        }
+        
       </Routes>
     </div>
   )
