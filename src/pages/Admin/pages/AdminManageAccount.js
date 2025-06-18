@@ -150,8 +150,6 @@ function AdminManageAccount(){
         e.preventDefault()
         setStateUpdBtn(prev => !prev)
         setFormUpdData(fixForm)
-            console.log(JSON.stringify(formUpdData))
-
     }
     const handleUpdChange = (e) => {
         e.preventDefault()
@@ -167,11 +165,8 @@ function AdminManageAccount(){
     const handleUpdAccount = async (e) => {
         e.preventDefault()
         try{
-
             const { email, fullName, roleId} = formUpdData;
             const jsonForm = { email, fullName, roleId};
-        console.log(JSON.stringify(jsonForm))
-
             const response = await AdminRequest.updateAccount(jsonForm, formUpdData.id);
 
             if (response.data.code === 200) {

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import * as FeatureApi from '../../services/FeatureApi';
 import '../../styles/DonateBlood.scss';
 const healthQuestions = [
   'Bạn đã từng hiến máu chưa ?',
@@ -23,15 +25,15 @@ const healthQuestions = [
 const form = {
   fullName: '',
   dob: '',
-  // appointmentDate: '',
   gender: '',
   weight: '',
-  bloodId: 0,
-  amountBloodMl: 0,
+  amountBloodMl: '',
   cccdNumber: '',
   phone: '',
   address: '',
-  agree: false,
+  bloodId: 0,
+  orderDateId: 1,
+  userId: 1,
   // healthQuestions: Array(12).fill(''),
 }
 const DonateBlood = () => {
@@ -40,9 +42,36 @@ const DonateBlood = () => {
       const { name, value } = e.target;
       setFormData(prev => ({ ...prev, [name]: value }));
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    try{
+        const response = await FeatureApi.orderDonation(formData);
+
+        if (response.data.code === 200) {
+            setFormData({
+                  fullName: '',
+                  dob: '',
+                  gender: '',
+                  weight: '',
+                  amountBloodMl: '',
+                  cccdNumber: '',
+                  phone: '',
+                  address: '',
+                  bloodId: 0,
+                  orderDateId: 1,
+                  userId: 1,
+            })
+            toast.success(response.data.message, { className: 'my-toast' })
+        }
+    }catch(error){
+        if (error.response) {
+            toast.error(error.response.data.message || "Cập nhật tài khoản thất bại!", {className : 'my-toast'});
+        } else if (error.request) {
+            toast.error("Không nhận được phản hồi từ server");
+        } else {
+            toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
+        }
+    }
   }
 
   return (
@@ -84,19 +113,19 @@ const DonateBlood = () => {
                 <span className="label-row">Giới tính <span>*</span></span>
                 <select name="gender" value={formData.gender} onChange={e => handleChange(e)} required>
                   <option disabled value="" selected>Chọn giới tính</option>
-                  <option value="Nam">Nam</option>
-                  <option value="Nữ">Nữ</option>
+                  <option value="1">Nam</option>
+                  <option value="2">Nữ</option>
                 </select>
               </label>
               {/* WEIGHT */}
               <label>
                 <span className='label-row'>Cân nặng<span>*</span></span>
-                  <input type="number" name="weight" min="1" max="200" step="0.1"  onChange={e => handleChange(e)} required/>
+                  <input type="number" value={formData.weight} name="weight" min="1" max="200" step="0.1"  onChange={e => handleChange(e)} required/>
               </label>
               {/* BLOOD TYPE */}
               <label>
                 <span className="label-row">Nhóm máu <span> *</span></span>
-                <select name="bloodType" value={formData.bloodId} onChange={e => handleChange(e)} required>
+                <select name="bloodId" value={formData.bloodId} onChange={e => handleChange(e)} required>
                   <option disabled value="0" selected>Chọn nhóm máu</option>
                   <option value="1">A+</option>
                   <option value="2">A-</option>
@@ -111,7 +140,7 @@ const DonateBlood = () => {
 
               {/* BLOOD AMOUNT */}
               <label><span className="label-row">Lượng máu sẽ hiến (ml)<span> *</span></span> 
-                <input type="number" name="amountBloodMl" value={formData.amountBloodMl} min="50" max="150" step="0.1" onChange={e => handleChange(e)} required />
+                <input type="number" name="amountBloodMl" value={formData.amountBloodMl} step="10" onChange={e => handleChange(e)} required />
               </label>
 
               {/* CMND */}
@@ -146,12 +175,12 @@ const DonateBlood = () => {
             ))}        
           </fieldset> */}
           
-          <div className="form-row agree-row">
+          {/* <div className="form-row agree-row">
             <label className="agree-label">
               <input type="checkbox" name="agree" checked={formData.agree} onChange={e => handleChange(e)} required /> 
               Tôi cam kết các thông tin trên là đúng sự thật và tự nguyện đăng ký hiến máu.
             </label>
-          </div>
+          </div> */}
 
           <button type="submit" className="submit-btn">Gửi đăng ký</button>
         </form>
