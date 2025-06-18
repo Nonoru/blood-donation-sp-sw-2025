@@ -246,7 +246,7 @@
     background: none;
   }
   .donate-title-section {
-    height: 30vh;
+    height: 35vh;
     min-height: unset;
     align-items: center;
     padding-top: 40px !important;
@@ -306,10 +306,11 @@
         }
 
         .features-text {
+          margin-bottom: 5px !important;
           display: block;
-          font-size: 2rem;
-          font-weight: 300;
-          letter-spacing: 0.3rem !important;
+          font-size: 1.6rem;
+          font-weight: 510;
+          letter-spacing: 0.3rem;
           text-transform: uppercase;
         }
       }

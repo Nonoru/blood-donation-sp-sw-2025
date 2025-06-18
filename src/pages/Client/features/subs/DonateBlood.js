@@ -78,6 +78,7 @@ const DonateBlood = () => {
         <div className="donate-title-content">
           <h2 className="main-title">
             <span className="blood-bridge">Blood Bridge</span>
+            <span className="features-text">Đăng ký Xét Nghiệm Máu</span>
           </h2> 
           <div className="title-decoration">
             <div className="decoration-line"></div>
@@ -131,11 +132,8 @@ const DonateBlood = () => {
                   <option value="O-">O-</option>
                 </select>
               </label>
-              <label><span className="label-row">Thời gian đặt lịch có sẵn<span> *</span></span> 
-                <select name="bloodType" value={form.appointmentDate} onChange={handleChange} required>
-                  <option value="">Chọn thời gian</option>
-                  <option value="A+">A+</option>
-                </select>
+              <label><span className="label-row">Ngày đặt lịch <span> *</span></span> 
+                <input type="date" name="appointmentDate" value={form.appointmentDate} onChange={handleChange} required />
               </label>
             </div>
             <div className="form-row">
@@ -150,9 +148,9 @@ const DonateBlood = () => {
               <label><span className="label-row">Địa chỉ <span> *</span></span>
                 <input name="address" value={form.address} onChange={handleChange} required/>
               </label>
-              {/* <label>Email
+              <label>Email
                 <input type="email" name="email" value={form.email} onChange={handleChange} />
-              </label> */}
+              </label>
             </div>        
           </fieldset>
           
