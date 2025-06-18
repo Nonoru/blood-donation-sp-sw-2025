@@ -130,7 +130,7 @@
       border-radius: 8px;
       padding: 12px 36px !important;
       cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
+      // transition: background 0.2s, transform 0.2s;
       box-shadow: 0 2px 8px rgba(182,59,59,0.10);
 
       &:hover {
@@ -246,7 +246,7 @@
     background: none;
   }
   .donate-title-section {
-    height: 35vh;
+    height: 40vh;
     min-height: unset;
     align-items: center;
     padding-top: 40px !important;

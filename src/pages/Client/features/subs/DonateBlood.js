@@ -1,21 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../../styles/DonateBlood.scss';
-
-const initialState = {
-  fullName: '',
-  dob: '',
-  appointmentDate: '',
-  gender: '',
-  job: '',
-  bloodType: '',
-  idNumber: '',
-  phone: '',
-  address: '',
-  email: '',
-  healthQuestions: Array(12).fill(''),
-  agree: false,
-};
-
 const healthQuestions = [
   'Bạn đã từng hiến máu chưa ?',
   'Hiện tại, bạn có bị các bệnh: viêm khớp, đau dạ dày, viêm gan, vàng da, bệnh tim, huyết áp thấp/cao, ho kéo dài,bệnh máu, lao ?',
@@ -36,41 +20,30 @@ const healthQuestions = [
   'Bạn có đồng ý hiến máu tình nguyện và tuân thủ các quy định của chương trình ?'
 ];
 
+const form = {
+  fullName: '',
+  dob: '',
+  // appointmentDate: '',
+  gender: '',
+  weight: '',
+  bloodId: 0,
+  amountBloodMl: 0,
+  cccdNumber: '',
+  phone: '',
+  address: '',
+  agree: false,
+  // healthQuestions: Array(12).fill(''),
+}
 const DonateBlood = () => {
-  const [form, setForm] = useState(initialState);
-  const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState({});
-  const [showToast, setShowToast] = useState(false);
-
+  const [formData, setFormData] = useState(form);
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    // Clear error when user starts typing/selecting
-    if (errors[name]) {
-      setErrors({ ...errors, [name]: '' });
-    }
-    
-    if (name.startsWith('health_')) {
-      const idx = parseInt(name.split('_')[1], 10);
-      const newHealth = [...form.healthQuestions];
-      newHealth[idx] = value;
-      setForm({ ...form, healthQuestions: newHealth });
-    } else if (type === 'checkbox') {
-      setForm({ ...form, [name]: checked });
-    } else {
-      setForm({ ...form, [name]: value });
-    }
-  };
-
+      const { name, value } = e.target;
+      setFormData(prev => ({ ...prev, [name]: value }));
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors({});
-    setSubmitted(true);
-    // Cuộn lên đầu trang
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    // Hiện toast
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
-  };
+    console.log('Form submitted:', formData);
+  }
 
   return (
     <div className="donate-blood-page blood-register-layout">
@@ -87,94 +60,99 @@ const DonateBlood = () => {
           </div>
         </div>
       </div>
-
       <div className="donate-form-section">
-        {showToast && (
-          <div className="custom-toast success">
-            <span className="toast-icon">✔</span>
-            Đăng ký thành công! Cảm ơn bạn đã đăng ký xét nghiệm máu.
-            <button className="toast-close" onClick={() => setShowToast(false)}>×</button>
-          </div>
-        )}
-        <form className="donate-blood-form" onSubmit={handleSubmit}>
+        {/* FORM điền thông tin */}
+        <form className="donate-blood-form" onSubmit={e => handleSubmit(e)}>
           <fieldset>
             <legend>Thông tin cá nhân</legend>
             <div className="form-row">
-              <label><span className="label-row">Họ và tên <span> *</span></span>
-                <input name="fullName" value={form.fullName} onChange={handleChange} required />
+
+              {/* FULLNAME */}
+              <label>
+                <span className="label-row">Họ và tên <span>*</span></span>
+                <input name="fullName" value={formData.fullName} onChange={e => handleChange(e)} required />
               </label>
-              <label><span className="label-row">Ngày sinh <span> *</span></span> 
-                <input type="date" name="dob" value={form.dob} onChange={handleChange} required />
-              </label>            
-              <label><span className="label-row">Giới tính <span> *</span></span>
-                <select name="gender" value={form.gender} onChange={handleChange} required>
-                  <option value="">Chọn</option>
+
+              {/* DOB */}
+              <label>
+                <span className="label-row">Ngày sinh <span>*</span></span> 
+                <input type="date" name="dob" value={formData.dob} onChange={e => handleChange(e)} required />
+              </label>
+
+              {/* GENDER */}
+              <label>
+                <span className="label-row">Giới tính <span>*</span></span>
+                <select name="gender" value={formData.gender} onChange={e => handleChange(e)} required>
+                  <option disabled value="" selected>Chọn giới tính</option>
                   <option value="Nam">Nam</option>
                   <option value="Nữ">Nữ</option>
-                  <option value="Khác">Khác</option>
                 </select>
               </label>
-              <label><span className='label-row'>Nghề nghiệp<span> *</span></span>
-                  <input name="job" value={form.job} onChange={handleChange} required />
+              {/* WEIGHT */}
+              <label>
+                <span className='label-row'>Cân nặng<span>*</span></span>
+                  <input type="number" name="weight" min="1" max="200" step="0.1"  onChange={e => handleChange(e)} required/>
               </label>
-            </div>
-            <div className="form-row">
-              <label><span className="label-row">Nhóm máu <span> *</span></span>
-                <select name="bloodType" value={form.bloodType} onChange={handleChange} required>
-                  <option value="">Chọn nhóm máu</option>
-                  <option value="A+">A+</option>
-                  <option value="A-">A-</option>
-                  <option value="B+">B+</option>
-                  <option value="B-">B-</option>
-                  <option value="AB+">AB+</option>
-                  <option value="AB-">AB-</option>
-                  <option value="O+">O+</option>
-                  <option value="O-">O-</option>
+              {/* BLOOD TYPE */}
+              <label>
+                <span className="label-row">Nhóm máu <span> *</span></span>
+                <select name="bloodType" value={formData.bloodId} onChange={e => handleChange(e)} required>
+                  <option disabled value="0" selected>Chọn nhóm máu</option>
+                  <option value="1">A+</option>
+                  <option value="2">A-</option>
+                  <option value="3">B+</option>
+                  <option value="4">B-</option>
+                  <option value="5">AB+</option>
+                  <option value="6">AB-</option>
+                  <option value="7">O+</option>
+                  <option value="8">O-</option>
                 </select>
               </label>
-              <label><span className="label-row">Ngày đặt lịch <span> *</span></span> 
-                <input type="date" name="appointmentDate" value={form.appointmentDate} onChange={handleChange} required />
+
+              {/* BLOOD AMOUNT */}
+              <label><span className="label-row">Lượng máu sẽ hiến (ml)<span> *</span></span> 
+                <input type="number" name="amountBloodMl" value={formData.amountBloodMl} min="50" max="150" step="0.1" onChange={e => handleChange(e)} required />
               </label>
-            </div>
-            <div className="form-row">
-              <label><span className="label-row">Số CMND/CCCD <span> *</span></span>
-                <input name="idNumber" value={form.idNumber} onChange={handleChange} required />
+
+              {/* CMND */}
+              <label><span className="label-row">Số CCCD <span> *</span></span>
+                <input name="cccdNumber" value={formData.cccdNumber} onChange={e => handleChange(e)} required />
               </label>
+
+              {/* NUMBER PHONE */}
               <label><span className="label-row">Số điện thoại <span> *</span></span>
-                <input name="phone" value={form.phone} onChange={handleChange} required />
+                <input name="phone" value={formData.phone} onChange={e => handleChange(e)} required />
+              </label>
+
+              {/* ADDRESS */}
+              <label><span className="label-row">Địa chỉ thường trú<span> *</span></span>
+                <input name="address" value={formData.address} onChange={e => handleChange(e)} required/>
               </label>
             </div>
-            <div className="form-row">
-              <label><span className="label-row">Địa chỉ <span> *</span></span>
-                <input name="address" value={form.address} onChange={handleChange} required/>
-              </label>
-              <label>Email
-                <input type="email" name="email" value={form.email} onChange={handleChange} />
-              </label>
-            </div>        
           </fieldset>
           
-          <fieldset>
+          {/* <fieldset>
             <legend>Câu hỏi sức khỏe</legend>
             {healthQuestions.map((q, idx) => (
               <div className="health-question" key={idx}>
                 <span>{idx + 1}. {q}</span>
                 <label>
-                  <input type="radio" name={`health_${idx}`} value="Có" checked={form.healthQuestions[idx] === 'Có'} onChange={handleChange} required /> Có
+                  <input type="radio" name={`health_${idx}`} value="Có" checked={formData.healthQuestions[idx] === 'Có'} onChange={e => handleChange(e)} required /> Có
                 </label>
                 <label>
-                  <input type="radio" name={`health_${idx}`} value="Không" checked={form.healthQuestions[idx] === 'Không'} onChange={handleChange} required /> Không
+                  <input type="radio" name={`health_${idx}`} value="Không" checked={formData.healthQuestions[idx] === 'Không'} onChange={e => handleChange(e)} required /> Không
                 </label>
               </div>
             ))}        
-          </fieldset>
+          </fieldset> */}
           
           <div className="form-row agree-row">
             <label className="agree-label">
-              <input type="checkbox" name="agree" checked={form.agree} onChange={handleChange} required /> 
+              <input type="checkbox" name="agree" checked={formData.agree} onChange={e => handleChange(e)} required /> 
               Tôi cam kết các thông tin trên là đúng sự thật và tự nguyện đăng ký hiến máu.
             </label>
           </div>
+
           <button type="submit" className="submit-btn">Gửi đăng ký</button>
         </form>
       </div>
