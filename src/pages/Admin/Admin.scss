@@ -2,4 +2,11 @@
     display: flex;
     background-color: white !important;
     padding: 0 !important;
+    position: relative;
+    .user-info{
+        position: absolute;
+        height: 50px;
+        left: 300px;
+        width: calc(100% - 200px);
+    }
 }
