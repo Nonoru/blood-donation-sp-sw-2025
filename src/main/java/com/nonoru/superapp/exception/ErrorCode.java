@@ -27,7 +27,22 @@ public enum ErrorCode {
 
     LOGIN_FAIL(14, "Thông tin đăng nhập không chính xác"),
 
-    USER_NOTFOUND(15, "Không tìm thấy người dùng");
+    USER_NOTFOUND(15, "Không tìm thấy người dùng"),
+
+    DOB_EMPTY(16, "Ngày sinh không thể bỏ trống"),
+    DOB_MUST_IN_PAST(17, "Ngày sinh không thể vượt quá ngày hiện tại"),
+
+    CCCD_NUMBER_EMPTY(18, "CCCD không thể bỏ trống"),
+    CCCD_NUMBER_INVALID(19, "CCCD không đúng định dạng hoặc vượt quá độ dài cho phép"),
+
+    PHONE_EMPTY(20, "Số điện thoại không thể bỏ trống"),
+    PHONE_INVALID(21, "Số điện thoại không đúng định dạng hoặc quá độ dài cho phép"),
+
+    ADDRESS_EMPTY(22, "Địa chỉ thường chú không thể bỏ trống"),
+
+    YEAR_LOWER_18(23, "Người dưới 18 tuổi không được phép hiến máu"),
+    AMMOUNT_BLOOD_ERROR(23, "Bạn không thể hiến với lượng máu này so với cân nặng của bạn")
+    ;
     private int code;
     private String message;
 

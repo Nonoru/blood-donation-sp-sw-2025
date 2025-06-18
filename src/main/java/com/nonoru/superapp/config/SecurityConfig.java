@@ -29,6 +29,7 @@ import java.util.List;
 public class SecurityConfig {
     private final String[] PUBLIC_URLS =
             {"/auth/login", "auth/register", "/auth/introspect", "/auth/user/**",
+                    "feature/order-donation",
                     "/admin/list", "admin/update/**", "/admin/delete/**"};
 
             /*, "/admin/get-all", "/admin/create-account", "/admin/update-account",*/

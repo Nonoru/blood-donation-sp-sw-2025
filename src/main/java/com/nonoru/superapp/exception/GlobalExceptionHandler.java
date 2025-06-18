@@ -36,7 +36,11 @@ public class GlobalExceptionHandler {
                 "USER_EMPTY", "USER_LENGTH_INVALID", "USER_CONTAIN_ERROR_SYMBOL",
                 "PASSWORD_EMPTY","PASSWORD_LENGTH_INVALID","PASSWORD_CONTAIN_ERROR_SYMBOL","PASSWORD_CONFIRM_EMPTY",
                 "EMAIL_EMPTY", "EMAIL_INVALID",
-                "FULL_NAME_EMPTY"
+                "FULL_NAME_EMPTY",
+                "DOB_EMPTY", "DOB_MUST_IN_PAST",
+                "CCCD_NUMBER_EMPTY", "CCCD_NUMBER_INVALID",
+                "PHONE_EMPTY", "PHONE_INVALID",
+                "ADDRESS_EMPTY", "YEAR_LOWER_18", "AMMOUNT_BLOOD_ERROR"
         );
 
         FieldError prioritizedError = fieldErrors.stream()
