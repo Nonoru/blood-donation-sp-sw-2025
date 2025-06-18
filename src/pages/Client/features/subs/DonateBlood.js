@@ -78,19 +78,15 @@ const DonateBlood = () => {
         <div className="donate-title-content">
           <h2 className="main-title">
             <span className="blood-bridge">Blood Bridge</span>
-            <span className="features-text">Đăng ký Xét Nghiệm Máu</span>
-          </h2>
-          <p className="subtitle">
-            Hãy đăng ký xét nghiệm máu để bảo vệ sức khỏe bản thân và cộng đồng!
-          </p>
+          </h2> 
           <div className="title-decoration">
             <div className="decoration-line"></div>
             <div className="decoration-circle">🩸</div>
             <div className="decoration-line"></div>
           </div>
         </div>
-        {/* Có thể thêm hiệu ứng floating nếu muốn */}
       </div>
+
       <div className="donate-form-section">
         {showToast && (
           <div className="custom-toast success">
@@ -122,14 +118,6 @@ const DonateBlood = () => {
               </label>
             </div>
             <div className="form-row">
-              <label><span className="label-row">Số CMND/CCCD <span> *</span></span>
-                <input name="idNumber" value={form.idNumber} onChange={handleChange} required />
-              </label>
-              <label><span className="label-row">Số điện thoại <span> *</span></span>
-                <input name="phone" value={form.phone} onChange={handleChange} required />
-              </label>
-            </div>
-            <div className="form-row">
               <label><span className="label-row">Nhóm máu <span> *</span></span>
                 <select name="bloodType" value={form.bloodType} onChange={handleChange} required>
                   <option value="">Chọn nhóm máu</option>
@@ -145,6 +133,14 @@ const DonateBlood = () => {
               </label>
               <label><span className="label-row">Ngày đặt lịch <span> *</span></span> 
                 <input type="date" name="appointmentDate" value={form.appointmentDate} onChange={handleChange} required />
+              </label>
+            </div>
+            <div className="form-row">
+              <label><span className="label-row">Số CMND/CCCD <span> *</span></span>
+                <input name="idNumber" value={form.idNumber} onChange={handleChange} required />
+              </label>
+              <label><span className="label-row">Số điện thoại <span> *</span></span>
+                <input name="phone" value={form.phone} onChange={handleChange} required />
               </label>
             </div>
             <div className="form-row">
