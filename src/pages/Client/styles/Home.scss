@@ -177,7 +177,7 @@
             max-width: 100%;
             width: 100%;
             margin: 100px auto !important;              
-            padding: 0 20px;
+            padding: 0 20px !important;
             display: flex;
             flex-direction: column;
             gap: 115px;
@@ -189,10 +189,11 @@
             margin-bottom: 40px !important;
             
             .section-title {
+                width: auto;
                 font-size: 36px;
                 font-weight: 600;
                 color: #333;
-                margin: 0;
+                margin: 10px !important;
                 line-height: 1.2;
             }
               .section-title-highlight {
@@ -218,7 +219,7 @@
 
                 .benefit-card {
                     background: white;
-                    padding: 25px 20px;
+                    padding: 25px 20px !important;
                     border-radius: 20px;
                     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
                     transition: all 0.3s ease;
@@ -249,7 +250,7 @@
                     .benefit-icon {
                         width: 80px;
                         height: 80px;
-                        margin-bottom: 20px;
+                        margin-bottom: 15px !important;
                         background: linear-gradient(135deg, #B63B3B, #ff6b6b);
                         border-radius: 50%;
                         display: flex;
@@ -268,7 +269,7 @@
                         font-size: 20px;
                         font-weight: 600;
                         color: #333;
-                        margin-bottom: 16px;
+                        margin-bottom: 5px !important;
                         margin-top: 0;
                         text-align: center;
                         line-height: 1.3;
@@ -467,10 +468,11 @@
             margin-top: 50px !important;
             
             .section-title {
+                width: auto;
                 font-size: 36px;
                 font-weight: 600;
                 color: #2c3e50;
-                margin: 0;
+                margin: 10px !important;
                 line-height: 1.2;
             }
             
