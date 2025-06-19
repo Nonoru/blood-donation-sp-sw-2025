@@ -12,7 +12,6 @@ public enum ErrorCode {
     USER_CONTAIN_ERROR_SYMBOL(3, "Tên tài khoản chứa các kí tự không hợp lệ"),
     USER_EXISTED(4, "Tên tài khoản đã tồn tại"),
 
-
     EMAIL_EXISTED(5, "Email đã được sử dụng"),
     EMAIL_EMPTY(6, "Email không thể bỏ trống"),
     EMAIL_INVALID(7, "Email không đúng định dạng"),
@@ -41,7 +40,7 @@ public enum ErrorCode {
     ADDRESS_EMPTY(22, "Địa chỉ thường chú không thể bỏ trống"),
 
     YEAR_LOWER_18(23, "Người dưới 18 tuổi không được phép hiến máu"),
-    AMMOUNT_BLOOD_ERROR(23, "Bạn không thể hiến với lượng máu này so với cân nặng của bạn")
+    AMMOUNT_BLOOD_ERROR(24, "Bạn không thể hiến với lượng máu này so với cân nặng của bạn")
     ;
     private int code;
     private String message;

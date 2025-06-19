@@ -27,9 +27,9 @@ public class AdminAPI {
                 .build();
     }
     @PostMapping("/create")
-    ApiResponse create (@RequestBody @Valid RegisterAccountRequest request){
+    ApiResponse<Void> create (@RequestBody @Valid RegisterAccountRequest request){
         service.create(request);
-        return ApiResponse.builder()
+        return ApiResponse.<Void>builder()
                 .message("Đăng ký thành công bạn hãy đăng nhập")
                 .build();
     }

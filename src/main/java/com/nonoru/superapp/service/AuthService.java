@@ -30,7 +30,6 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.StringJoiner;
 
 @Service
 
@@ -110,7 +109,7 @@ public class AuthService {
                 .issuer("bloodbridge.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
-                        Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
+                        Instant.now().plus(1, ChronoUnit.DAYS).toEpochMilli()
                 ))
                 .claim("id", userAccount.getId())
                 .claim("role", userAccount.getRole().getRoleName().toUpperCase())
@@ -129,10 +128,10 @@ public class AuthService {
             throws JOSEException, ParseException {
         String token = request.getToken();
         JWSVerifier verifier = new MACVerifier(signKey.getBytes());
-        SignedJWT signedJWT = SignedJWT.parse(token);
-        Date expTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        JWSObject  jwsObject = JWSObject.parse(token);
+        Date expTime = new Date((Long) jwsObject.getPayload().toJSONObject().get("exp"));
 
-        boolean verified = signedJWT.verify(verifier);
+        boolean verified = jwsObject.verify(verifier);
         return IntrospectResponse.builder()
                 .valid(verified && expTime.after(new Date()))
                 .build();
@@ -142,5 +141,4 @@ public class AuthService {
     public UserAccount getUserAccount(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
     }
-
 }
