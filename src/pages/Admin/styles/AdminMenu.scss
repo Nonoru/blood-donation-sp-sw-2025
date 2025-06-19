@@ -1,15 +1,17 @@
 .admin-navbar {
-  width: 200px;
-  height: 100vh;
-  background-color: #1e1e2f;
-  color: #fff;
-  padding-top: 20px !important;
-  position: fixed;
-    img{
-        padding: 0 10px 0 10px  !important;
+    width: 200px;
+    height: 100vh;
+    background-color: #1e1e2f;
+    color: #fff;
+    padding-top: 20px !important;
+    position: fixed;
+
+    img {
+        padding: 0 10px 0 10px !important;
     }
+
     .menu-group {
-        list-style: none;   
+        list-style: none;
         margin: 20px 0 20px 0 !important;
         padding: 0 0 0 10px !important;
         cursor: pointer;
@@ -19,7 +21,8 @@
             color: #ccc;
             padding: 10px 10px 5px 0;
             font-weight: 600;
-            &:hover{
+
+            &:hover {
                 color: transparent;
                 background-image: linear-gradient(to right, rgb(243, 113, 113), rgb(235, 222, 77));
                 background-clip: text;
@@ -35,6 +38,7 @@
             display: none;
             font-size: 14px;
             font-weight: 600;
+
             &:hover {
                 background-color: #2e2e4d;
                 color: transparent;
@@ -42,17 +46,18 @@
                 background-clip: text;
             }
         }
-        
-    &.active {
-        background-color: #3f3f6b;
-        transition: 0.8s;
-        .menu-item{
-            display: block;
-            border-left: 3px solid #00bcd4;
-            padding-left: 10px !important;
-            margin-top: 10px !important;
-            
+
+        &.active {
+            background-color: #3f3f6b;
+            transition: 0.8s;
+
+            .menu-item {
+                display: block;
+                border-left: 3px solid #00bcd4;
+                padding-left: 10px !important;
+                margin-top: 10px !important;
+
+            }
         }
-      }
-  }
+    }
 }

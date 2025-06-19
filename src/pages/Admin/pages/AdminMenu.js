@@ -2,19 +2,20 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import title from '../../../assets/logo/title.png'
 import '../styles/AdminMenu.scss'
+import { path } from 'framer-motion/client';
 
 const items = [
     {id: 1, name: 'Thống kê', path: '/admin/'},
 
-    {id: 2, name: 'Tài khoản', path: '/admin/account',
+    {id: 2, name: 'Tài khoản', path: '/admin/manage',
         child: [
-            {id: 2.1, name: 'Tài khoản nhân viên', path: '/manage'},
-            {id: 2.2, name: 'Vai trò', path: '/manage-roles'},
+            {id: 2.1, name: 'Tài khoản nhân viên', path: '/accounts'},
+            {id: 2.2, name: 'Vai trò', path: '/roles'},
         ]
     },
-    {id: 3, name: 'Dịch vụ',
+    {id: 3, name: 'Dịch vụ', path: '/admin/manage',
         child: [
-            {id: 3.1, name: 'Đơn yêu cầu hiến máu'},
+            {id: 3.1, name: 'Đơn yêu cầu hiến máu', path: '/orders/donate'},
             {id: 3.2, name: 'Lịch hẹn hiến máu'},
             {id: 3.3, name: 'Lịch sử hiến máu'},
             {id: 3.4, name: 'Đơn yêu cầu nhận máu'},

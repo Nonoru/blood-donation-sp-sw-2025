@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { getUserId } from '../../../../util/Token'
 import * as FeatureApi from '../../services/FeatureApi';
 import '../../styles/DonateBlood.scss';
 const healthQuestions = [
@@ -21,7 +22,6 @@ const healthQuestions = [
   'Bạn có đồng ý xét nghiệm HIV, nhận thông báo và được tư vấn khi kết quả xét nghiệm HIV nghi ngờ hoặc dương tính ?',
   'Bạn có đồng ý hiến máu tình nguyện và tuân thủ các quy định của chương trình ?'
 ];
-
 const form = {
   fullName: '',
   dob: '',
@@ -31,46 +31,48 @@ const form = {
   cccdNumber: '',
   phone: '',
   address: '',
-  bloodId: 0,
+  bloodId: '',
+  userId: '',
   orderDateId: 1,
-  userId: 1,
   // healthQuestions: Array(12).fill(''),
 }
 const DonateBlood = () => {
   const [formData, setFormData] = useState(form);
   const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-        const response = await FeatureApi.orderDonation(formData);
-
-        if (response.data.code === 200) {
-            setFormData({
-                  fullName: '',
-                  dob: '',
-                  gender: '',
-                  weight: '',
-                  amountBloodMl: '',
-                  cccdNumber: '',
-                  phone: '',
-                  address: '',
-                  bloodId: 0,
-                  orderDateId: 1,
-                  userId: 1,
-            })
-            toast.success(response.data.message, { className: 'my-toast' })
-        }
-    }catch(error){
-        if (error.response) {
-            toast.error(error.response.data.message || "Cập nhật tài khoản thất bại!", {className : 'my-toast'});
-        } else if (error.request) {
-            toast.error("Không nhận được phản hồi từ server");
-        } else {
-            toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
-        }
+    try {
+      formData.userId = getUserId();
+      const response = await FeatureApi.orderDonation(formData);
+      if (response.data.code === 200) {
+        setFormData({
+          fullName: '',
+          dob: '',
+          gender: '',
+          weight: '',
+          amountBloodMl: '',
+          cccdNumber: '',
+          phone: '',
+          address: '',
+          bloodId: '',
+        })
+        toast.success(response.data.message, { className: 'my-toast' })
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        toast.error("Bạn cần đăng nhập để thực hiện chức năng này", { className: 'my-toast' });
+      } else if (error.response.status === 403) {
+        toast.error("Bạn không có quyền sử dụng", { className: 'my-toast' });
+      } else if (error.response.data) {
+        toast.error(error.response.data.message, { className: 'my-toast' });
+      } else if (error.request) {
+        toast.error("Không nhận được phản hồi từ server", { className: 'my-toast' });
+      } else {
+        toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
+      }
     }
   }
 
@@ -81,7 +83,7 @@ const DonateBlood = () => {
           <h2 className="main-title">
             <span className="blood-bridge">Blood Bridge</span>
             <span className="features-text">Đăng ký Xét Nghiệm Máu</span>
-          </h2> 
+          </h2>
           <div className="title-decoration">
             <div className="decoration-line"></div>
             <div className="decoration-circle">🩸</div>
@@ -104,7 +106,7 @@ const DonateBlood = () => {
 
               {/* DOB */}
               <label>
-                <span className="label-row">Ngày sinh <span>*</span></span> 
+                <span className="label-row">Ngày sinh <span>*</span></span>
                 <input type="date" name="dob" value={formData.dob} onChange={e => handleChange(e)} required />
               </label>
 
@@ -120,13 +122,13 @@ const DonateBlood = () => {
               {/* WEIGHT */}
               <label>
                 <span className='label-row'>Cân nặng<span>*</span></span>
-                  <input type="number" value={formData.weight} name="weight" min="1" max="200" step="0.1"  onChange={e => handleChange(e)} required/>
+                <input type="number" value={formData.weight} name="weight" min="1" max="200" step="0.1" onChange={e => handleChange(e)} required />
               </label>
               {/* BLOOD TYPE */}
               <label>
                 <span className="label-row">Nhóm máu <span> *</span></span>
                 <select name="bloodId" value={formData.bloodId} onChange={e => handleChange(e)} required>
-                  <option disabled value="0" selected>Chọn nhóm máu</option>
+                  <option disabled value="" selected>Chọn nhóm máu</option>
                   <option value="1">A+</option>
                   <option value="2">A-</option>
                   <option value="3">B+</option>
@@ -139,7 +141,7 @@ const DonateBlood = () => {
               </label>
 
               {/* BLOOD AMOUNT */}
-              <label><span className="label-row">Lượng máu sẽ hiến (ml)<span> *</span></span> 
+              <label><span className="label-row">Lượng máu sẽ hiến (ml)<span> *</span></span>
                 <input type="number" name="amountBloodMl" value={formData.amountBloodMl} step="10" onChange={e => handleChange(e)} required />
               </label>
 
@@ -155,11 +157,11 @@ const DonateBlood = () => {
 
               {/* ADDRESS */}
               <label><span className="label-row">Địa chỉ thường trú<span> *</span></span>
-                <input name="address" value={formData.address} onChange={e => handleChange(e)} required/>
+                <input name="address" value={formData.address} onChange={e => handleChange(e)} required />
               </label>
             </div>
           </fieldset>
-          
+
           {/* <fieldset>
             <legend>Câu hỏi sức khỏe</legend>
             {healthQuestions.map((q, idx) => (
@@ -174,7 +176,7 @@ const DonateBlood = () => {
               </div>
             ))}        
           </fieldset> */}
-          
+
           {/* <div className="form-row agree-row">
             <label className="agree-label">
               <input type="checkbox" name="agree" checked={formData.agree} onChange={e => handleChange(e)} required /> 
