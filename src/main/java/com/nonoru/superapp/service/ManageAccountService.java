@@ -77,8 +77,8 @@ public class ManageAccountService {
 
         String hashedPassword = passwordEncoder.encode(rawPassword);
 
-        RoleAccount role =
-                roleRepository.findById(request.getRoleId()).orElseThrow(() -> new RuntimeException("Role not existed"));
+        RoleAccount role = roleRepository.findById(request.getRoleId()).orElseThrow(()
+            -> new AppException(ErrorCode.ROLE_ID_NOTFOUND));
 
         if (checkPassword(rawPassword, hashedPassword)) {
             UserAccount user = UserAccount.builder()

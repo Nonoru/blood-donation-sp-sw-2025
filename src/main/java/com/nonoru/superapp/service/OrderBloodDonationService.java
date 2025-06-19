@@ -38,11 +38,14 @@ public class OrderBloodDonationService {
             throw  new AppException(ErrorCode.AMMOUNT_BLOOD_ERROR);
         }
 
-        BloodStorage bloodStorage = bloodRepo.findById(request.getBloodId()).orElseThrow(() -> new RuntimeException("There is no blood type"));
+        BloodStorage bloodStorage = bloodRepo.findById(request.getBloodId()).orElseThrow(()
+                -> new AppException(ErrorCode.BLOOD_ID_NOTFOUND));
 
-        OrderDateDonation orderDate = orderDateRepo.findById(request.getOrderDateId()).orElseThrow(() -> new RuntimeException("There is no order date"));
+        OrderDateDonation orderDate = orderDateRepo.findById(request.getOrderDateId()).orElseThrow(()
+                -> new AppException(ErrorCode.ORDER_DATE_ID_NOTFOUND));
 
-        UserAccount userAccount = userRepo.findById(request.getUserId()).orElseThrow(() -> new RuntimeException("There is no user account"));
+        UserAccount userAccount = userRepo.findById(request.getUserId()).orElseThrow(()
+                -> new AppException(ErrorCode.USER_NOTFOUND));
 
         String gender = request.getGender() == 1 ? "Nam" : "Nữ";
 

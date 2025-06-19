@@ -1,15 +1,13 @@
 package com.nonoru.superapp.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDetail {
+@ToString
+public class UserToken {
     private String username;
     private String role;
 }

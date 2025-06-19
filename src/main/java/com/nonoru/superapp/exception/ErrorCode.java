@@ -40,7 +40,11 @@ public enum ErrorCode {
     ADDRESS_EMPTY(22, "Địa chỉ thường chú không thể bỏ trống"),
 
     YEAR_LOWER_18(23, "Người dưới 18 tuổi không được phép hiến máu"),
-    AMMOUNT_BLOOD_ERROR(24, "Bạn không thể hiến với lượng máu này so với cân nặng của bạn")
+    AMMOUNT_BLOOD_ERROR(24, "Bạn không thể hiến với lượng máu này so với cân nặng của bạn"),
+
+    BLOOD_ID_NOTFOUND(25, "Nhóm máu không tồn tại"),
+    ORDER_DATE_ID_NOTFOUND(26, "Ngày đặt lịch không tồn tại"),
+    ROLE_ID_NOTFOUND(27, "Vai trò không tồn tại")
     ;
     private int code;
     private String message;

@@ -2,6 +2,7 @@ package com.nonoru.superapp.exception;
 
 import ch.qos.logback.core.spi.ErrorCodes;
 import com.nonoru.superapp.dto.response.ApiResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -9,16 +10,29 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(value = RuntimeException.class)
-    ResponseEntity<ApiResponse> handlingRuntimeException(){
-        ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setCode(ErrorCode.UNCATEGORIZED_NOT_FOUND.getCode());
-        apiResponse.setMessage(ErrorCode.UNCATEGORIZED_NOT_FOUND.getMessage());
-        return ResponseEntity.badRequest().body(apiResponse);
+//    @ExceptionHandler(value = RuntimeException.class)
+//    ResponseEntity<ApiResponse> handlingRuntimeException(){
+//        ApiResponse apiResponse = new ApiResponse();
+//        apiResponse.setCode(ErrorCode.UNCATEGORIZED_NOT_FOUND.getCode());
+//        apiResponse.setMessage(ErrorCode.UNCATEGORIZED_NOT_FOUND.getMessage());
+//        return ResponseEntity.badRequest().body(apiResponse);
+//    }
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Object> handleRuntimeException(RuntimeException ex) {
+        System.out.println("RuntimeException: " + ex.getMessage());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("error", "INTERNAL_ERROR");
+        response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
     @ExceptionHandler

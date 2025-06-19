@@ -14,7 +14,9 @@ public class FeatureAPI {
     @Autowired
     private OrderBloodDonationService bloodDonationService;
     @PostMapping("/order-donation")
-    public ApiResponse<Void> createOrder(@RequestBody @Valid OrderBloodDonationRequest request) {
+    public ApiResponse<Void> createOrder
+            (@Valid @RequestBody OrderBloodDonationRequest request) {
+        System.out.println(request.toString());
         bloodDonationService.createOrderBloodDonation(request);
         return ApiResponse.<Void>builder()
                 .message("Tạo đơn hoàn tất! Vui lòng chờ để được xét duyệt")
