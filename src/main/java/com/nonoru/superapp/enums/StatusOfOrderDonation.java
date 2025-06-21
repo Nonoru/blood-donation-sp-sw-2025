@@ -7,7 +7,8 @@ public enum StatusOfOrderDonation {
     PROCESSING(1,"Đang chờ kiểm duyệt"),
     COMFRIMMED(2,"Đơn đã được xét duyệt"),
     COMPLETED(3,"Đơn đã hoàn tất"),
-    REFUSED(4,"Đơn bị từ chối");
+    REFUSED(4,"Đơn bị từ chối"),
+    CANCELED(5, "Đơn đã bị hủy");
     private int statusCode;
     private String statusDescription;
 

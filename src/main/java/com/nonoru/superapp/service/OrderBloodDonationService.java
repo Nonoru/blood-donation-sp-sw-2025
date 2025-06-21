@@ -1,6 +1,7 @@
 package com.nonoru.superapp.service;
 
 import com.nonoru.superapp.dto.request.OrderBloodDonationRequest;
+import com.nonoru.superapp.dto.response.OrderBloodDonationResponse;
 import com.nonoru.superapp.entity.BloodStorage;
 import com.nonoru.superapp.entity.OrderBloodDonation;
 import com.nonoru.superapp.entity.OrderDateDonation;
@@ -17,17 +18,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class OrderBloodDonationService {
     @Autowired
-    private OrderBloodDonationRepository bloodDonationRepository;
+    private OrderBloodDonationRepository orderDonationRepo;
     @Autowired
     private BloodStorageRepository bloodRepo;
     @Autowired
     private OrderDateDonationRepository orderDateRepo;
     @Autowired
     private UserRepository userRepo;
+    /* CREATE BLOOD DONATION ORDERs - USER*/
     public void createOrderBloodDonation(OrderBloodDonationRequest request) {
         int age = LocalDate.now().getYear() - request.getDob().getYear();
         if(age < 18){
@@ -62,7 +67,60 @@ public class OrderBloodDonationService {
                 .orderDateId(orderDate)
                 .userAccount(userAccount)
                 .status(StatusOfOrderDonation.PROCESSING.getStatusCode())
+                .createDate(LocalDate.now())
                 .build();
-        bloodDonationRepository.save(order);
+        orderDonationRepo.save(order);
+    }
+    /* GET LIST BLOOD DONATION ORDERS - STAFF */
+    public List<OrderBloodDonationResponse> getListOrderBloodDonationWaitingToAccept() {
+        List<OrderBloodDonation> listOrder = orderDonationRepo.findAll();
+        List<OrderBloodDonationResponse> response = new ArrayList<>();
+        listOrder.forEach(order -> {
+            if(order.getStatus() == StatusOfOrderDonation.PROCESSING.getStatusCode()){
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                String orderDate = order.getOrderDate().getOrderDate().format(formatter);
+                String dob = order.getDob().format(formatter);
+                String createDate = order.getCreateDate().format(formatter);
+
+                OrderBloodDonationResponse orderResponse = OrderBloodDonationResponse.builder()
+                        .orderDonationId(order.getOrderDonationId())
+                        .fullName(order.getFullName())
+                        .phone(order.getPhone())
+                        .bloodType(order.getBlood().getBloodType())
+                        .amountBloodMl(order.getAmountBloodMl())
+                        .orderDate(orderDate)
+                        .createByUsername(order.getUserAccount().getUsername())
+                        .dob(dob)
+                        .createDate(createDate)
+                        .gender(order.getGender())
+                        .weight(order.getWeight())
+                        .cccdNumber(order.getCccdNumber())
+                        .address(order.getAddress())
+                        .build();
+                response.add(orderResponse);
+            }
+        });
+        return response;
+    }
+    /* SET STATUS FOR ORER DONATION - STAFF */
+    public void acceptOrderBloodDonation(long orderDonationId) {
+        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId).orElse(null);
+        orBD.setStatus(StatusOfOrderDonation.COMFRIMMED.getStatusCode());
+        orderDonationRepo.save(orBD);
+    }
+    public void refuseOrderBloodDonation(long orderDonationId) {
+        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId).orElse(null);
+        orBD.setStatus(StatusOfOrderDonation.REFUSED.getStatusCode());
+        orderDonationRepo.save(orBD);
+    }
+    public void completeOrderBloodDonation(long orderDonationId) {
+        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId).orElse(null);
+        orBD.setStatus(StatusOfOrderDonation.COMPLETED.getStatusCode());
+        orderDonationRepo.save(orBD);
+    }
+    public void cancelOrderBloodDonation(long orderDonationId) {
+        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId).orElse(null);
+        orBD.setStatus(StatusOfOrderDonation.CANCELED.getStatusCode());
+        orderDonationRepo.save(orBD);
     }
 }

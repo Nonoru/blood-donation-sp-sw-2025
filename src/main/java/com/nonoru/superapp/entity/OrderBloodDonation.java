@@ -56,9 +56,11 @@ public class OrderBloodDonation {
 
     private int status;
 
+    private LocalDate createDate;
+
     @Builder
 
-    public OrderBloodDonation(String fullName, LocalDate dob, String gender, String cccdNumber, String phone, String address, float amountBloodMl, float weight, BloodStorage blood, OrderDateDonation orderDateId, UserAccount userAccount, int status) {
+    public OrderBloodDonation(String fullName, LocalDate dob, String gender, String cccdNumber, String phone, String address, float amountBloodMl, float weight, BloodStorage blood, OrderDateDonation orderDateId, UserAccount userAccount, int status, LocalDate createDate) {
         this.fullName = fullName;
         this.dob = dob;
         this.gender = gender;
@@ -71,5 +73,6 @@ public class OrderBloodDonation {
         this.orderDate = orderDateId;
         this.userAccount = userAccount;
         this.status = status;
+        this.createDate = createDate;
     }
 }

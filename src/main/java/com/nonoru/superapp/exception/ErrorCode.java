@@ -44,7 +44,15 @@ public enum ErrorCode {
 
     BLOOD_ID_NOTFOUND(25, "Nhóm máu không tồn tại"),
     ORDER_DATE_ID_NOTFOUND(26, "Ngày đặt lịch không tồn tại"),
-    ROLE_ID_NOTFOUND(27, "Vai trò không tồn tại")
+    ROLE_ID_NOTFOUND(27, "Vai trò không tồn tại"),
+
+    CLINIC_ID_NOTFOUND(28, "Phòng khám không tìm thấy"),
+
+    ORDER_DATE_EMPTY(29, "Ngày đặt lịch không thể bỏ trống"),
+    ORDER_DATE_MUST_IN_FUTURE(30,"Ngày đặt lịch phải ở tương lai"),
+    ORDER_TIME_EMPTY(32, "Giờ đặt lịch không thể bỏ trống"),
+    ORDER_TIME_MUST_IN_FUTURE(32,"Giờ đặt lịch phải ở tương lai"),
+    ORDER_TIME_EXISTED_IN_DAY(33, "Thời gian này đã được tạo trong ngày"),
     ;
     private int code;
     private String message;

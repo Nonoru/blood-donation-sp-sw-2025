@@ -42,15 +42,15 @@ public class AuthAPI {
                 .build();
     }
 
-    @PostMapping("/introspect")
-    ApiResponse<IntrospectResponse> login (@RequestBody IntrospectRequest request)
-            throws ParseException, JOSEException {
-        IntrospectResponse res = authService.introspect(request);
-        return ApiResponse.<IntrospectResponse>builder()
-                .code(200)
-                .data(res)
-                .build();
-    }
+//    @PostMapping("/introspect")
+//    ApiResponse<IntrospectResponse> login (@RequestBody IntrospectRequest request)
+//            throws ParseException, JOSEException {
+//        IntrospectResponse res = authService.introspect(request);
+//        return ApiResponse.<IntrospectResponse>builder()
+//                .code(200)
+//                .data(res)
+//                .build();
+//    }
 
     @GetMapping("/user/{id}")
     ApiResponse<UserAccount> getUser (@PathVariable("id") Long id){

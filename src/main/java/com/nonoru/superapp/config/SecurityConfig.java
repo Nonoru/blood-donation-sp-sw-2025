@@ -29,6 +29,8 @@ import java.util.List;
 public class SecurityConfig {
     private final String[] PUBLIC_URLS = {"/auth/**"};
     private final String[] ADMIN_URLS = {"/admin/**"};
+    private final String[] STAFF_URLS = {"/staff/**"};
+    private final String[] USER_URLS = {"/user/**"};
 
     @Value("${jwt.signerKey}")
     private String signKey;
@@ -44,8 +46,9 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.GET, PUBLIC_URLS).permitAll()
 
             .requestMatchers(ADMIN_URLS).hasAuthority("ROLE_ADMIN")
+            .requestMatchers(STAFF_URLS).hasAnyAuthority("ROLE_STAFF", "ROLE_ADMIN")
+            .requestMatchers(USER_URLS).hasAuthority("ROLE_USER")
 
-            .requestMatchers(HttpMethod.POST, "/feature/order-donation").hasAuthority("ROLE_USER")
             .anyRequest().authenticated());
         httpSecurity.oauth2ResourceServer(oauth2 ->
                 oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));

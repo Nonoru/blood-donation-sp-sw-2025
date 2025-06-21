@@ -2,30 +2,24 @@ package com.nonoru.superapp.service;
 
 import com.nonoru.superapp.dto.request.RegisterAccountRequest;
 import com.nonoru.superapp.dto.request.UpdateAccountRequest;
-import com.nonoru.superapp.dto.response.ApiResponse;
 import com.nonoru.superapp.dto.response.UserAccountManageResponse;
 import com.nonoru.superapp.entity.RoleAccount;
 import com.nonoru.superapp.entity.UserAccount;
 import com.nonoru.superapp.exception.AppException;
 import com.nonoru.superapp.exception.ErrorCode;
-import com.nonoru.superapp.repository.ManageAccountRepository;
 import com.nonoru.superapp.repository.RoleRepository;
 import com.nonoru.superapp.repository.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class ManageAccountService {
-    @Autowired
-    private ManageAccountRepository manage;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -37,9 +31,9 @@ public class ManageAccountService {
         return passwordEncoder.matches(rawPassword, hashedPassword);
     }
 
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public List<UserAccountManageResponse> listAll(){
-        List<UserAccount> list = manage.findAll();
+        List<UserAccount> list = userRepository.findAll();
         List<UserAccountManageResponse> responses = new ArrayList<>();
         list.forEach( x -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -94,7 +88,7 @@ public class ManageAccountService {
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public int update(Long id,UpdateAccountRequest request) {
-        UserAccount user = manage.findById
+        UserAccount user = userRepository.findById
                 (id).orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
         if(
             userRepository.existsByEmail(request.getEmail()) &&
@@ -125,7 +119,7 @@ public class ManageAccountService {
     }
 
     public void deleteStillExist(Long id) {
-        UserAccount user = manage.findById
+        UserAccount user = userRepository.findById
                 (id).orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
         user.setStatus(false);
         userRepository.save(user);

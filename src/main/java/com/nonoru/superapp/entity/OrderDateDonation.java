@@ -1,14 +1,14 @@
 package com.nonoru.superapp.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.security.Timestamp;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 @Entity
 @Data
@@ -21,9 +21,17 @@ public class OrderDateDonation {
 
     private LocalDate orderDate;
 
+    @Column(columnDefinition = "time")
     private LocalTime orderTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "clinic-id")
     private Clinic clinic;
+
+    @Builder
+    public OrderDateDonation(LocalDate orderDate, LocalTime orderTime, Clinic clinic) {
+        this.orderDate = orderDate;
+        this.orderTime = orderTime;
+        this.clinic = clinic;
+    }
 }
