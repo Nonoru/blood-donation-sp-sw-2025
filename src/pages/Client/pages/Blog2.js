@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import '../styles/Blog1.scss';
+import '../styles/Blogx.scss';
 
 function Blog2() {
   return (
     <div className="blog-detail">
       <h1 className="blog-detail-title">Tình Nguyện Viên Góp Sức Cứu Người Qua Từng Đơn Vị Máu</h1>
-      <p className="blog-meta"><em>Jun 13, 2025</em></p>
+      <p className="blog-meta"><em>Thứ 5, 27/5/2025, 10:30</em></p>
       <img src="/img/pics/blog22.jpg" alt="Hiến máu" className="detail-image" />
 
       <p className="blog-content">

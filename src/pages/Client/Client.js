@@ -6,6 +6,9 @@ import Blog1 from '../Client/pages/Blog1'
 import Blog2 from '../Client/pages/Blog2'
 import Blog3 from '../Client/pages/Blog3'
 import DocPage from '../Client/pages/Doc'
+import Doc1 from '../Client/pages/Doc1'
+import Doc2 from '../Client/pages/Doc2'
+import Doc3 from '../Client/pages/Doc3'
 import Auth from '../Client/pages/Auth'
 import FeaturesPage from '../Client/features/main/Features'
 import DonateBlood from '../Client/features/subs/DonateBlood'
@@ -34,6 +37,9 @@ function Client ({userInfo, setUserInfo}) {
                 <Route path='/blog/1' element={<Blog1/>}/>
                 <Route path='/blog/2' element={<Blog2/>}/>
                 <Route path='/blog/3' element={<Blog3/>}/>
+                <Route path='/doc/1' element={<Doc1/>}/>
+                <Route path='/doc/2' element={<Doc2/>}/>    
+                <Route path='/doc/3' element={<Doc3/>}/>
 
                 <Route path='*' element={<ErrorPage/>}/>
             </Routes>
