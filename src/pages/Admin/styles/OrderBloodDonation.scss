@@ -19,9 +19,8 @@
         &::after {
             content: '';
             display: block;
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            height: 4px;
+            background: linear-gradient(45deg, #d5daef 0%, #aa7ada 100%);
             margin: 8px auto !important;
             border-radius: 2px;
         }
@@ -268,33 +267,100 @@
         color: white;
         padding: 50px !important;
         border-radius: 15px;
-        h2{
+
+        h2 {
             color: white;
+            border: none;
+
+            &::after {
+                width: 300px;
+            }
         }
+
         div {
             display: flex;
             margin-bottom: 8px !important;
+
             span:nth-child(1) {
                 width: 90px;
                 font-weight: 600;
                 color: #ffe397;
             }
-            span:nth-child(2){
+
+            span:nth-child(2) {
                 max-width: 400px;
                 word-wrap: break-word;
             }
         }
+    }
 
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            height: 30px;
-            width: 30px;
-            background-image: url("../../../../public/img/icons/cancle.svg");
-            background-repeat: no-repeat;
-            background-size: cover;
-            border-radius: 50%;
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        height: 30px;
+        width: 30px;
+        background-image: url("../../../../public/img/icons/cancle.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 50%;
+    }
+
+    .accept-container,
+    .refuse-container {
+        width: 400px;
+        position: fixed;
+        z-index: 1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 40px 20px 20px 20px !important;
+        background: linear-gradient(135deg, #24c6c1 0%, #8998d3 100%);
+        border-radius: 15px;
+        font-weight: 600;
+
+        h2 {
+            border: none;
+
+            &::after {
+                width: 150px;
+            }
+        }
+
+        .form-accept {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 20px !important;
+
+            button {
+                width: 150px;
+                align-self: center;
+            }
+        }
+    }
+
+    .refuse-container {
+        label {
+            input {
+                margin-top: 5px !important;
+                width: 100%;
+                border-radius: 10px;
+                padding: 5px 10px !important;
+                outline: none;
+            }
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
     }
 }
@@ -326,4 +392,14 @@
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200px 100%;
     animation: shimmer 1.5s infinite;
+}
+
+.prevent-ui {
+    pointer-events: none;
+    filter: blur(1px);
+}
+
+.normal-ui {
+    pointer-events: auto;
+    filter: blur(0px);
 }

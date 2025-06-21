@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as StaffApi from '../services/StaffApi'
 import { toast } from 'react-toastify';
 import '../styles/OrderBloodDonation.scss';
+import { pre } from 'framer-motion/client';
 function OrderBloodDonation() {
   const tHeadItems =
     ["Mã", "Tên khách hàng", "Số điện thoại", "Nhóm máu", "Lượng máu(ml)", "Ngày hẹn", "Xem thêm", "Tạo bởi", "Duyệt", "Hủy"];
@@ -63,18 +64,51 @@ function OrderBloodDonation() {
     setMoreInfo(prev => !prev);
     setChooseUserInfo(info)
   }
-
+  const [stateAcceptBtn, setStateAcceptBtn] = useState(false);
+  const acceptUserToInfo = (info) => {
+    setStateAcceptBtn(prev => !prev)
+    setChooseUserInfo(info)
+  }
   const acceptOrder = async (e, id) => {
     e.preventDefault()
     try {
       const response = await StaffApi.acceptOrder(id);
 
       if (response.data.code === 200) {
-
         toast.success(response.data.message, { className: 'my-toast' })
-        setTimeout(() => {
-          reload();
-        }, 1500);
+        setStateAcceptBtn(prev => !prev)
+        getList();
+      }
+    } catch (error) {
+      console.log(error.response)
+      if (error.response.status === 401) {
+        toast.error("Bạn cần đăng nhập để thực hiện chức năng này", { className: 'my-toast' });
+      } else if (error.response.status === 403) {
+        toast.error("Bạn không có quyền sử dụng", { className: 'my-toast' });
+      } else if (error.response.data) {
+        toast.error(error.response.data.message, { className: 'my-toast' });
+      } else if (error.request) {
+        toast.error("Không nhận được phản hồi từ server", { className: 'my-toast' });
+      } else {
+        toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
+      }
+    }
+  }
+  const [stateRefuseBtn, setStateRefuseBtn] = useState(false);
+  const refuseUserToInfo = (info) => {
+    setStateRefuseBtn(prev => !prev)
+    setChooseUserInfo(info)
+  }
+  const [reason, setReason] = useState('');
+  const refuseOrder = async (e, id, reason) => {
+    e.preventDefault();
+    try {
+      const response = await StaffApi.refuseOrder(id, reason);
+
+      if (response.data.code === 200) {
+        toast.success(response.data.message, { className: 'my-toast' })
+        getList();
+        setStateRefuseBtn(prev => !prev)
       }
     } catch (error) {
       console.log(error.response)
@@ -94,7 +128,7 @@ function OrderBloodDonation() {
   return (
     <div className="order-blood-donation-page">
       <div
-        className={`order-more-info ${moreInfo ? 'show' : 'hidden'} `}
+        className={`order-more-info ${moreInfo ? 'show' : 'hidden'}`}
       >
         <h2>Thông tin khách hàng</h2>
         <div>
@@ -130,8 +164,8 @@ function OrderBloodDonation() {
         </div>
         <button type="none" className="close-btn" onClick={e => setMoreInfo(!moreInfo)}></button>
       </div>
-      <p className='title-table'>Danh sách đơn đặt lịch xét nghiệm máu</p>
-      <table>
+      <p className={`title-table ${moreInfo || stateAcceptBtn ? 'prevent-ui' : 'normal-ui'}`}>Danh sách đơn đặt lịch xét nghiệm máu</p>
+      <table className={`${moreInfo || stateAcceptBtn ? 'prevent-ui' : 'normal-ui'}`}>
         <thead>
           <tr>
             {tHeadItems.map((item, index) => (
@@ -156,20 +190,47 @@ function OrderBloodDonation() {
                 </td>
                 <td>{item.createByUsername}</td>
                 <td>
-                  <button className="btn-accept" onClick={e => acceptOrder(e, item.orderDonationId)}>
+                  <button className="btn-accept" onClick={e => acceptUserToInfo(item)}>
                     Nhận
                   </button>
                 </td>
                 <td>
-                  <button className="btn-reject">
+                  <button className="btn-reject" onClick={e => refuseUserToInfo(item)}>
                     Loại
                   </button>
                 </td>
               </tr>
             ))}
-
         </tbody>
       </table>
+      <div className={`${stateAcceptBtn ? 'show' : 'hidden'} accept-container `}>
+        <h2>Nhận đơn</h2>
+        <div className="form-accept">
+          <span className="text-w">Bạn có chắc chắn muốn nhận đơn này?</span>
+          <span className="text-w">Mã đơn: {chooseUserInfo.orderDonationId}</span>
+          <span className="text-w">Tên khách hàng: {chooseUserInfo.fullName}</span>
+          <button type="none" onClick={e => acceptOrder(e, chooseUserInfo.orderDonationId)}>Nhận</button>
+        </div>
+        <button type="none" className="close-btn" onClick={e => setStateAcceptBtn(!stateAcceptBtn)}>
+        </button>
+      </div>
+      <div className={`${stateRefuseBtn ? 'show' : 'hidden'} refuse-container `}>
+        <h2>Loại đơn</h2>
+        <div className="form-accept">
+          <span className="text-w">Bạn có chắc chắn muốn loại đơn này?</span>
+          <span className="text-w">Mã đơn: {chooseUserInfo.orderDonationId}</span>
+          <span className="text-w">Tên khách hàng: {chooseUserInfo.fullName}</span>
+          <form onSubmit={e => refuseOrder(e, chooseUserInfo.orderDonationId,reason)}>
+            <label>
+              Nhập lý do hủy đơn
+              <input required onChange={(e) => setReason(e.target.value)}></input>
+            </label>
+            <button type="submit">Loại</button>
+          </form>
+        </div>
+        <button type="none" className="close-btn" onClick={e => setStateRefuseBtn(!stateRefuseBtn)}>
+        </button>
+      </div>
     </div>
   );
 }

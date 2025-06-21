@@ -5,9 +5,9 @@ import { AdminAddAccount } from "../components/AdminAddAccount"
 import { AdminUpdateAccount } from "../components/AdminUpdateAccount"
 import '../styles/AdminManageAccount.scss'
 
-const attrTableHead = ['ID','Tên tài khoản','Địa chỉ Email','Họ và tên', 'Vai trò', 'Ngày tạo']
+const attrTableHead = ['ID', 'Tên tài khoản', 'Địa chỉ Email', 'Họ và tên', 'Vai trò', 'Ngày tạo']
 
-function AdminManageAccount(){
+function AdminManageAccount() {
     const [userAccounts, setUserAccounts] = useState([])
     const [empAccounts, setEmpAccounts] = useState([])
 
@@ -19,45 +19,45 @@ function AdminManageAccount(){
                 return res;
             } catch (err) {
                 await new Promise(resolve => setTimeout(resolve, 1000));
-                throw err; 
+                throw err;
             }
         };
 
         try {
             await toast.promise(
                 execute(),
-            {
-                pending: {
-                    render() {
-                        return 'Đang tải danh sách tài khoản...';
+                {
+                    pending: {
+                        render() {
+                            return 'Đang tải danh sách tài khoản...';
+                        },
+                        className: 'my-toast',
                     },
-                    className: 'my-toast',
-                    },
-                success: {
-                    render({ data }) {
-                        const userList = [];
-                        const empList = [];
+                    success: {
+                        render({ data }) {
+                            const userList = [];
+                            const empList = [];
 
-                        data.data.data.forEach(acc => {
-                            if(acc.status === true){
-                                if (acc.role.roleId === 3) userList.push(acc);
-                                else empList.push(acc);
-                            }
-                        });
+                            data.data.data.forEach(acc => {
+                                if (acc.status === true) {
+                                    if (acc.role.roleId === 3) userList.push(acc);
+                                    else empList.push(acc);
+                                }
+                            });
 
-                        setUserAccounts(userList);
-                        setEmpAccounts(empList);
-                        return 'Đã tải danh sách thành công!';
+                            setUserAccounts(userList);
+                            setEmpAccounts(empList);
+                            return 'Đã tải danh sách thành công!';
+                        },
+                        className: 'my-toast',
                     },
-                className: 'my-toast',
-                },
-                error: {
-                    render() {
-                        return 'Có lỗi xảy ra khi tải danh sách!';
-                    },
-                    className: 'my-toast',
+                    error: {
+                        render() {
+                            return 'Có lỗi xảy ra khi tải danh sách!';
+                        },
+                        className: 'my-toast',
+                    }
                 }
-            }
             );
         } catch (err) {
         }
@@ -84,9 +84,9 @@ function AdminManageAccount(){
     }
     const handleCreateAccount = async (e) => {
         e.preventDefault()
-        try{
+        try {
             const response = await AdminRequest.createAccount(formData);
-            
+
             if (response.data.code === 200) {
                 setFormData({
                     fullName: '',
@@ -98,19 +98,19 @@ function AdminManageAccount(){
                 })
                 setStateAddBtn(prev => !prev)
                 toast.success("Tạo tài khoản thành công", { className: 'my-toast' })
-                toast.success("Tải lại trang để cập nhật", { className: 'my-toast' })
+                getList();
             }
-        }catch(error){
+        } catch (error) {
             if (error.response.status === 401) {
-            toast.error("Bạn cần đăng nhập để thực hiện chức năng này", {className : 'my-toast'});
-            }else if (error.response.status === 403) {
-            toast.error("Bạn không có quyền sử dụng", {className : 'my-toast'});
+                toast.error("Bạn cần đăng nhập để thực hiện chức năng này", { className: 'my-toast' });
+            } else if (error.response.status === 403) {
+                toast.error("Bạn không có quyền sử dụng", { className: 'my-toast' });
             } else if (error.response.data) {
-            toast.error(error.response.data.message,  {className: 'my-toast'});
+                toast.error(error.response.data.message, { className: 'my-toast' });
             } else if (error.request) {
-            toast.error("Không nhận được phản hồi từ server",  {className: 'my-toast'});
+                toast.error("Không nhận được phản hồi từ server", { className: 'my-toast' });
             } else {
-            toast.error("Lỗi không xác định", error.message, {className: 'my-toast'});
+                toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
             }
         }
     }
@@ -129,7 +129,7 @@ function AdminManageAccount(){
             username: acc.username,
             email: acc.email,
             fullName: acc.fullName,
-            roleId: acc.role?.roleId ?? '', 
+            roleId: acc.role?.roleId ?? '',
         };
 
         e.preventDefault()
@@ -149,9 +149,9 @@ function AdminManageAccount(){
     }
     const handleUpdAccount = async (e) => {
         e.preventDefault()
-        try{
-            const { email, fullName, roleId} = formUpdData;
-            const jsonForm = { email, fullName, roleId};
+        try {
+            const { email, fullName, roleId } = formUpdData;
+            const jsonForm = { email, fullName, roleId };
             const response = await AdminRequest.updateAccount(jsonForm, formUpdData.id);
 
             if (response.data.code === 200) {
@@ -164,19 +164,19 @@ function AdminManageAccount(){
                 })
                 setStateUpdBtn(prev => !prev)
                 toast.success(response.data.message, { className: 'my-toast' })
-                toast.success("Tải lại trang để cập nhật", { className: 'my-toast' })
+                getList();
             }
-        }catch(error){
+        } catch (error) {
             if (error.response.status === 401) {
-            toast.error("Bạn cần đăng nhập để thực hiện chức năng này", {className : 'my-toast'});
-            }else if (error.response.status === 403) {
-            toast.error("Bạn không có quyền sử dụng", {className : 'my-toast'});
+                toast.error("Bạn cần đăng nhập để thực hiện chức năng này", { className: 'my-toast' });
+            } else if (error.response.status === 403) {
+                toast.error("Bạn không có quyền sử dụng", { className: 'my-toast' });
             } else if (error.response.data) {
-            toast.error(error.response.data.message,  {className: 'my-toast'});
+                toast.error(error.response.data.message, { className: 'my-toast' });
             } else if (error.request) {
-            toast.error("Không nhận được phản hồi từ server",  {className: 'my-toast'});
+                toast.error("Không nhận được phản hồi từ server", { className: 'my-toast' });
             } else {
-            toast.error("Lỗi không xác định", error.message, {className: 'my-toast'});
+                toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
             }
         }
     }
@@ -194,7 +194,7 @@ function AdminManageAccount(){
     }
     const handleDeleteAccount = async (e) => {
         e.preventDefault()
-        try{
+        try {
             const response = await AdminRequest.deleteAccount(formDelData.id);
 
             if (response.data.code === 200) {
@@ -205,37 +205,37 @@ function AdminManageAccount(){
                 })
                 setStateDelBtn(prev => !prev)
                 toast.success(response.data.message, { className: 'my-toast' })
-                toast.success("Tải lại trang để cập nhật", { className: 'my-toast' })
+                getList();
             }
-        }catch(error){
+        } catch (error) {
             if (error.response.status === 401) {
-            toast.error("Bạn cần đăng nhập để thực hiện chức năng này", {className : 'my-toast'});
-            }else if (error.response.status === 403) {
-            toast.error("Bạn không có quyền sử dụng", {className : 'my-toast'});
+                toast.error("Bạn cần đăng nhập để thực hiện chức năng này", { className: 'my-toast' });
+            } else if (error.response.status === 403) {
+                toast.error("Bạn không có quyền sử dụng", { className: 'my-toast' });
             } else if (error.response.data) {
-            toast.error(error.response.data.message,  {className: 'my-toast'});
+                toast.error(error.response.data.message, { className: 'my-toast' });
             } else if (error.request) {
-            toast.error("Không nhận được phản hồi từ server",  {className: 'my-toast'});
+                toast.error("Không nhận được phản hồi từ server", { className: 'my-toast' });
             } else {
-            toast.error("Lỗi không xác định", error.message, {className: 'my-toast'});
+                toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
             }
         }
     }
-    return(
-        <div className="list-account-page">  
+    return (
+        <div className="list-account-page">
             {/* BUTTON */}
             <div className=
-            {`function-btn ${stateAddBtn || stateUpdBtn || stateDelBtn ? 'prevent-ui' : 'normal-ui'}`}>
-                <button className="add-btn btn" onClick={e => setStateAddBtn(!stateAddBtn)}>    
+                {`function-btn ${stateAddBtn || stateUpdBtn || stateDelBtn ? 'prevent-ui' : 'normal-ui'}`}>
+                <button className="add-btn btn" onClick={e => setStateAddBtn(!stateAddBtn)}>
                     <img src="/img/icons/add.svg"></img>
-                <span>Thêm tài khoản</span>
+                    <span>Thêm tài khoản</span>
                 </button>
-                
-                <button className="search-btn btn" >    
+
+                <button className="search-btn btn" >
                     <img src="/img/icons/search.svg"></img>
-                <span>Tìm tài khoản</span>
+                    <span>Tìm tài khoản</span>
                 </button>
-                <button className="refresh-btn btn" onClick= {reload} >    
+                <button className="refresh-btn btn" onClick={reload} >
                     <img src="/img/icons/refresh.svg"></img>
                     <span>Tải lại trang</span>
                 </button>
@@ -243,7 +243,7 @@ function AdminManageAccount(){
                     <span>Số tài khoản</span>
                     {!setTable ? <span>{empAccounts.length}</span> : <span>{userAccounts.length}</span>}
                 </div>
-                
+
                 <button onClick={swithchBtn} className={`switch-btn ${stateAddBtn || stateUpdBtn || stateDelBtn ? 'prevent-ui' : 'normal-ui'}`}>
                     <div></div>
                     <span>Emp</span>
@@ -251,20 +251,20 @@ function AdminManageAccount(){
                 </button>
             </div>
             {/* CREATE */}
-            <div className="form-create-container" style={{display: stateAddBtn ? 'block':'none'}}>
+            <div className="form-create-container" style={{ display: stateAddBtn ? 'block' : 'none' }}>
                 <h2>Tạo tài khoản mới</h2>
                 <div className="form-create">
-                    <AdminAddAccount formData={formData} handleChange={handleChange}/>   
+                    <AdminAddAccount formData={formData} handleChange={handleChange} />
                     <button type="none" onClick={handleCreateAccount}>Tạo tài khoản</button>
                 </div>
                 <button type="none" className="close-btn" onClick={e => setStateAddBtn(!stateAddBtn)}>
                 </button>
             </div>
             {/* UPDATE */}
-            <div className="form-update-container" style={{display: stateUpdBtn ? 'block':'none'}}>
+            <div className="form-update-container" style={{ display: stateUpdBtn ? 'block' : 'none' }}>
                 <h2>Cập nhật tài khoản</h2>
                 <div className="form-upd">
-                    <AdminUpdateAccount formUpdData={formUpdData} handleUpdChange={handleUpdChange}/>   
+                    <AdminUpdateAccount formUpdData={formUpdData} handleUpdChange={handleUpdChange} />
                     <button type="none" onClick={handleUpdAccount}>Cập nhật tài khoản</button>
                 </div>
                 <button type="none" className="close-btn" onClick={e => setStateUpdBtn(!stateUpdBtn)}>
@@ -272,14 +272,14 @@ function AdminManageAccount(){
             </div>
 
             {/* DELETE */}
-            <div className="delete-container" style={{display: stateDelBtn ? 'block':'none'}}>
+            <div className="delete-container" style={{ display: stateDelBtn ? 'block' : 'none' }}>
                 <h2>Xóa tài khoản</h2>
                 <div className="form-upd">
                     <span className="text-w">Bạn có chắc chắn muốn xóa tài khoản này?</span>
                     <span className="text-w">Tài khoản: {formDelData.username}</span>
                     <button type="none" onClick={handleDeleteAccount}>Xóa</button>
                 </div>
-                <button type="none" className="close-btn"  onClick={e => setStateDelBtn(!stateDelBtn)}>
+                <button type="none" className="close-btn" onClick={e => setStateDelBtn(!stateDelBtn)}>
                 </button>
             </div>
             {/* TABLE EMPLOYEE */}
@@ -301,7 +301,7 @@ function AdminManageAccount(){
                     </thead>
                     <tbody>
                         {
-                            empAccounts.map( acc =>
+                            empAccounts.map(acc =>
                                 <tr key={acc.id}>
                                     <th>{acc.id}</th>
                                     <th>{acc.username}</th>
@@ -315,7 +315,7 @@ function AdminManageAccount(){
                                         </button>
                                     </td>
                                     <td>
-                                        <button className="delete-btn" onClick={e => clickToDelForm(e, acc)} >    
+                                        <button className="delete-btn" onClick={e => clickToDelForm(e, acc)} >
                                             <img src="/img/icons/delete.svg"></img>
                                         </button>
                                     </td>
@@ -329,31 +329,31 @@ function AdminManageAccount(){
             <div className={`${setTable === false && 'hide-table'}
                  ${stateAddBtn || stateUpdBtn || stateDelBtn ? 'prevent-ui' : 'normal-ui'}`}
             >
-            <p>Danh sách người dùng</p>
-            <table>
-                <thead>
-                    <tr>
-                        {attrTableHead.map((a, index) => (
-                            <th key={index}> {a} </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        userAccounts.map( acc =>
-                            <tr key={acc.id}>
-                                <th>{acc.id}</th>
-                                <th>{acc.username}</th>
-                                <td>{acc.email}</td>
-                                <th>{acc.fullName}</th>
-                                <th>{acc.role.roleName}</th>
-                                <th>{acc.createAt}</th>
-                            </tr>
-                        )
-                    }
-                </tbody>
-            </table>
-        </div>
+                <p>Danh sách người dùng</p>
+                <table>
+                    <thead>
+                        <tr>
+                            {attrTableHead.map((a, index) => (
+                                <th key={index}> {a} </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            userAccounts.map(acc =>
+                                <tr key={acc.id}>
+                                    <th>{acc.id}</th>
+                                    <th>{acc.username}</th>
+                                    <td>{acc.email}</td>
+                                    <th>{acc.fullName}</th>
+                                    <th>{acc.role.roleName}</th>
+                                    <th>{acc.createAt}</th>
+                                </tr>
+                            )
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }

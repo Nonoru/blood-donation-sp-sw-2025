@@ -12,3 +12,6 @@ export const getOrderBloodDonation = async () => {
 export const acceptOrder = async (id) => {
     return await axios.put(`${url}/accept-orders/${id}`, null,{ headers: createHeaders() });
 }
+export const refuseOrder = async (id, reason) => {
+    return await axios.put(`${url}/refuse-orders/${id}`, {reason:reason},{ headers: createHeaders() });
+}

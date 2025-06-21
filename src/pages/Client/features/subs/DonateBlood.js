@@ -1,27 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { getUserId } from '../../../../util/Token'
-import * as FeatureApi from '../../services/UserApi';
+import * as UserApi from '../../services/UserApi';
 import '../../styles/DonateBlood.scss';
-const healthQuestions = [
-  'Bạn đã từng hiến máu chưa ?',
-  'Hiện tại, bạn có bị các bệnh: viêm khớp, đau dạ dày, viêm gan, vàng da, bệnh tim, huyết áp thấp/cao, ho kéo dài,bệnh máu, lao ?',
-  'Trong vòng 12 tháng gần đây, bạn có mắc các bệnh và đã được điều trị khỏi: Sốt rét, Giang mai, Lao, Viêm não, Phẫu thuật ngoại khoa ?',
-  'Trong vòng 12 tháng gần đây, bạn có dược truyền máu và các chể phẩm máu ?',
-  'Trong vòng 12 tháng gần đây, bạn có tiêm Vaccin bệnh dại ?',
-  'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Sút cân nhanh không rõ nguyên nhân ?',
-  'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Nổi hạch kéo dài ?',
-  'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Chữa răng, châm cứu ?',
-  'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Xăm mình, xỏ lỗ tai, lỗ mũi ?',
-  'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Sử dụng ma tuý ?',
-  'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Quan hệ tình dục với người nhiễm HIV hoặc người có hành vì nguy cơ lây nhiễm HIV ?',
-  'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: QUan hệ tình dục với người cùng giới ?',
-  'Trong vòng 7 ngày gần đây, bạn có: Bị cảm cúm ( ho, nhức đầu, sốt... ) ?',
-  'Trong vòng 7 ngày gần đây, bạn có: Dùng thuốc kháng sinh: Aspirin, Corticol ?',
-  'Trong vòng 7 ngày gần đây, bạn có: Tiêm Vacxin phòng: Viêm gan siêu vi B, Human Papilloma Virus,... ?',
-  'Bạn có đồng ý xét nghiệm HIV, nhận thông báo và được tư vấn khi kết quả xét nghiệm HIV nghi ngờ hoặc dương tính ?',
-  'Bạn có đồng ý hiến máu tình nguyện và tuân thủ các quy định của chương trình ?'
-];
+// const healthQuestions = [
+//   'Bạn đã từng hiến máu chưa ?',
+//   'Hiện tại, bạn có bị các bệnh: viêm khớp, đau dạ dày, viêm gan, vàng da, bệnh tim, huyết áp thấp/cao, ho kéo dài,bệnh máu, lao ?',
+//   'Trong vòng 12 tháng gần đây, bạn có mắc các bệnh và đã được điều trị khỏi: Sốt rét, Giang mai, Lao, Viêm não, Phẫu thuật ngoại khoa ?',
+//   'Trong vòng 12 tháng gần đây, bạn có dược truyền máu và các chể phẩm máu ?',
+//   'Trong vòng 12 tháng gần đây, bạn có tiêm Vaccin bệnh dại ?',
+//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Sút cân nhanh không rõ nguyên nhân ?',
+//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Nổi hạch kéo dài ?',
+//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Chữa răng, châm cứu ?',
+//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Xăm mình, xỏ lỗ tai, lỗ mũi ?',
+//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Sử dụng ma tuý ?',
+//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Quan hệ tình dục với người nhiễm HIV hoặc người có hành vì nguy cơ lây nhiễm HIV ?',
+//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: QUan hệ tình dục với người cùng giới ?',
+//   'Trong vòng 7 ngày gần đây, bạn có: Bị cảm cúm ( ho, nhức đầu, sốt... ) ?',
+//   'Trong vòng 7 ngày gần đây, bạn có: Dùng thuốc kháng sinh: Aspirin, Corticol ?',
+//   'Trong vòng 7 ngày gần đây, bạn có: Tiêm Vacxin phòng: Viêm gan siêu vi B, Human Papilloma Virus,... ?',
+//   'Bạn có đồng ý xét nghiệm HIV, nhận thông báo và được tư vấn khi kết quả xét nghiệm HIV nghi ngờ hoặc dương tính ?',
+//   'Bạn có đồng ý hiến máu tình nguyện và tuân thủ các quy định của chương trình ?'
+// ];
 const form = {
   fullName: '',
   dob: '',
@@ -34,7 +34,6 @@ const form = {
   bloodId: '',
   userId: '',
   orderDateId: 1,
-  // healthQuestions: Array(12).fill(''),
 }
 const DonateBlood = () => {
   const [formData, setFormData] = useState(form);
@@ -46,7 +45,7 @@ const DonateBlood = () => {
     e.preventDefault();
     try {
       formData.userId = getUserId();
-      const response = await FeatureApi.orderDonation(formData);
+      const response = await UserApi.orderDonation(formData);
       if (response.data.code === 200) {
         setFormData({
           fullName: '',
@@ -75,7 +74,26 @@ const DonateBlood = () => {
       }
     }
   }
-
+  const [listDate, setListDate] = useState([])
+  const getListDate = async () => {
+    const response = await UserApi.getOrderDate();
+    if (response.data.code === 200) {
+      const listDate = [];
+      response.data.data.forEach(i => {
+        listDate.push(i)
+      });
+      setListDate(listDate);
+      console.log(listDate)
+    }
+  };
+  useEffect(() => {
+    getListDate();
+  }, []);
+  const [formState,setFormState] = useState(false)
+  const [chooseOrderDate, setChooseOrderDate] = useState({})
+  const openForm = () => {
+    setFormState(prev => !prev)
+  }
   return (
     <div className="donate-blood-page blood-register-layout">
       <div className="donate-title-section">
@@ -93,11 +111,10 @@ const DonateBlood = () => {
       </div>
       <div className="donate-form-section">
         {/* FORM điền thông tin */}
-        <form className="donate-blood-form" onSubmit={e => handleSubmit(e)}>
+        <form className={`donate-blood-form ${formState ? 'show':'hidden'}`} onSubmit={e => handleSubmit(e)}>
           <fieldset>
             <legend>Thông tin cá nhân</legend>
             <div className="form-row">
-
               {/* FULLNAME */}
               <label>
                 <span className="label-row">Họ và tên <span>*</span></span>
@@ -161,22 +178,6 @@ const DonateBlood = () => {
               </label>
             </div>
           </fieldset>
-
-          {/* <fieldset>
-            <legend>Câu hỏi sức khỏe</legend>
-            {healthQuestions.map((q, idx) => (
-              <div className="health-question" key={idx}>
-                <span>{idx + 1}. {q}</span>
-                <label>
-                  <input type="radio" name={`health_${idx}`} value="Có" checked={formData.healthQuestions[idx] === 'Có'} onChange={e => handleChange(e)} required /> Có
-                </label>
-                <label>
-                  <input type="radio" name={`health_${idx}`} value="Không" checked={formData.healthQuestions[idx] === 'Không'} onChange={e => handleChange(e)} required /> Không
-                </label>
-              </div>
-            ))}        
-          </fieldset> */}
-
           {/* <div className="form-row agree-row">
             <label className="agree-label">
               <input type="checkbox" name="agree" checked={formData.agree} onChange={e => handleChange(e)} required /> 
@@ -186,7 +187,34 @@ const DonateBlood = () => {
 
           <button type="submit" className="submit-btn">Gửi đăng ký</button>
         </form>
+
+        <div className={`order ${!formState ? 'show':'hidden'}`}>
+          <h2>Các mốc thời gian đặt lịch hiến máu</h2>
+          <div className='order-date'>
+            {listDate.map((item, index) => (
+              <div key={index} className={`order-date-ele`} onClick={e => openForm()}>
+                <div>
+                  <span>Mã</span>
+                  {item.orderDateId}
+                </div>
+                <div>
+                  <span>Ngày</span>
+                  {item.orderDate}
+                </div>
+                <div>
+                  <span>Thời gian</span>
+                  {item.orderTime}
+                </div>
+                <div>
+                  <span>Số lượng người tham gia</span>
+                  {item.numberOfPeople}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+
     </div>
   );
 };
