@@ -119,14 +119,8 @@ function Login({userInfo, setUserInfo}) {
                     <h2>Đăng nhập</h2>
                     
                     <div className='social-login'>
-                        <button className='social-btn facebook'>
-                            <i className='fab fa-facebook-f'></i>
-                        </button>
                         <button className='social-btn google'>
                             <i className='fab fa-google'></i>
-                        </button>
-                        <button className='social-btn linkedin'>
-                            <i className='fab fa-linkedin-in'></i>
                         </button>
                     </div>
 
@@ -173,7 +167,7 @@ function Login({userInfo, setUserInfo}) {
                     <div className='overlay'>
                         {/* Left Overlay Panel */}
                         <div className='overlay-panel overlay-left'>
-                            <h2>Chào mừng trở lại!</h2>
+                            <h2>Hãy đăng ký!</h2>
                             <p>Để tiếp tục kết nối với chúng tôi, vui lòng đăng ký với thông tin cá nhân của bạn</p>
                             <button className='ghost-btn' onClick={toggleMode}>
                                 Đăng nhập

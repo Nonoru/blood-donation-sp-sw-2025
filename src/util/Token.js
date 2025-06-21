@@ -3,7 +3,6 @@ import { jwtDecode } from 'jwt-decode';
 export const isTokenValid = () => {
   const token = localStorage.getItem("token");
   if (!token) return false;
-
   try {
     const decoded = jwtDecode(token);
     const now = Date.now() / 1000;
@@ -36,3 +35,24 @@ export const getUserRole = () => {
     return null;
   }
 };
+
+export const getUserId = () => {
+  try {
+    const token = getToken();
+    const decoded = jwtDecode(token);
+    return decoded.id || null;
+  } catch {
+    return null;
+  }
+};
+
+export const getFullName = () => {
+  try {
+    const token = getToken();
+    const decoded = jwtDecode(token);
+    return decoded.fullName || null;
+  } catch {
+    return null;
+  }
+};
+

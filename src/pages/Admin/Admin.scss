@@ -1,5 +1,61 @@
+// SCSS GỐC CỦA BẠN - GIỮ NGUYÊN KHÔNG THAY ĐỔI
 .admin-page{
     display: flex;
     background-color: white !important;
     padding: 0 !important;
+    position: relative;
+    .user-info{
+        position: absolute;
+        height: 50px;
+        left: 200px;
+        width: calc(100% - 200px);
+    }
+}
+
+.admin-page {
+    .user-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+        padding: 0 20px !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        z-index: 999;
+
+        .user-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .user-role {
+            font-size: 14px;
+            color: #7f8c8d;
+            background-color: #3498db;
+            color: white;
+            padding: 4px 12px !important;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px !important; 
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: #c0392b;
+            }
+
+            &:active {
+                transform: translateY(1px);
+            }
+        }
+    }
 }

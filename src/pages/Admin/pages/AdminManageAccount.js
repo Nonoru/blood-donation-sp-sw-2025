@@ -16,17 +16,17 @@ function AdminManageAccount(){
         const getList = async () => {
             try{
                 const response = await AdminRequest.listAccount()
+                console.log(response.data.data)
                 const userList = []
                 const empList = []
-                response.data.data.map( acc => {
-                    if(acc.role.roleId === 3){
-                        userList.push(acc)
-                    }else{
-                        empList.push(acc)
+                response.data.data.forEach(acc => {
+                    if(acc.status === true){
+                        if (acc.role.roleId === 3) userList.push(acc);
+                        else empList.push(acc);
                     }
-                    setUserAccounts(userList)
-                    setEmpAccounts(empList)
-                } )
+                });
+                setUserAccounts(userList);
+                setEmpAccounts(empList);
             }catch{
 
             }
@@ -83,7 +83,6 @@ function AdminManageAccount(){
             }
             );
         } catch (err) {
-            console.error('Lỗi khi lấy danh sách:', err);
         }
     };
 
@@ -120,12 +119,16 @@ function AdminManageAccount(){
                 toast.success("Tải lại trang để cập nhật", { className: 'my-toast' })
             }
         }catch(error){
-            if (error.response) {
-                toast.error(error.response.data.message || "Tạo tài khoản thất bại!", {className : 'my-toast'});
+            if (error.response.status === 401) {
+            toast.error("Bạn cần đăng nhập để thực hiện chức năng này", {className : 'my-toast'});
+            }else if (error.response.status === 403) {
+            toast.error("Bạn không có quyền sử dụng", {className : 'my-toast'});
+            } else if (error.response.data) {
+            toast.error(error.response.data.message,  {className: 'my-toast'});
             } else if (error.request) {
-                toast.error("Không nhận được phản hồi từ server");
+            toast.error("Không nhận được phản hồi từ server",  {className: 'my-toast'});
             } else {
-                toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
+            toast.error("Lỗi không xác định", error.message, {className: 'my-toast'});
             }
         }
     }
@@ -150,8 +153,6 @@ function AdminManageAccount(){
         e.preventDefault()
         setStateUpdBtn(prev => !prev)
         setFormUpdData(fixForm)
-            console.log(JSON.stringify(formUpdData))
-
     }
     const handleUpdChange = (e) => {
         e.preventDefault()
@@ -167,11 +168,8 @@ function AdminManageAccount(){
     const handleUpdAccount = async (e) => {
         e.preventDefault()
         try{
-
             const { email, fullName, roleId} = formUpdData;
             const jsonForm = { email, fullName, roleId};
-        console.log(JSON.stringify(jsonForm))
-
             const response = await AdminRequest.updateAccount(jsonForm, formUpdData.id);
 
             if (response.data.code === 200) {
@@ -187,12 +185,16 @@ function AdminManageAccount(){
                 toast.success("Tải lại trang để cập nhật", { className: 'my-toast' })
             }
         }catch(error){
-            if (error.response) {
-                toast.error(error.response.data.message || "Cập nhật tài khoản thất bại!", {className : 'my-toast'});
+            if (error.response.status === 401) {
+            toast.error("Bạn cần đăng nhập để thực hiện chức năng này", {className : 'my-toast'});
+            }else if (error.response.status === 403) {
+            toast.error("Bạn không có quyền sử dụng", {className : 'my-toast'});
+            } else if (error.response.data) {
+            toast.error(error.response.data.message,  {className: 'my-toast'});
             } else if (error.request) {
-                toast.error("Không nhận được phản hồi từ server");
+            toast.error("Không nhận được phản hồi từ server",  {className: 'my-toast'});
             } else {
-                toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
+            toast.error("Lỗi không xác định", error.message, {className: 'my-toast'});
             }
         }
     }
@@ -224,12 +226,16 @@ function AdminManageAccount(){
                 toast.success("Tải lại trang để cập nhật", { className: 'my-toast' })
             }
         }catch(error){
-            if (error.response) {
-                toast.error(error.response.data.message || "Cập nhật tài khoản thất bại!", {className : 'my-toast'});
+            if (error.response.status === 401) {
+            toast.error("Bạn cần đăng nhập để thực hiện chức năng này", {className : 'my-toast'});
+            }else if (error.response.status === 403) {
+            toast.error("Bạn không có quyền sử dụng", {className : 'my-toast'});
+            } else if (error.response.data) {
+            toast.error(error.response.data.message,  {className: 'my-toast'});
             } else if (error.request) {
-                toast.error("Không nhận được phản hồi từ server");
+            toast.error("Không nhận được phản hồi từ server",  {className: 'my-toast'});
             } else {
-                toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
+            toast.error("Lỗi không xác định", error.message, {className: 'my-toast'});
             }
         }
     }
@@ -288,6 +294,7 @@ function AdminManageAccount(){
                 <h2>Xóa tài khoản</h2>
                 <div className="form-upd">
                     <span className="text-w">Bạn có chắc chắn muốn xóa tài khoản này?</span>
+                    <span className="text-w">Tài khoản: {formDelData.username}</span>
                     <button type="none" onClick={handleDeleteAccount}>Xóa</button>
                 </div>
                 <button type="none" className="close-btn"  onClick={e => setStateDelBtn(!stateDelBtn)}>
