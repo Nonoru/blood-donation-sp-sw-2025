@@ -21,4 +21,3 @@ export const updateAccount = async (formData, id) => {
 export const deleteAccount = async (id) => {
     return await axios.delete(`${url}/delete/${id}`, { headers: createHeaders() });
 }
-

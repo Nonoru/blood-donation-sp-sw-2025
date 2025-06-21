@@ -19,7 +19,7 @@ const items = [
         child: [
             { id: 3.1, name: 'Đơn yêu cầu hiến máu', path: '/orders/donate' },
             { id: 3.2, name: 'Lịch hẹn hiến máu' },
-            { id: 3.3, name: 'Lịch sử hiến máu' },
+            { id: 3.3, name: 'Lịch sử đơn hiến máu' },
             { id: 3.4, name: 'Đơn yêu cầu nhận máu' },
             { id: 3.5, name: 'Lịch hẹn nhận máu' },
             { id: 3.6, name: 'Lịch sử nhận máu' },
@@ -34,14 +34,6 @@ const items = [
     }
 ]
 function AdminMenu() {
-    //   const [curClick, setCurClick] = useState(null);
-
-    //   const clickItem = (id) => {
-    //     if(id === curClick)
-    //        return setCurClick(null)
-    //     setCurClick(id);
-    //   };
-
     const [itemShow, setItemShow] = useState(new Array(items.length).fill(false));
 
     const clickItem = (index) => {

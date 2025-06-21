@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import * as AdminRequest from "../services/AdminRequest"
+import { useEffect, useState, useRef } from "react"
+import * as AdminRequest from "../services/AdminApi"
 import { toast } from 'react-toastify';
 import { AdminAddAccount } from "../components/AdminAddAccount"
 import { AdminUpdateAccount } from "../components/AdminUpdateAccount"
@@ -10,29 +10,6 @@ const attrTableHead = ['ID','Tên tài khoản','Địa chỉ Email','Họ và t
 function AdminManageAccount(){
     const [userAccounts, setUserAccounts] = useState([])
     const [empAccounts, setEmpAccounts] = useState([])
-    const [refreshKey, setRefreshKey] = useState(0);
-
-    useEffect(() => {
-        const getList = async () => {
-            try{
-                const response = await AdminRequest.listAccount()
-                console.log(response.data.data)
-                const userList = []
-                const empList = []
-                response.data.data.forEach(acc => {
-                    if(acc.status === true){
-                        if (acc.role.roleId === 3) userList.push(acc);
-                        else empList.push(acc);
-                    }
-                });
-                setUserAccounts(userList);
-                setEmpAccounts(empList);
-            }catch{
-
-            }
-        }
-        getList();
-    }, [refreshKey]);
 
     const getList = async () => {
         const execute = async () => {
@@ -85,6 +62,11 @@ function AdminManageAccount(){
         } catch (err) {
         }
     };
+    useEffect(() => {
+        getList();
+    }, []);
+
+    const reload = () => window.location.reload();
 
     const [stateAddBtn, setStateAddBtn] = useState(false)
 
@@ -253,7 +235,7 @@ function AdminManageAccount(){
                     <img src="/img/icons/search.svg"></img>
                 <span>Tìm tài khoản</span>
                 </button>
-                <button className="refresh-btn btn" onClick= {getList} >    
+                <button className="refresh-btn btn" onClick= {reload} >    
                     <img src="/img/icons/refresh.svg"></img>
                     <span>Tải lại trang</span>
                 </button>

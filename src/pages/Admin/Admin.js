@@ -27,7 +27,7 @@ function AdminPage(){
                     Quay về trang chủ
                 </button>
             </div>
-            <ToastContainer position="top-right" autoClose={2000} />
+            <ToastContainer position="top-right" autoClose={1500} />
             <AdminMenu/>
             <Routes>
                 <Route path='/' element={<AdminStatistic/>}/>

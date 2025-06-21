@@ -24,8 +24,6 @@ function AdminStatistic() {
     { name: 'Nhóm Máu O+', tiepNhan: 8400, truyenDi: 2900, conLai: 5500 },
   ];
 
-
-
   return (
     <div className="blood-statistic">
       <h2 className="section-title">TỔNG QUAN</h2>

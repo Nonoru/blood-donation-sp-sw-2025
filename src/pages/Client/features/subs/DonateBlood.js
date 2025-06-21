@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { getUserId } from '../../../../util/Token'
-import * as FeatureApi from '../../services/FeatureApi';
+import * as FeatureApi from '../../services/UserApi';
 import '../../styles/DonateBlood.scss';
 const healthQuestions = [
   'Bạn đã từng hiến máu chưa ?',

@@ -19,7 +19,7 @@ import './Client.scss'
 function Client ({userInfo, setUserInfo}) {
     return(
         <div className="client-page">
-            <ToastContainer position="top-center" autoClose={2000} />
+            <ToastContainer position="top-center" autoClose={600} />
             <Header userInfo={userInfo} setUserInfo={setUserInfo}/>
             <Routes>
                 <Route path='/' element={<HomePage/>}/>
