@@ -83,6 +83,9 @@ public class AuthService {
 /* Block-Code Login Account */
     public AuthResponse loginAccount (LoginAccountRequest request) {
         UserAccount user = userRepository.findByUsername(request.getTk());
+        if(!user.isStatus()){
+            throw new AppException(ErrorCode.ACCOUNT_BLACKLIST);
+        }
         if(user == null) {
             user = userRepository.findByEmail(request.getTk());
         }

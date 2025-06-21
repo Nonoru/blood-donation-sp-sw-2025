@@ -53,6 +53,8 @@ public enum ErrorCode {
     ORDER_TIME_EMPTY(32, "Giờ đặt lịch không thể bỏ trống"),
     ORDER_TIME_MUST_IN_FUTURE(32,"Giờ đặt lịch phải ở tương lai"),
     ORDER_TIME_EXISTED_IN_DAY(33, "Thời gian này đã được tạo trong ngày"),
+
+    ACCOUNT_BLACKLIST(34, "Tài khoản đã bị khóa")
     ;
     private int code;
     private String message;

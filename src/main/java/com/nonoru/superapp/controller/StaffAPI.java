@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/staff")
@@ -54,8 +55,9 @@ public class StaffAPI {
                 .build();
     }
     @PutMapping("/refuse-orders/{id}")
-    public ApiResponse<Void> refuseOrder(@PathVariable("id") long id){
-        bloodDonationService.refuseOrderBloodDonation(id);
+    public ApiResponse<Void> refuseOrder(@PathVariable("id") long id,  @RequestBody Map<String, String> body){
+        String reason = body.get("reason");
+        bloodDonationService.refuseOrderBloodDonation(id, reason);
         return ApiResponse.<Void>builder()
                 .message("Đơn đã được từ chối")
                 .build();

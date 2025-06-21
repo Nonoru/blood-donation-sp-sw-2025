@@ -33,7 +33,7 @@ public class OrderBloodDonation {
     @Column(nullable = false, columnDefinition = "VARCHAR(60)")
     private String phone;
 
-    @Column(nullable = false, columnDefinition = "NVARCHAR(60)")
+    @Column(nullable = false, columnDefinition = "NVARCHAR(300)")
     private String address;
 
     @Column(nullable = false)
@@ -58,8 +58,10 @@ public class OrderBloodDonation {
 
     private LocalDate createDate;
 
-    @Builder
+    @Column(nullable = true, columnDefinition = "NVARCHAR(300)")
+    private String reason;
 
+    @Builder
     public OrderBloodDonation(String fullName, LocalDate dob, String gender, String cccdNumber, String phone, String address, float amountBloodMl, float weight, BloodStorage blood, OrderDateDonation orderDateId, UserAccount userAccount, int status, LocalDate createDate) {
         this.fullName = fullName;
         this.dob = dob;

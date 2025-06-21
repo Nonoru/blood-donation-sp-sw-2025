@@ -108,8 +108,9 @@ public class OrderBloodDonationService {
         orBD.setStatus(StatusOfOrderDonation.COMFRIMMED.getStatusCode());
         orderDonationRepo.save(orBD);
     }
-    public void refuseOrderBloodDonation(long orderDonationId) {
+    public void refuseOrderBloodDonation(long orderDonationId, String reason) {
         OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId).orElse(null);
+        orBD.setReason(reason);
         orBD.setStatus(StatusOfOrderDonation.REFUSED.getStatusCode());
         orderDonationRepo.save(orBD);
     }
@@ -123,4 +124,5 @@ public class OrderBloodDonationService {
         orBD.setStatus(StatusOfOrderDonation.CANCELED.getStatusCode());
         orderDonationRepo.save(orBD);
     }
+
 }
