@@ -3,7 +3,9 @@ package com.nonoru.superapp.controller;
 import com.nonoru.superapp.dto.request.OrderDateDonationRequest;
 import com.nonoru.superapp.dto.response.ApiResponse;
 import com.nonoru.superapp.dto.response.OrderBloodDonationResponse;
+import com.nonoru.superapp.dto.response.OrderDateDonationResponse;
 import com.nonoru.superapp.entity.Clinic;
+import com.nonoru.superapp.enums.StatusOfOrderDonation;
 import com.nonoru.superapp.service.ClinicService;
 import com.nonoru.superapp.service.OrderBloodDonationService;
 import com.nonoru.superapp.service.OrderDateDonationService;
@@ -25,14 +27,21 @@ public class StaffAPI {
     @Autowired
     private ClinicService clinicService;
 
-    @GetMapping("/list-order-donation")
-    public ApiResponse<List<OrderBloodDonationResponse>> getDonationOrders (){
+    @GetMapping("/list-order/processing")
+    public ApiResponse<List<OrderBloodDonationResponse>> getDonationOrdersProcessing () {
         return ApiResponse.<List<OrderBloodDonationResponse>>builder()
-                .data(bloodDonationService.getListOrderBloodDonationWaitingToAccept())
+                .data(bloodDonationService.getListOrderBloodDonationWaitingToAccept(StatusOfOrderDonation.PROCESSING))
+                .build();
+    }
+    @GetMapping("/list-order/accept")
+    public ApiResponse<List<OrderBloodDonationResponse>> getDonationOrdersConfirmed (){
+        return ApiResponse.<List<OrderBloodDonationResponse>>builder()
+                .data(bloodDonationService.getListOrderBloodDonationWaitingToAccept(StatusOfOrderDonation.COMFRIMMED))
                 .build();
     }
 
-    @GetMapping("/create-date-donation")
+
+    @PostMapping("/create-date-donation")
     public ApiResponse<Void> createDateDonation(@RequestBody @Valid OrderDateDonationRequest request){
         dateDonationService.create(request);
         return ApiResponse.<Void>builder()
@@ -63,17 +72,24 @@ public class StaffAPI {
                 .build();
     }
     @PutMapping("/complete-orders/{id}")
-    public ApiResponse<Void> completeOrder(@PathVariable("id") long id){
-        bloodDonationService.completeOrderBloodDonation(id);
-        return ApiResponse.<Void>builder()
+    public ApiResponse<String> completeOrder(@PathVariable("id") long id){
+        String res = bloodDonationService.completeOrderBloodDonation(id);
+        return ApiResponse.<String>builder()
                 .message("Đơn đã hoàn tất")
+                .data(res)
                 .build();
     }
     @PutMapping("/cancel-orders/{id}")
-    public ApiResponse<Void> cancelOrder(@PathVariable("id") long id){
-        bloodDonationService.cancelOrderBloodDonation(id);
+    public ApiResponse<Void> cancelOrder(@PathVariable("id") long id, @RequestBody Map<String, String> reason){
+        bloodDonationService.cancelOrderBloodDonation(id, reason.get("reason"));
         return ApiResponse.<Void>builder()
                 .message("Đơn đã bị hủy")
+                .build();
+    }
+    @GetMapping("/list-schedules")
+    public ApiResponse<List<OrderDateDonationResponse>> getOrderDate(){
+        return ApiResponse.<List<OrderDateDonationResponse>>builder()
+                .data(dateDonationService.getOrderDateDonationForStaff())
                 .build();
     }
 }

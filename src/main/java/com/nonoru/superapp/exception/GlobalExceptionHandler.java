@@ -54,7 +54,8 @@ public class GlobalExceptionHandler {
                 "DOB_EMPTY", "DOB_MUST_IN_PAST",
                 "CCCD_NUMBER_EMPTY", "CCCD_NUMBER_INVALID",
                 "PHONE_EMPTY", "PHONE_INVALID",
-                "ADDRESS_EMPTY", "YEAR_LOWER_18", "AMMOUNT_BLOOD_ERROR"
+                "ADDRESS_EMPTY", "YEAR_LOWER_18", "AMMOUNT_BLOOD_ERROR",
+                "ORDER_DATE_EMPTY","ORDER_DATE_MUST_IN_FUTURE", "ORDER_TIME_EMPTY", "ORDER_TIME_MUST_IN_FUTURE", "ORDER_TIME_EXISTED_IN_DAY"
         );
 
         FieldError prioritizedError = fieldErrors.stream()

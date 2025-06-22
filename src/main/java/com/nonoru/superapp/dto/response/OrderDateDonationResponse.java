@@ -1,20 +1,30 @@
 package com.nonoru.superapp.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nonoru.superapp.dto.ClinicDTO;
+import com.nonoru.superapp.entity.Clinic;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@ToString
 public class OrderDateDonationResponse {
     private long orderDateId;
-    private LocalDate orderDate;
+    private String orderDate;
     private LocalTime orderTime;
+    private ClinicDTO clinic;
     private int numberOfPeople;
+    @Builder
+    public OrderDateDonationResponse(long orderDateId, String orderDate, LocalTime orderTime, int numberOfPeople) {
+        this.orderDateId = orderDateId;
+        this.orderDate = orderDate;
+        this.orderTime = orderTime;
+        this.numberOfPeople = numberOfPeople;
+    }
 }

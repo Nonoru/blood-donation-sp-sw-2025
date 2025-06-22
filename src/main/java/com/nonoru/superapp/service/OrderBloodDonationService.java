@@ -15,6 +15,7 @@ import com.nonoru.superapp.repository.OrderDateDonationRepository;
 import com.nonoru.superapp.repository.UserRepository;
 import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -32,6 +33,8 @@ public class OrderBloodDonationService {
     private OrderDateDonationRepository orderDateRepo;
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    private BloodStorageRepository bloodStorageRepo;
     /* CREATE BLOOD DONATION ORDERs - USER*/
     public void createOrderBloodDonation(OrderBloodDonationRequest request) {
         int age = LocalDate.now().getYear() - request.getDob().getYear();
@@ -72,11 +75,11 @@ public class OrderBloodDonationService {
         orderDonationRepo.save(order);
     }
     /* GET LIST BLOOD DONATION ORDERS - STAFF */
-    public List<OrderBloodDonationResponse> getListOrderBloodDonationWaitingToAccept() {
+    public List<OrderBloodDonationResponse> getListOrderBloodDonationWaitingToAccept(StatusOfOrderDonation sts) {
         List<OrderBloodDonation> listOrder = orderDonationRepo.findAll();
         List<OrderBloodDonationResponse> response = new ArrayList<>();
         listOrder.forEach(order -> {
-            if(order.getStatus() == StatusOfOrderDonation.PROCESSING.getStatusCode()){
+            if(order.getStatus() == sts.getStatusCode()){
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 String orderDate = order.getOrderDate().getOrderDate().format(formatter);
                 String dob = order.getDob().format(formatter);
@@ -114,15 +117,25 @@ public class OrderBloodDonationService {
         orBD.setStatus(StatusOfOrderDonation.REFUSED.getStatusCode());
         orderDonationRepo.save(orBD);
     }
-    public void completeOrderBloodDonation(long orderDonationId) {
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
+    public String completeOrderBloodDonation(long orderDonationId) {
         OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId).orElse(null);
         orBD.setStatus(StatusOfOrderDonation.COMPLETED.getStatusCode());
+        getBloodFromOrder(orBD.getBlood(), orBD.getAmountBloodMl());
         orderDonationRepo.save(orBD);
+        return "Đã thêm thành công "+ orBD.getAmountBloodMl() + " ml nhóm " +orBD.getBlood().getBloodType()+" vào trong kho máu";
     }
-    public void cancelOrderBloodDonation(long orderDonationId) {
+    public void cancelOrderBloodDonation(long orderDonationId, String reason) {
         OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId).orElse(null);
+        orBD.setReason(reason);
         orBD.setStatus(StatusOfOrderDonation.CANCELED.getStatusCode());
         orderDonationRepo.save(orBD);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
+    public void getBloodFromOrder(BloodStorage bloodStorage, float amount) {
+        float oldAmount = bloodStorage.getStorage();
+        bloodStorage.setStorage(oldAmount + amount);
+        bloodStorageRepo.save(bloodStorage);
+    }
 }

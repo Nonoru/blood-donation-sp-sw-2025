@@ -32,7 +32,7 @@ public class UserAPI {
     @GetMapping("/get-order-date")
     public ApiResponse<List<OrderDateDonationResponse>> getOrderDate(){
         return ApiResponse.<List<OrderDateDonationResponse>>builder()
-                .data(dateDonationService.getOrderDateDonation())
+                .data(dateDonationService.getOrderDateDonationForUser())
                 .build();
     }
 }

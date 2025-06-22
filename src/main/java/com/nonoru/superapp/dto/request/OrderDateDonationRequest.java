@@ -22,7 +22,6 @@ public class OrderDateDonationRequest {
     private LocalDate orderDate;
 
     @NotNull(message = "ORDER_TIME_EMPTY")
-    @Future(message = "ORDER_TIME_MUST_IN_FUTURE")
     private LocalTime orderTime;
 
     private int clinicId;
