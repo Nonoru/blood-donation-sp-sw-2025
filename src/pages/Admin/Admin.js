@@ -5,6 +5,9 @@ import AdminStatistic from './pages/AdminStatistic';
 import AdminManageAccount from './pages/AdminManageAccount';
 import ForBidden from './pages/ForBidden';
 import OrderBloodDonation from './pages/OrderBloodDonation';
+import Clinic from './pages/Clinic';
+import OrderDateDonation from './pages/OrderDateDonation';
+import OrderBloodDonationAccept from './pages/OrderBloodDonationAccept'
 import * as Token from '../../util/Token';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -31,8 +34,11 @@ function AdminPage(){
             <AdminMenu/>
             <Routes>
                 <Route path='/' element={<AdminStatistic/>}/>
-                <Route path='/manage/accounts' element={<ManageAccountRoute><AdminManageAccount/></ManageAccountRoute>}/>
-                <Route path='/manage/orders/donate' element={<OrderBloodDonation/>}/>
+                <Route path='/accounts' element={<ManageAccountRoute><AdminManageAccount/></ManageAccountRoute>}/>
+                <Route path='/manage/clinics' element={<Clinic/>}/>
+                <Route path='/manage/schedules' element={<OrderDateDonation/>}/>
+                <Route path='/orders/donates' element={<OrderBloodDonation/>}/>
+                <Route path='/orders/accepts' element={<OrderBloodDonationAccept/>}/>
                 <Route path='/for-bidden' element={<ForBidden/>}/>
             </Routes>
         </div>

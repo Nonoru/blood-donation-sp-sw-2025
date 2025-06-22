@@ -19,13 +19,14 @@
         .menu-title {
             font-size: 16px;
             color: #ccc;
-            padding: 10px 10px 5px 0;
             font-weight: 600;
-
             &:hover {
                 color: transparent;
                 background-image: linear-gradient(to right, rgb(243, 113, 113), rgb(235, 222, 77));
                 background-clip: text;
+            }
+            a{
+                padding-right: 100px !important;
             }
         }
 
