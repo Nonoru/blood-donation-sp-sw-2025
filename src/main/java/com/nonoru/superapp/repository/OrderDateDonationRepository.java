@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Repository
 public interface OrderDateDonationRepository extends JpaRepository<OrderDateDonation, Long> {
@@ -35,4 +36,8 @@ public interface OrderDateDonationRepository extends JpaRepository<OrderDateDona
             @Param("orderTime") LocalTime orderTime
     );
 
+    @Query(value = """
+    SELECT od.orderDateId FROM OrderDateDonation od WHERE od.orderDate = :date
+    """)
+    List<Long> findListIdByDate(@Param("date") LocalDate date);
 }

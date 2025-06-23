@@ -16,13 +16,6 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-//    @ExceptionHandler(value = RuntimeException.class)
-//    ResponseEntity<ApiResponse> handlingRuntimeException(){
-//        ApiResponse apiResponse = new ApiResponse();
-//        apiResponse.setCode(ErrorCode.UNCATEGORIZED_NOT_FOUND.getCode());
-//        apiResponse.setMessage(ErrorCode.UNCATEGORIZED_NOT_FOUND.getMessage());
-//        return ResponseEntity.badRequest().body(apiResponse);
-//    }
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Object> handleRuntimeException(RuntimeException ex) {
         System.out.println("RuntimeException: " + ex.getMessage());

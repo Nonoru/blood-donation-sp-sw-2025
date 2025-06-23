@@ -1,7 +1,9 @@
 package com.nonoru.superapp.service;
 
 import com.nonoru.superapp.dto.request.OrderBloodDonationRequest;
+import com.nonoru.superapp.dto.response.BloodOrderStaticResponse;
 import com.nonoru.superapp.dto.response.OrderBloodDonationResponse;
+import com.nonoru.superapp.dto.response.OrderDateDonationResponse;
 import com.nonoru.superapp.entity.BloodStorage;
 import com.nonoru.superapp.entity.OrderBloodDonation;
 import com.nonoru.superapp.entity.OrderDateDonation;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -137,5 +140,31 @@ public class OrderBloodDonationService {
         float oldAmount = bloodStorage.getStorage();
         bloodStorage.setStorage(oldAmount + amount);
         bloodStorageRepo.save(bloodStorage);
+    }
+    /* STATISTIC ORDER */
+    public BloodOrderStaticResponse getBloodStaticToday() {
+
+        int processingCode = StatusOfOrderDonation.PROCESSING.getStatusCode();
+        int confirmedCode = StatusOfOrderDonation.COMFRIMMED.getStatusCode();
+        int completedCode = StatusOfOrderDonation.COMPLETED.getStatusCode();
+        int refusedCode = StatusOfOrderDonation.REFUSED.getStatusCode();
+        int canceledCode = StatusOfOrderDonation.CANCELED.getStatusCode();
+
+        LocalDate today = LocalDate.now();
+        List<Long> listIdDate = orderDateRepo.findListIdByDate(today);
+
+        BloodOrderStaticResponse response = BloodOrderStaticResponse.builder()
+                .countAllOrderDonation
+                        (orderDonationRepo.countAllColumnOrderByStatus(listIdDate))
+                .countAllOrderDonationWaiting
+                        (orderDonationRepo.countColumnOrderByStatus(processingCode ,confirmedCode , listIdDate))
+                .countAllOrderDonationCompleted
+                        (orderDonationRepo.countColumnOrderByStatus(completedCode, completedCode, listIdDate))
+                .countAllOrderDonationDenied
+                        (orderDonationRepo.countColumnOrderByStatus(refusedCode, canceledCode, listIdDate))
+                .donationBloodAmount
+                        (orderDonationRepo.sumBloodAmountByStatus(completedCode, listIdDate))
+                .build();
+        return response;
     }
 }

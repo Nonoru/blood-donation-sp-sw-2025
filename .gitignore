@@ -12,6 +12,7 @@ target/
 *.iml
 *.ipr
 *.properties
+application.yml
 .idea
 
 ### Eclipse ###

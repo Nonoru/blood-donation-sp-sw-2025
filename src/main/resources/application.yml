@@ -15,4 +15,3 @@ spring:
 
 jwt:
   signerKey: "wEDCBaS00Qr970TDN7svt2/B+ld6qx+f/UwOPdGbSRt3pTogLD4aX902srj8/J6V"
-

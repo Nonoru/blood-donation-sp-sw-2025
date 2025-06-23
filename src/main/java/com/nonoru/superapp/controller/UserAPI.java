@@ -3,7 +3,6 @@ package com.nonoru.superapp.controller;
 import com.nonoru.superapp.dto.request.OrderBloodDonationRequest;
 import com.nonoru.superapp.dto.response.ApiResponse;
 import com.nonoru.superapp.dto.response.OrderDateDonationResponse;
-import com.nonoru.superapp.entity.OrderDateDonation;
 import com.nonoru.superapp.service.OrderBloodDonationService;
 import com.nonoru.superapp.service.OrderDateDonationService;
 import jakarta.validation.Valid;

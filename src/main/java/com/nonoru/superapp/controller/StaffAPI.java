@@ -2,10 +2,12 @@ package com.nonoru.superapp.controller;
 
 import com.nonoru.superapp.dto.request.OrderDateDonationRequest;
 import com.nonoru.superapp.dto.response.ApiResponse;
+import com.nonoru.superapp.dto.response.BloodOrderStaticResponse;
 import com.nonoru.superapp.dto.response.OrderBloodDonationResponse;
 import com.nonoru.superapp.dto.response.OrderDateDonationResponse;
 import com.nonoru.superapp.entity.Clinic;
 import com.nonoru.superapp.enums.StatusOfOrderDonation;
+import com.nonoru.superapp.service.BloodService;
 import com.nonoru.superapp.service.ClinicService;
 import com.nonoru.superapp.service.OrderBloodDonationService;
 import com.nonoru.superapp.service.OrderDateDonationService;
@@ -26,6 +28,8 @@ public class StaffAPI {
     private OrderDateDonationService dateDonationService;
     @Autowired
     private ClinicService clinicService;
+    @Autowired
+    private BloodService bloodService;
 
     @GetMapping("/list-order/processing")
     public ApiResponse<List<OrderBloodDonationResponse>> getDonationOrdersProcessing () {
@@ -90,6 +94,12 @@ public class StaffAPI {
     public ApiResponse<List<OrderDateDonationResponse>> getOrderDate(){
         return ApiResponse.<List<OrderDateDonationResponse>>builder()
                 .data(dateDonationService.getOrderDateDonationForStaff())
+                .build();
+    }
+    @GetMapping("/statistic/today")
+    public ApiResponse<BloodOrderStaticResponse> getStatisticToday(){
+        return ApiResponse.<BloodOrderStaticResponse>builder()
+                .data(bloodDonationService.getBloodStaticToday())
                 .build();
     }
 }
