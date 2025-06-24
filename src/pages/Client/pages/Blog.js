@@ -22,6 +22,27 @@ const posts = [
     subtitle: 'Không chỉ giữ gìn an ninh trật tự, họ còn tích cực hiến máu...',
     image: '/img/pics/blog3.jpg',
     date: 'Chủ nhật, 22/6/2025, 14:00',
+  },
+  {
+  id: 4,
+    title: 'Hưởng ứng chương trình hiến máu tình nguyện',
+    subtitle: 'Từ ngày 01/06/2025 đến 30/06/2025...',
+    image: '/img/pics/blog44.jpg',
+    date: 'Chủ nhật, 13/6/2025, 08:00',
+  },
+  {
+  id: 5,
+    title: 'Cảnh báo lừa đảo về hiến máu: Cẩn thận trước những chiêu lừa tinh vi',
+    subtitle: 'Hiện có đối tượng giả mạo Trung tâm hiến máu nhân đạo TPHCM',
+    image: '/img/pics/blog55.jpg',
+    date: 'Chủ nhật, 24/6/2025, 11:00',
+  },
+  {
+  id: 6,
+    title: 'Khởi động tháng Nhân đạo năm 2025',
+    subtitle: 'Ngày 8-5, tại TPHCM, Trung ương Hội Chữ thập đỏ Việt Nam và UBND TPHCM',
+    image: '/img/pics/blog66.jpg',
+    date: 'Chủ nhật, 24/6/2025, 11:00',
   }
 ];
 

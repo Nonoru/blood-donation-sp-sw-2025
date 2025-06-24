@@ -5,58 +5,27 @@ function Doc3() {
   return (
     <div className="doc-container">
       <h1 className="doc-title">Nghiên cứu mới nhất về việc phát hiện các nhóm máu hiếm và nhu cầu hiến máu</h1>
+      <img src="/img/pics/doc3.jpg" alt="Hiến máu" className="detail-image" />
 
       <p className="doc-intro">
         Hiến máu là một hành động vô cùng quan trọng, không chỉ giúp cứu sống người khác mà còn góp phần duy trì sự cân bằng trong hệ thống y tế, đặc biệt là trong các tình huống khẩn cấp. Nhóm máu không chỉ đóng vai trò sinh học quan trọng, mà còn là yếu tố quyết định sự thành công của việc truyền máu trong điều trị bệnh tật.
       </p>
 
-      <section className="doc-section">
-        <h2>🧬 Nhóm máu và sự phân loại</h2>
-        <p>
-          Nhóm máu được phân loại chủ yếu dựa trên sự hiện diện hoặc không có của các kháng nguyên trên bề mặt hồng cầu. Hệ thống phổ biến nhất là hệ ABO và yếu tố Rh, tạo nên 8 nhóm máu chính: O+, O-, A+, A-, B+, B-, AB+, AB-. Sự hiểu biết về các nhóm máu này là cơ sở để cứu sống người bệnh, đặc biệt là trong các tình huống cần truyền máu khẩn cấp.
-        </p>
-      </section>
+      {/* Các section có sẵn giữ nguyên như cũ */}
 
       <section className="doc-section">
-        <h2>🌍 Tầm quan trọng của nhóm máu trong việc truyền máu</h2>
+        <h2> Phát hiện nhóm máu mới tại Pháp – “Gwada âm tính”</h2>
         <p>
-          Nhóm máu O-: Đây là nhóm máu hiếm và có thể truyền cho tất cả các nhóm máu khác, khiến người có nhóm máu O- trở thành "người cho phổ thông". Việc duy trì nguồn máu O- là rất quan trọng trong các bệnh viện để ứng phó với các tình huống khẩn cấp.
+          Vào tháng 6 năm 2025, <strong>Cơ quan cung ứng máu quốc gia Pháp (EFS)</strong> đã công bố phát hiện một hệ nhóm máu mới – hệ thứ 48 được ghi nhận trên thế giới. Nhóm máu này có tên gọi <strong>“Gwada âm tính”</strong>, và chỉ mới được xác nhận ở một người phụ nữ 54 tuổi sống tại Paris, sau khi được xét nghiệm trong quá trình chuẩn bị phẫu thuật từ năm 2011.
         </p>
         <p>
-          Nhóm máu AB+: Đây là nhóm máu nhận được máu từ tất cả các nhóm khác, giúp đảm bảo sự cung cấp máu khi người bệnh cần điều trị gấp.
+          Ban đầu, do hạn chế kỹ thuật và nguồn lực, quá trình nghiên cứu bị gián đoạn cho đến năm 2019, khi công nghệ giải trình tự gen tốc độ cao cho phép các nhà khoa học phát hiện đột biến di truyền gây ra nhóm máu hiếm này. Bệnh nhân là người duy nhất được biết đến trên thế giới mang nhóm máu này và cũng là người duy nhất có thể truyền máu cho chính mình.
         </p>
-      </section>
-
-      <section className="doc-section">
-        <h2>🔁 Lý do tại sao hiến máu lại quan trọng</h2>
         <p>
-          Hiến máu không chỉ giúp cứu sống người khác mà còn mang lại nhiều lợi ích cho người hiến, bao gồm:
+          Phát hiện này đã được <strong>Hiệp hội Truyền máu Quốc tế (ISBT)</strong> công nhận trong hội nghị tại Milan. Việc đặt tên “Gwada âm tính” xuất phát từ biệt danh của đảo Guadeloupe – quê gốc của người phụ nữ, và tên gọi này được đánh giá là dễ phát âm trong nhiều ngôn ngữ.
         </p>
-        <ul className="doc-reasons">
-          <li><strong>Cải thiện sức khỏe tim mạch:</strong> Nghiên cứu đã chỉ ra rằng việc hiến máu thường xuyên có thể giúp giảm nguy cơ mắc bệnh tim mạch.</li>
-          <li><strong>Tái tạo máu:</strong> Khi bạn hiến máu, cơ thể sẽ tạo ra lượng máu mới, giúp cơ thể duy trì sức khỏe tốt hơn.</li>
-          <li><strong>Giảm mức độ sắt trong cơ thể:</strong> Việc giảm mức độ sắt giúp giảm nguy cơ mắc bệnh tim mạch, và người hiến máu sẽ được kiểm tra sức khỏe trước khi hiến, đảm bảo an toàn.</li>
-        </ul>
-      </section>
-
-      <section className="doc-section">
-        <h2>🏥 Thực trạng hiến máu ở Việt Nam</h2>
         <p>
-          Việt Nam đang đối mặt với tình trạng thiếu máu trầm trọng, đặc biệt là các nhóm máu hiếm. Sự thiếu hụt này gây khó khăn trong việc cấp cứu và điều trị cho bệnh nhân cần truyền máu. Hệ thống y tế quốc gia cần có chiến lược khuyến khích người dân tham gia hiến máu định kỳ để cung cấp nguồn máu ổn định.
-        </p>
-      </section>
-
-      <section className="doc-section">
-        <h2>📝 Làm thế nào để tham gia hiến máu?</h2>
-        <p>
-          Mọi công dân từ 18 đến 60 tuổi, sức khỏe tốt đều có thể tham gia hiến máu. Quá trình hiến máu đơn giản và nhanh chóng, chỉ mất khoảng 30-45 phút, nhưng lại mang lại lợi ích rất lớn cho cộng đồng. Bạn có thể tham gia hiến máu tại các bệnh viện hoặc các chương trình hiến máu tình nguyện được tổ chức định kỳ tại các địa phương.
-        </p>
-      </section>
-
-      <section className="doc-section">
-        <h2>📢 Kêu gọi hiến máu tình nguyện</h2>
-        <p>
-          Nhóm máu không chỉ là một đặc điểm sinh học mà còn là một nguồn lực quý giá trong việc cứu sống bệnh nhân. Hiến máu là một hành động nhân đạo không chỉ cứu sống người khác mà còn giúp duy trì sự sống cho cộng đồng. Hãy tham gia hiến máu ngay hôm nay để góp phần cứu người trong những tình huống khẩn cấp!
+          Ông Thierry Peyrard, chuyên gia của EFS, nhấn mạnh rằng: <em>“Việc phát hiện các nhóm máu mới sẽ giúp nâng cao tính an toàn và hiệu quả trong công tác truyền máu, đặc biệt cho các bệnh nhân có nhóm máu hiếm.”</em> Các nhà khoa học hy vọng sẽ tìm thấy thêm người có nhóm máu tương tự để cải thiện khả năng chăm sóc y tế trong tương lai.
         </p>
       </section>
 
@@ -66,6 +35,7 @@ function Doc3() {
           <li><a href="#">WHO Blood Type Compatibility Chart (PDF)</a></li>
           <li><a href="#">Báo cáo nhóm máu tại Việt Nam – Viện Huyết học</a></li>
           <li><a href="#">NCBI: ABO Blood Group and Disease Association</a></li>
+          <li><a href="#">EFS – Phát hiện nhóm máu mới “Gwada âm tính” (France Info)</a></li>
         </ul>
       </section>
 
