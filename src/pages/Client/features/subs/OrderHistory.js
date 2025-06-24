@@ -1,11 +1,128 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../styles/OrderHistory.scss';
 
+const donationHistory = [
+  { id: 1, date: '01-05-2025', location: 'Bệnh viện A', status: 'Đã hiến', amount: '350ml' },
+  { id: 2, date: '15-03-2025', location: 'Bệnh viện B', status: 'Đã hiến', amount: '350ml' },
+];
+const testHistory = [
+  { id: 1, date: '10-04-2025', result: 'Âm tính', location: 'Bệnh viện A', note: 'Bình thường' },
+  { id: 2, date: '20-02-2025', result: 'Dương tính', location: 'Bệnh viện B', note: 'Cần theo dõi' },
+];
+const receiveHistory = [
+  { id: 1, date: '05-05-2025', hospital: 'Bệnh viện C', status: 'Đã nhận', amount: '250ml' },
+];
+
+const tabs = [
+  { key: 'donate', label: 'Lịch sử hiến máu' },
+  { key: 'test', label: 'Lịch sử xét nghiệm máu' },
+  { key: 'receive', label: 'Yêu cầu nhận máu' },
+];
+
 const OrderHistory = () => {
+  const [activeTab, setActiveTab] = useState('donate');
+
   return (
     <div className="order-history-page">
-      <h2>Lịch sử Đơn Hàng</h2>
-      {/* Nội dung trang xem đơn hàng sẽ đặt ở đây */}
+      <div className="donate-title-section">
+        <div className="donate-title-content">
+          <h2 className="main-title">
+            <span className="blood-bridge">Blood Bridge</span>
+            <span className="features-text">LỊCH SỬ ĐƠN HÀNG</span>
+          </h2>
+          <div className="title-decoration">
+            <div className="decoration-line"></div>
+            <div className="decoration-circle">📋</div>
+            <div className="decoration-line"></div>
+          </div>
+        </div>
+      </div>
+      <h2 className="order-title">Xem Lịch Sử Đơn Hàng</h2>
+      <div className="order-tabs">
+        {tabs.map(tab => (
+          <button
+            key={tab.key}
+            className={`order-tab-btn${activeTab === tab.key ? ' active' : ''}`}
+            onClick={() => setActiveTab(tab.key)}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+      <div className="order-tab-content">
+        {activeTab === 'donate' && (
+          <table className="order-table">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Ngày hiến</th>
+                <th>Địa điểm</th>
+                <th>Số lượng</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              {donationHistory.map((item, idx) => (
+                <tr key={item.id}>
+                  <td>{idx + 1}</td>
+                  <td>{item.date}</td>
+                  <td>{item.location}</td>
+                  <td>{item.amount}</td>
+                  <td>{item.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {activeTab === 'test' && (
+          <table className="order-table">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Ngày xét nghiệm</th>
+                <th>Kết quả</th>
+                <th>Địa điểm</th>
+                <th>Ghi chú</th>
+              </tr>
+            </thead>
+            <tbody>
+              {testHistory.map((item, idx) => (
+                <tr key={item.id}>
+                  <td>{idx + 1}</td>
+                  <td>{item.date}</td>
+                  <td>{item.result}</td>
+                  <td>{item.location}</td>
+                  <td>{item.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {activeTab === 'receive' && (
+          <table className="order-table">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Ngày nhận</th>
+                <th>Bệnh viện</th>
+                <th>Số lượng</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              {receiveHistory.map((item, idx) => (
+                <tr key={item.id}>
+                  <td>{idx + 1}</td>
+                  <td>{item.date}</td>
+                  <td>{item.hospital}</td>
+                  <td>{item.amount}</td>
+                  <td>{item.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 };

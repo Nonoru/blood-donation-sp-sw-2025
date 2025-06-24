@@ -1,4 +1,191 @@
 /* OrderHistory page styles */
 .order-history-page {
-  /* Thêm style cho trang xem đơn hàng ở đây */
-} 
+  margin: 100px auto 0 auto; 
+  background: #fff;
+  box-shadow: 0 4px 32px rgba(182,59,59,0.10);
+  font-family: 'Roboto', Arial, sans-serif;
+  min-height: 100vh;
+
+  .donate-title-section {
+    height: 40vh;
+    min-height: unset;
+    align-items: center;
+    padding-top: 40px !important;
+    padding-bottom: 0;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100vw;
+    z-index: 0;
+    background: linear-gradient(135deg, #B63B3B 0%, #ff6b6b 100%);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://images.pexels.com/photos/1001897/pexels-photo-1001897.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center/cover;
+      opacity: 0.1;
+      z-index: 1;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(182, 59, 59, 0.8);
+      z-index: 1;
+    }
+
+    .donate-title-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      color: white;
+
+      .main-title {
+        font-family: 'Roboto Slab', 'sans-serif';
+        font-size: 4rem;
+        font-weight: 900;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+        .blood-bridge {
+          display: block;
+          font-size: 4.5rem;
+          background: linear-gradient(45deg, #fff, #ffcccb);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          margin-bottom: 0.5rem;
+        }
+
+        .features-text {
+          margin-bottom: 5px !important;
+          display: block;
+          font-size: 1.6rem;
+          font-weight: 510;
+          letter-spacing: 0.3rem;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+
+  .title-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem !important;
+  }
+
+  .decoration-line {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, white, transparent);
+  }
+
+  .decoration-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    animation: pulse 2s infinite;
+  }
+
+
+
+  .order-title {
+    margin-top: 20px !important;
+    text-align: center;
+    color: #B63B3B;
+    margin-bottom: 28px !important;
+    font-size: 2rem;
+    font-weight: 800;
+  }
+
+  .order-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 24px !important;
+    
+    .order-tab-btn {
+      background: #fff;
+      color: #B63B3B;
+      border: 2px solid #ff6b6b;
+      border-radius: 8px 8px 0 0;
+      font-weight: 700;
+      font-size: 1.08rem;
+      padding: 10px 32px !important;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+      outline: none;
+
+      &:hover, &.active {
+        background: linear-gradient(90deg, #ff6b6b, #fff0f0);
+        color: #fff;
+        border-bottom: 2px solid #fff;
+      }
+    }
+  }
+
+  .order-tab-content {
+    width: 100%;
+    min-height: 320px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px !important;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(182,59,59,0.07);
+
+    th, td {
+      padding: 12px 10px !important;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    th {
+      background: #ffeaea;
+      color: #B63B3B;
+      font-weight: 700;
+      border-bottom: 2px solid #ff6b6b;
+    }
+
+    tr {
+      border-bottom: 1px solid #f3caca;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      color: #333;
+      font-weight: 500;
+    }
+    
+    tr:hover {
+      background: #fff6f6;
+    }
+  }
+}
