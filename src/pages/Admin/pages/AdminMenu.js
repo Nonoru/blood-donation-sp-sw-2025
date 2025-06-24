@@ -5,61 +5,57 @@ import '../styles/AdminMenu.scss'
 import { path } from 'framer-motion/client';
 
 const items = [
-    {id: 1, name: 'Thống kê', path: '/admin/'},
+    { id: 1, name: 'Thống kê', path: '/admin/' },
+    { id: 2, name: 'Tài khoản', path: '/admin/accounts' },
 
-    {id: 2, name: 'Tài khoản', path: '/admin/manage',
+    {
+        id: 3, name: 'Quản lý', path: '/admin/manage',
         child: [
-            {id: 2.1, name: 'Tài khoản nhân viên', path: '/accounts'},
-            {id: 2.2, name: 'Vai trò', path: '/roles'},
+            { id: 3.1, name: 'Phòng khám', path: '/clinics' },
+            { id: 3.2, name: 'Lịch trình ', path: '/schedules' }, 
         ]
     },
-    {id: 3, name: 'Dịch vụ', path: '/admin/manage',
+    {
+        id: 4, name: 'Dịch vụ', path: '/admin/orders',
         child: [
-            {id: 3.1, name: 'Đơn yêu cầu hiến máu', path: '/orders/donate'},
-            {id: 3.2, name: 'Lịch hẹn hiến máu'},
-            {id: 3.3, name: 'Lịch sử hiến máu'},
-            {id: 3.4, name: 'Đơn yêu cầu nhận máu'},
-            {id: 3.5, name: 'Lịch hẹn nhận máu'},
-            {id: 3.6, name: 'Lịch sử nhận máu'},
+            { id: 4.1, name: 'Đơn yêu cầu hiến máu', path: '/donates' },
+            { id: 4.2, name: 'Đơn hiến máu', path:'/accepts' },
+            { id: 4.3, name: 'Lịch sử đơn hiến máu' },
+            { id: 4.4, name: 'Đơn yêu cầu nhận máu' },
+            { id: 4.5, name: 'Lịch hẹn nhận máu' },
+            { id: 4.6, name: 'Lịch sử nhận máu' },
         ]
     },
-    {id: 4, name: 'Kho',
+    {
+        id: 5, name: 'Kho',
         child: [
-            {id: 4.1, name: 'Kho vật tư'},
-            {id: 4.2, name: 'Ngân hàng máu'},
+            { id: 5.1, name: 'Kho vật tư' },
+            { id: 5.2, name: 'Ngân hàng máu' },
         ]
     }
 ]
 function AdminMenu() {
-//   const [curClick, setCurClick] = useState(null);
-
-//   const clickItem = (id) => {
-//     if(id === curClick)
-//        return setCurClick(null)
-//     setCurClick(id);
-//   };
-
     const [itemShow, setItemShow] = useState(new Array(items.length).fill(false));
 
     const clickItem = (index) => {
-    setItemShow(prev => 
+        setItemShow(prev =>
             prev.map((val, i) => i === index ? !val : val)
         )
     };
 
     return (
         <nav className="admin-navbar">
-            <img src={title}/>
+            <img src={title} />
             {items.map((item) => (
-                <ul 
-                    key={item.id} 
-                    className={`menu-group ${itemShow[item.id-1]  ? 'active' : ''}`}
+                <ul
+                    key={item.id}
+                    className={`menu-group ${itemShow[item.id - 1] ? 'active' : ''}`}
                 >
                     <div className="menu-title"
-                        onClick={() => clickItem(item.id-1)}
+                        onClick={() => clickItem(item.id - 1)}
                     >
                         {
-                            item.id === 1 ? 
+                            item.id === 1 || item.id === 2 ?
                                 <Link to={item.path}>
                                     {item.name}
                                 </Link>
@@ -67,10 +63,10 @@ function AdminMenu() {
                         }
                     </div>
 
-                    { 
+                    {
                         item.child && (item.child).map((child) => (
                             <li
-                                key= {child.id}
+                                key={child.id}
                                 className={`menu-item`}
                             >
                                 <Link to={`${item.path}${child.path}`}>

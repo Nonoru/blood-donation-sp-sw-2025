@@ -1,4 +1,4 @@
-import '../styles/Blog.css';
+import '../styles/Blog.scss';
 import { Link } from 'react-router-dom';
 
 const posts = [
@@ -7,21 +7,21 @@ const posts = [
     title: 'Những chia sẻ đáng yêu về hiến máu',
     subtitle: 'Mỗi ngày luôn có hàng nghìn người bệnh đang cần máu...',
     image: '/img/pics/blog11.jpg',
-    date: 'Jun 10, 2025',
+    date: 'Thứ 2, 3/3/2025, 16:15',
   },
   {
     id: 2,
     title: 'Tình nguyện viên góp sức cứu người qua từng đơn vị máu',
     subtitle: 'Những hành động thiết thực như hiến máu tình nguyện...',
     image: '/img/pics/blog22.jpg',
-    date: 'Jun 5, 2025',
+    date: 'Thứ 5, 27/5/2025, 10:30',
   },
   {
     id: 3,
     title: 'Chiến sĩ công an – người hùng thầm lặng',
     subtitle: 'Không chỉ giữ gìn an ninh trật tự, họ còn tích cực hiến máu...',
     image: '/img/pics/blog3.jpg',
-    date: 'May 28, 2025',
+    date: 'Chủ nhật, 22/6/2025, 14:00',
   }
 ];
 

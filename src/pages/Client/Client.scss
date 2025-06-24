@@ -1,0 +1,15 @@
+.client-page{
+    .error-page{
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(to top, #afc9de, #6b9ddb);
+        gap: 10px;
+        h1{
+            color: white;
+        }
+        a{
+            padding-right: 20px !important;
+            padding-left: 20px !important;
+        }
+    }
+}
