@@ -33,7 +33,7 @@ const form = {
   address: '',
   bloodId: '',
   userId: '',
-  orderDateId: 1,
+  orderDateId: '',
 }
 const DonateBlood = () => {
   const [formData, setFormData] = useState(form);
@@ -41,10 +41,16 @@ const DonateBlood = () => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   }
+  const [agreeForTruth, setAgreeForTruth] = useState(false)
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(agreeForTruth === false){
+      toast.error("Vui lòng cam kết thông tin" , { className: 'my-toast' })
+      return
+    }
     try {
       formData.userId = getUserId();
+      formData.orderDateId = chooseOrderDate.orderDateId;
       const response = await UserApi.orderDonation(formData);
       if (response.data.code === 200) {
         setFormData({
@@ -57,7 +63,9 @@ const DonateBlood = () => {
           phone: '',
           address: '',
           bloodId: '',
+          orderDateId: '',
         })
+        setFormState(prev => !prev)
         toast.success(response.data.message, { className: 'my-toast' })
       }
     } catch (error) {
@@ -89,10 +97,11 @@ const DonateBlood = () => {
   useEffect(() => {
     getListDate();
   }, []);
-  const [formState,setFormState] = useState(false)
+  const [formState, setFormState] = useState(false)
   const [chooseOrderDate, setChooseOrderDate] = useState({})
-  const openForm = () => {
-    setFormState(prev => !prev)
+  const openForm = (item) => {
+    setFormState(prev => !prev);
+    setChooseOrderDate(item);
   }
   return (
     <div className="donate-blood-page blood-register-layout">
@@ -111,9 +120,20 @@ const DonateBlood = () => {
       </div>
       <div className="donate-form-section">
         {/* FORM điền thông tin */}
-        <form className={`donate-blood-form ${formState ? 'show':'hidden'}`} onSubmit={e => handleSubmit(e)}>
+        <form className={`donate-blood-form ${formState ? 'show' : 'hidden'}`} onSubmit={e => handleSubmit(e)}>
           <fieldset>
-            <legend>Thông tin cá nhân</legend>
+            <div className='form-title'>
+              <legend>Thông tin cá nhân</legend>
+              <div className='form-schedule'>
+                <div>
+                  <span>Ngày : {chooseOrderDate.orderDate}</span>
+                </div>
+                <div>
+                  <span>Giờ : {chooseOrderDate.orderTime}</span>
+                </div>
+              </div>
+              <button type="none" className="close-btn" onClick={e => openForm([])}> </button>
+            </div>
             <div className="form-row">
               {/* FULLNAME */}
               <label>
@@ -178,21 +198,21 @@ const DonateBlood = () => {
               </label>
             </div>
           </fieldset>
-          {/* <div className="form-row agree-row">
-            <label className="agree-label">
-              <input type="checkbox" name="agree" checked={formData.agree} onChange={e => handleChange(e)} required /> 
+          <div className="form-row agree-row">
+            <div className="agree-label">
+              <input type="checkbox" name="agree" onClick={e => setAgreeForTruth(!agreeForTruth)}/> 
               Tôi cam kết các thông tin trên là đúng sự thật và tự nguyện đăng ký hiến máu.
-            </label>
-          </div> */}
+            </div>
+          </div>
 
           <button type="submit" className="submit-btn">Gửi đăng ký</button>
         </form>
 
-        <div className={`order ${!formState ? 'show':'hidden'}`}>
+        <div className={`order ${!formState ? 'show' : 'hidden'}`}>
           <h2>Các mốc thời gian đặt lịch hiến máu</h2>
           <div className='order-date'>
             {listDate.map((item, index) => (
-              <div key={index} className={`order-date-ele`} onClick={e => openForm()}>
+              <div key={index} className={`order-date-ele`} onClick={e => openForm(item)}>
                 <div>
                   <span>Mã</span>
                   {item.orderDateId}

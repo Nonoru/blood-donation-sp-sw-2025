@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../../styles/OrderHistory.scss';
 
 const donationHistory = [
-  { id: 1, date: '01-05-2025', location: 'Bệnh viện A', status: 'Đã hiến', amount: '350ml' },
+  { id: '25/06/2025', date: 'A+', location: 'Bệnh viện A', status: 'Đã hiến', amount: '350ml' },
   { id: 2, date: '15-03-2025', location: 'Bệnh viện B', status: 'Đã hiến', amount: '350ml' },
 ];
 const receiveHistory = [
@@ -49,11 +49,14 @@ const OrderHistory = () => {
           <table className="order-table">
             <thead>
               <tr>
-                <th>STT</th>
-                <th>Ngày hiến</th>
-                <th>Địa điểm</th>
+                <th>Mã đơn</th>
+                <th>Ngày tạo</th>
+                <th>Loại máu</th>
                 <th>Số lượng</th>
+                <th>Ngày hiến</th>
+                <th>Phòng khám</th>
                 <th>Trạng thái</th>
+                <th>Lý do</th>
               </tr>
             </thead>
             <tbody>

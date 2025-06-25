@@ -170,7 +170,7 @@ function OrderBloodDonation() {
           <span>{chooseUserInfo.orderDonationId}</span>
         </div>
         <div>
-          <span>Tạo bởi</span>
+          <span>Tạo bởi username</span>
           <span>{chooseUserInfo.createByUsername}</span>
         </div>
         <div>
