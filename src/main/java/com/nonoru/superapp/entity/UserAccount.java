@@ -43,7 +43,7 @@ public class UserAccount {
     private RoleAccount role;
 
     @Column(nullable = false)
-    private boolean status = true;
+    private boolean status;
 
     @Builder
     public UserAccount(String fullName, String username, String hashPassword, String email, RoleAccount role, boolean status) {

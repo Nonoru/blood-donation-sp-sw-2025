@@ -1,6 +1,7 @@
 package com.nonoru.superapp.repository;
 
 import com.nonoru.superapp.entity.OrderBloodDonation;
+import com.nonoru.superapp.entity.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,4 +28,6 @@ public interface OrderBloodDonationRepository extends JpaRepository<OrderBloodDo
          AND o.orderDate.orderDateId IN(:listIdDate)
     """)
     Integer countColumnOrderByStatus(@Param("status1") int status1, @Param("status2") int status2, @Param("listIdDate") List<Long> listIdDate);
+
+    List<OrderBloodDonation> findAllByUserAccount(UserAccount userAccount);
 }

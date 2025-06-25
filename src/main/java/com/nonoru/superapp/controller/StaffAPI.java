@@ -31,6 +31,12 @@ public class StaffAPI {
     @Autowired
     private BloodService bloodService;
 
+    @GetMapping("/list-order")
+    public ApiResponse<List<OrderBloodDonationResponse>> getAll () {
+        return ApiResponse.<List<OrderBloodDonationResponse>>builder()
+                .data(bloodDonationService.getAllOrder())
+                .build();
+    }
     @GetMapping("/list-order/processing")
     public ApiResponse<List<OrderBloodDonationResponse>> getDonationOrdersProcessing () {
         return ApiResponse.<List<OrderBloodDonationResponse>>builder()
@@ -43,8 +49,6 @@ public class StaffAPI {
                 .data(bloodDonationService.getListOrderBloodDonationWaitingToAccept(StatusOfOrderDonation.COMFRIMMED))
                 .build();
     }
-
-
     @PostMapping("/create-date-donation")
     public ApiResponse<Void> createDateDonation(@RequestBody @Valid OrderDateDonationRequest request){
         dateDonationService.create(request);
@@ -102,4 +106,5 @@ public class StaffAPI {
                 .data(bloodDonationService.getBloodStaticToday())
                 .build();
     }
+
 }

@@ -3,7 +3,6 @@ package com.nonoru.superapp.service;
 import com.nonoru.superapp.dto.request.OrderBloodDonationRequest;
 import com.nonoru.superapp.dto.response.BloodOrderStaticResponse;
 import com.nonoru.superapp.dto.response.OrderBloodDonationResponse;
-import com.nonoru.superapp.dto.response.OrderDateDonationResponse;
 import com.nonoru.superapp.entity.BloodStorage;
 import com.nonoru.superapp.entity.OrderBloodDonation;
 import com.nonoru.superapp.entity.OrderDateDonation;
@@ -21,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -81,30 +81,68 @@ public class OrderBloodDonationService {
     public List<OrderBloodDonationResponse> getListOrderBloodDonationWaitingToAccept(StatusOfOrderDonation sts) {
         List<OrderBloodDonation> listOrder = orderDonationRepo.findAll();
         List<OrderBloodDonationResponse> response = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
         listOrder.forEach(order -> {
-            if(order.getStatus() == sts.getStatusCode()){
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                String orderDate = order.getOrderDate().getOrderDate().format(formatter);
-                String dob = order.getDob().format(formatter);
-                String createDate = order.getCreateDate().format(formatter);
+            LocalDate orderDate = order.getOrderDate().getOrderDate();
+            LocalTime orderTime = order.getOrderDate().getOrderTime();
+            if((today.isEqual(orderDate) && now.isBefore(orderTime) || today.isBefore(orderDate))){
+                if(order.getStatus() == sts.getStatusCode())
+                {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    String orderDateStr = orderDate.format(formatter);
+                    String dob = order.getDob().format(formatter);
+                    String createDate = order.getCreateDate().format(formatter);
 
-                OrderBloodDonationResponse orderResponse = OrderBloodDonationResponse.builder()
-                        .orderDonationId(order.getOrderDonationId())
-                        .fullName(order.getFullName())
-                        .phone(order.getPhone())
-                        .bloodType(order.getBlood().getBloodType())
-                        .amountBloodMl(order.getAmountBloodMl())
-                        .orderDate(orderDate)
-                        .createByUsername(order.getUserAccount().getUsername())
-                        .dob(dob)
-                        .createDate(createDate)
-                        .gender(order.getGender())
-                        .weight(order.getWeight())
-                        .cccdNumber(order.getCccdNumber())
-                        .address(order.getAddress())
-                        .build();
-                response.add(orderResponse);
+                    OrderBloodDonationResponse orderResponse = OrderBloodDonationResponse.builder()
+                            .orderDonationId(order.getOrderDonationId())
+                            .fullName(order.getFullName())
+                            .phone(order.getPhone())
+                            .bloodType(order.getBlood().getBloodType())
+                            .amountBloodMl(order.getAmountBloodMl())
+                            .orderDate(orderDateStr)
+                            .orderTime(orderTime)
+                            .createByUsername(order.getUserAccount().getUsername())
+                            .dob(dob)
+                            .createDate(createDate)
+                            .gender(order.getGender())
+                            .weight(order.getWeight())
+                            .cccdNumber(order.getCccdNumber())
+                            .address(order.getAddress())
+                            .build();
+                    response.add(orderResponse);
+                }
             }
+        });
+        return response;
+    }
+    public List<OrderBloodDonationResponse> getAllOrder() {
+        List<OrderBloodDonation> listOrder = orderDonationRepo.findAll();
+        List<OrderBloodDonationResponse> response = new ArrayList<>();
+        listOrder.forEach(order -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String orderDate = order.getOrderDate().getOrderDate().format(formatter);
+            String dob = order.getDob().format(formatter);
+            String createDate = order.getCreateDate().format(formatter);
+            LocalTime orderTime = order.getOrderDate().getOrderTime();
+            OrderBloodDonationResponse orderResponse = OrderBloodDonationResponse.builder()
+                    .orderDonationId(order.getOrderDonationId())
+                    .fullName(order.getFullName())
+                    .phone(order.getPhone())
+                    .bloodType(order.getBlood().getBloodType())
+                    .amountBloodMl(order.getAmountBloodMl())
+                    .orderDate(orderDate)
+                    .orderTime(orderTime)
+                    .createByUsername(order.getUserAccount().getUsername())
+                    .dob(dob)
+                    .createDate(createDate)
+                    .gender(order.getGender())
+                    .weight(order.getWeight())
+                    .cccdNumber(order.getCccdNumber())
+                    .address(order.getAddress())
+                    .statusCode(order.getStatus())
+                    .build();
+            response.add(orderResponse);
         });
         return response;
     }
