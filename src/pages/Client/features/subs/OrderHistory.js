@@ -5,17 +5,12 @@ const donationHistory = [
   { id: 1, date: '01-05-2025', location: 'Bệnh viện A', status: 'Đã hiến', amount: '350ml' },
   { id: 2, date: '15-03-2025', location: 'Bệnh viện B', status: 'Đã hiến', amount: '350ml' },
 ];
-const testHistory = [
-  { id: 1, date: '10-04-2025', result: 'Âm tính', location: 'Bệnh viện A', note: 'Bình thường' },
-  { id: 2, date: '20-02-2025', result: 'Dương tính', location: 'Bệnh viện B', note: 'Cần theo dõi' },
-];
 const receiveHistory = [
   { id: 1, date: '05-05-2025', hospital: 'Bệnh viện C', status: 'Đã nhận', amount: '250ml' },
 ];
 
 const tabs = [
-  { key: 'donate', label: 'Lịch sử hiến máu' },
-  { key: 'test', label: 'Lịch sử xét nghiệm máu' },
+  { key: 'donate', label: 'Lịch sử hiến máu' }, 
   { key: 'receive', label: 'Yêu cầu nhận máu' },
 ];
 
@@ -69,30 +64,6 @@ const OrderHistory = () => {
                   <td>{item.location}</td>
                   <td>{item.amount}</td>
                   <td>{item.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-        {activeTab === 'test' && (
-          <table className="order-table">
-            <thead>
-              <tr>
-                <th>STT</th>
-                <th>Ngày xét nghiệm</th>
-                <th>Kết quả</th>
-                <th>Địa điểm</th>
-                <th>Ghi chú</th>
-              </tr>
-            </thead>
-            <tbody>
-              {testHistory.map((item, idx) => (
-                <tr key={item.id}>
-                  <td>{idx + 1}</td>
-                  <td>{item.date}</td>
-                  <td>{item.result}</td>
-                  <td>{item.location}</td>
-                  <td>{item.note}</td>
                 </tr>
               ))}
             </tbody>
