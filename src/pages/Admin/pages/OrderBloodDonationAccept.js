@@ -5,7 +5,7 @@ import '../styles/OrderBloodDonation.scss';
 import { pre } from 'framer-motion/client';
 function OrderBloodDonationAccept() {
   const tHeadItems =
-    ["Mã", "Tên khách hàng", "Số điện thoại", "Nhóm máu", "Lượng máu(ml)", "Ngày hẹn", "Xem thêm", "Tạo bởi", "Duyệt", "Hủy"];
+    ["Mã", "Tên khách hàng", "Số điện thoại", "Nhóm máu", "Lượng máu(ml)", "Ngày hẹn", "Giờ hẹn","Xem thêm", "Duyệt", "Hủy"];
 
   const [moreInfo, setMoreInfo] = useState(false);
   const [orderInfo, setOrderInfo] = useState([]);
@@ -126,6 +126,41 @@ function OrderBloodDonationAccept() {
       }
     }
   }
+  const parseDate = (str) => {
+    if (!str) return new Date(0); // trả về ngày rất nhỏ nếu thiếu
+    const [day, month, year] = str.split('/');
+    return new Date(`${year}-${month}-${day}`);
+  };
+  const [sortDirection, setSortDirection] = useState('asc');
+  const sortRow = (row) => {
+    const direction = sortDirection === 'asc' ? 1 : -1;
+
+    switch (row) {
+      case 1:
+        setOrderInfo([...orderInfo].sort((a, b) => (a.orderDonationId - b.orderDonationId) * direction));
+        break;
+
+      case 4:
+        setOrderInfo([...orderInfo].sort((a, b) => a.bloodType.localeCompare(b.bloodType) * direction));
+        break;
+
+      case 5:
+        setOrderInfo([...orderInfo].sort((a, b) => (a.amountBloodMl - b.amountBloodMl) * direction));
+        break;
+
+      case 6:
+        setOrderInfo([...orderInfo].sort((a, b) => {
+          const dateA = parseDate(a.orderDate);
+          const dateB = parseDate(b.orderDate);
+          return (dateA - dateB) * direction;
+        }));
+        break;
+
+      default:
+        break;
+    }
+    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+  };
   return (
     <div className="order-blood-donation-page">
       <div
@@ -135,6 +170,10 @@ function OrderBloodDonationAccept() {
         <div>
           <span>Mã đơn</span>
           <span>{chooseUserInfo.orderDonationId}</span>
+        </div>
+        <div>
+          <span>Tạo bởi username</span>
+          <span>{chooseUserInfo.createByUsername}</span>
         </div>
         <div>
           <span>Họ tên</span>
@@ -170,7 +209,19 @@ function OrderBloodDonationAccept() {
         <thead>
           <tr>
             {tHeadItems.map((item, index) => (
-              <th key={index}>{item}</th>
+              <th key={index}>
+                {
+                  (index + 1) === 1 || (index + 1) === 4 || (index + 1) === 5 || (index + 1) === 9 || (index + 1) === 6 ?
+                    <div onClick={e => sortRow(index + 1)} className='cursor-pointer'>
+                      {item}
+                      <img src='/img/icons/sort.svg' className='img-sort'></img>
+                    </div>
+                    :
+                    <div>
+                      {item}
+                    </div>
+                }
+              </th>
             ))}
           </tr>
         </thead>
@@ -184,12 +235,12 @@ function OrderBloodDonationAccept() {
                 <td>{item.bloodType}</td>
                 <td>{item.amountBloodMl}</td>
                 <td>{item.orderDate}</td>
+                <td>{item.orderTime}</td>
                 <td
                   className="more-info"
                   onClick={() => watchUserInfo(item)}>
                   <span>Thông tin khách hàng</span>
                 </td>
-                <td>{item.createByUsername}</td>
                 <td>
                   <button className="btn-accept" onClick={e => acceptUserToInfo(item)}>
                     Hoàn tất
@@ -221,7 +272,7 @@ function OrderBloodDonationAccept() {
           <span className="text-w">Bạn có chắc chắn muốn hủy đơn này?</span>
           <span className="text-w">Mã đơn: {chooseUserInfo.orderDonationId}</span>
           <span className="text-w">Tên khách hàng: {chooseUserInfo.fullName}</span>
-          <form onSubmit={e => refuseOrder(e, chooseUserInfo.orderDonationId,reason)}>
+          <form onSubmit={e => refuseOrder(e, chooseUserInfo.orderDonationId, reason)}>
             <label>
               Nhập lý do hủy đơn
               <input required onChange={(e) => setReason(e.target.value)}></input>

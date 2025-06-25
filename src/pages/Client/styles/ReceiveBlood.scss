@@ -3,7 +3,7 @@
 /* ReceiveBlood page styles */
 .receive-blood-page {
   @extend .donate-blood-page;
-  
+  height: 1100px !important;
   .form-actions {
     display: flex;
     justify-content: center;

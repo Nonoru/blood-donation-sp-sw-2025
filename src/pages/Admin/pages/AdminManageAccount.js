@@ -221,6 +221,52 @@ function AdminManageAccount() {
             }
         }
     }
+    const [sortDirection, setSortDirection] = useState('asc');
+    const parseDate = (str) => {
+        if (!str) return new Date(0);
+        const [day, month, year] = str.split('/');
+        return new Date(`${year}-${month}-${day}`);
+    };
+    const sortRow = (row, table) => {
+        const direction = sortDirection === 'asc' ? 1 : -1;
+
+        switch (row) {
+            case 1:
+                if (table === 1)
+                    setEmpAccounts([...empAccounts].sort((a, b) => (a.id - b.id) * direction));
+                else
+                    setUserAccounts([...userAccounts].sort((a, b) => (a.id - b.id) * direction));
+                break;
+            case 2:
+                if (table === 1)
+                    setEmpAccounts([...empAccounts].sort((a, b) => a.username.localeCompare(b.username) * direction));
+                else
+                    setUserAccounts([...userAccounts].sort((a, b) => a.username.localeCompare(b.username) * direction));
+                break;
+            case 4:
+                if (table === 1)
+                    setEmpAccounts([...empAccounts].sort((a, b) => a.fullName.localeCompare(b.fullName) * direction));
+                else
+                    setUserAccounts([...userAccounts].sort((a, b) => a.fullName.localeCompare(b.fullName) * direction));
+                break;
+            case 6:
+                if (table === 1)
+                    setEmpAccounts([...empAccounts].sort((a, b) => {
+                        const dateA = parseDate(a.createAt);
+                        const dateB = parseDate(b.createAt);
+                        return (dateA - dateB) * direction;
+                    }));
+                else
+                    setUserAccounts([...userAccounts].sort((a, b) => {
+                        const dateA = parseDate(a.createAt);
+                        const dateB = parseDate(b.createAt);
+                        return (dateA - dateB) * direction;
+                    }));
+            default:
+                break;
+        }
+        setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    };
     return (
         <div className="list-account-page">
             {/* BUTTON */}
@@ -292,8 +338,20 @@ function AdminManageAccount() {
                 <table>
                     <thead>
                         <tr>
-                            {attrTableHead.map((a, index) => (
-                                <th key={index}> {a} </th>
+                            {attrTableHead.map((item, index) => (
+                                <th key={index}>
+                                    {
+                                        (index + 1) === 1 || (index + 1) === 2 || (index + 1) === 4 || (index + 1) === 6 ?
+                                            <div onClick={e => sortRow(index + 1, 1)} className='cursor-pointer'>
+                                                {item}
+                                                <img src='/img/icons/sort.svg' className='img-sort'></img>
+                                            </div>
+                                            :
+                                            <div>
+                                                {item}
+                                            </div>
+                                    }
+                                </th>
                             ))}
                             <th>Chỉnh sửa</th>
                             <th>Xóa</th>
@@ -333,8 +391,20 @@ function AdminManageAccount() {
                 <table>
                     <thead>
                         <tr>
-                            {attrTableHead.map((a, index) => (
-                                <th key={index}> {a} </th>
+                            {attrTableHead.map((item, index) => (
+                                <th key={index}>
+                                    {
+                                        (index + 1) === 1 || (index + 1) === 2 || (index + 1) === 4 || (index + 1) === 6 ?
+                                            <div onClick={e => sortRow(index + 1,2)} className='cursor-pointer'>
+                                                {item}
+                                                <img src='/img/icons/sort.svg' className='img-sort'></img>
+                                            </div>
+                                            :
+                                            <div>
+                                                {item}
+                                            </div>
+                                    }
+                                </th>
                             ))}
                         </tr>
                     </thead>

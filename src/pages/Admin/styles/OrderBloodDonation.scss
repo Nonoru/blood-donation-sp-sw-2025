@@ -51,6 +51,17 @@
                 letter-spacing: 0.5px;
                 position: relative;
 
+                div {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+
+                    .img-sort {
+                        height: 16px;
+                        width: 16px;
+                    }
+                }
+
                 &::after {
                     content: '';
                     position: absolute;
@@ -282,7 +293,7 @@
             margin-bottom: 8px !important;
 
             span:nth-child(1) {
-                width: 90px;
+                width: 160px;
                 font-weight: 600;
                 color: #ffe397;
             }

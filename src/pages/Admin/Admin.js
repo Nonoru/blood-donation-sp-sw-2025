@@ -12,6 +12,7 @@ import * as Token from '../../util/Token';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import './Admin.scss'
+import OrderBloodDonationGetAll from './pages/OrderBloodDonationGetAll';
 function AdminPage(){
     const navigate = useNavigate();
     const goToHome = () => {
@@ -39,6 +40,7 @@ function AdminPage(){
                 <Route path='/manage/schedules' element={<OrderDateDonation/>}/>
                 <Route path='/orders/donates' element={<OrderBloodDonation/>}/>
                 <Route path='/orders/accepts' element={<OrderBloodDonationAccept/>}/>
+                <Route path='/orders/list-all' element={<OrderBloodDonationGetAll/>}/>
                 <Route path='/for-bidden' element={<ForBidden/>}/>
             </Routes>
         </div>

@@ -20,7 +20,7 @@ const items = [
         child: [
             { id: 4.1, name: 'Đơn yêu cầu hiến máu', path: '/donates' },
             { id: 4.2, name: 'Đơn hiến máu', path:'/accepts' },
-            { id: 4.3, name: 'Lịch sử đơn hiến máu' },
+            { id: 4.3, name: 'Lịch sử đơn hiến máu', path:'/list-all'},
             { id: 4.4, name: 'Đơn yêu cầu nhận máu' },
             { id: 4.5, name: 'Lịch hẹn nhận máu' },
             { id: 4.6, name: 'Lịch sử nhận máu' },

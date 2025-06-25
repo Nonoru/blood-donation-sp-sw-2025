@@ -51,6 +51,15 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
         position: relative;
+        div{
+          display: flex;
+          gap: 5px;
+          align-items: center;
+          img{
+            width: 16px !important; 
+            height: 16px !important;
+          }
+        }
 
         &::after {
           content: '';
