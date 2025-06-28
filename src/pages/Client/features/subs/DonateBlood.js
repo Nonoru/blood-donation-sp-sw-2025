@@ -91,7 +91,6 @@ const DonateBlood = () => {
         listDate.push(i)
       });
       setListDate(listDate);
-      console.log(listDate)
     }
   };
   useEffect(() => {
