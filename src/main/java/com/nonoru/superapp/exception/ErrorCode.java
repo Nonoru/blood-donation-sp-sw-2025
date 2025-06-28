@@ -54,7 +54,9 @@ public enum ErrorCode {
     ORDER_TIME_MUST_IN_FUTURE(32,"Giờ đặt lịch phải ở tương lai"),
     ORDER_TIME_EXISTED_IN_DAY(33, "Thời gian này đã được tạo trong ngày"),
 
-    ACCOUNT_BLACKLIST(34, "Tài khoản đã bị khóa")
+    ACCOUNT_BLACKLIST(34, "Tài khoản đã bị khóa"),
+
+    AUTHENTICATION_ORDER_ERROR(35,"Bạn có quyền truy cập vào")
     ;
     private int code;
     private String message;

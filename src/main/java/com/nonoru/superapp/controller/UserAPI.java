@@ -3,10 +3,13 @@ package com.nonoru.superapp.controller;
 import com.nonoru.superapp.dto.request.OrderBloodDonationRequest;
 import com.nonoru.superapp.dto.response.ApiResponse;
 import com.nonoru.superapp.dto.response.OrderDateDonationResponse;
+import com.nonoru.superapp.dto.response.UserOrderDonationResponse;
 import com.nonoru.superapp.service.OrderBloodDonationService;
 import com.nonoru.superapp.service.OrderDateDonationService;
+import com.nonoru.superapp.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +22,8 @@ public class UserAPI {
     private OrderBloodDonationService bloodDonationService;
     @Autowired
     private OrderDateDonationService dateDonationService;
+    @Autowired
+    private UserService userService;
     @PostMapping("/order-donation")
     public ApiResponse<Void> createOrder
             (@Valid @RequestBody OrderBloodDonationRequest request) {
@@ -32,6 +37,13 @@ public class UserAPI {
     public ApiResponse<List<OrderDateDonationResponse>> getOrderDate(){
         return ApiResponse.<List<OrderDateDonationResponse>>builder()
                 .data(dateDonationService.getOrderDateDonationForUser())
+                .build();
+    }
+    @GetMapping("/list-order/{id}")
+    public ApiResponse<List<UserOrderDonationResponse>> getListOrder(@PathVariable("id") long id){
+        System.out.println(id);
+        return ApiResponse.<List<UserOrderDonationResponse>>builder()
+                .data(userService.getOrderDonationOnlySelf(id))
                 .build();
     }
 }

@@ -29,5 +29,5 @@ public interface OrderBloodDonationRepository extends JpaRepository<OrderBloodDo
     """)
     Integer countColumnOrderByStatus(@Param("status1") int status1, @Param("status2") int status2, @Param("listIdDate") List<Long> listIdDate);
 
-    List<OrderBloodDonation> findAllByUserAccount(UserAccount userAccount);
+    List<OrderBloodDonation> findAllByUserAccount_Id(Long userAccountId);
 }
