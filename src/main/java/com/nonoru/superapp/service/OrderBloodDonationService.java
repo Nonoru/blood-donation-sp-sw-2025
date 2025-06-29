@@ -17,12 +17,16 @@ import com.nonoru.superapp.repository.UserRepository;
 import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -38,8 +42,14 @@ public class OrderBloodDonationService {
     private UserRepository userRepo;
     @Autowired
     private BloodStorageRepository bloodStorageRepo;
+
     /* CREATE BLOOD DONATION ORDERs - USER*/
     public void createOrderBloodDonation(OrderBloodDonationRequest request) {
+        long timePreOrder
+                = checkPreOrder() != null ? ChronoUnit.DAYS.between(checkPreOrder(), LocalDate.now()) : 0;
+        if(timePreOrder < 60){
+            throw new AppException(ErrorCode.TIME_INVALID_FOR_NEXT_ORDER);
+        }
         int age = LocalDate.now().getYear() - request.getDob().getYear();
         if(age < 18){
             throw new AppException(ErrorCode.YEAR_LOWER_18);
@@ -75,9 +85,17 @@ public class OrderBloodDonationService {
                 .status(StatusOfOrderDonation.PROCESSING.getStatusCode())
                 .createDate(LocalDate.now())
                 .build();
-        orderDonationRepo.save(order);
+//        orderDonationRepo.save(order);
     }
     /* GET LIST BLOOD DONATION ORDERS - STAFF */
+    public LocalDate checkPreOrder(){
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long idJwt = jwt.getClaim("id");
+        List<OrderBloodDonation> orders = orderDonationRepo.findAllByUserAccount_Id(idJwt);
+        orders.removeIf(order -> order.getStatus() != StatusOfOrderDonation.COMPLETED.getStatusCode());
+        OrderBloodDonation order = orders.stream().max(Comparator.comparing(x -> x.getOrderDate().getOrderDate())).orElse(null);
+        return order.getOrderDate().getOrderDate();
+    }
     public List<OrderBloodDonationResponse> getListOrderBloodDonationWaitingToAccept(StatusOfOrderDonation sts) {
         List<OrderBloodDonation> listOrder = orderDonationRepo.findAll();
         List<OrderBloodDonationResponse> response = new ArrayList<>();

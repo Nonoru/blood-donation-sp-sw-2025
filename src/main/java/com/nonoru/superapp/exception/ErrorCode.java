@@ -56,7 +56,10 @@ public enum ErrorCode {
 
     ACCOUNT_BLACKLIST(34, "Tài khoản đã bị khóa"),
 
-    AUTHENTICATION_ORDER_ERROR(35,"Bạn có quyền truy cập vào")
+    AUTHENTICATION_ORDER_ERROR(35,"Bạn có quyền truy cập vào"),
+
+    TIME_INVALID_FOR_NEXT_ORDER(36, "Cơ thể bạn vẫn chưa phục hồi. Vui lòng chờ đủ 60 ngày.")
+
     ;
     private int code;
     private String message;
