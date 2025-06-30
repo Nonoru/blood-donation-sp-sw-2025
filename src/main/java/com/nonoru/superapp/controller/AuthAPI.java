@@ -1,6 +1,7 @@
 package com.nonoru.superapp.controller;
 
 import com.nimbusds.jose.JOSEException;
+import com.nonoru.superapp.dto.request.ChangePasswordRequest;
 import com.nonoru.superapp.dto.request.IntrospectRequest;
 import com.nonoru.superapp.dto.response.ApiResponse;
 import com.nonoru.superapp.dto.response.AuthResponse;
@@ -56,6 +57,12 @@ public class AuthAPI {
     ApiResponse<UserAccount> getUser (@PathVariable("id") Long id){
         return ApiResponse.<UserAccount>builder()
                 .data(authService.getUserAccount(id))
+                .build();
+    }
+    @PutMapping("/user/change/password")
+    ApiResponse<Void> changePassword (@RequestBody @Valid ChangePasswordRequest request){
+        authService.changePassword(request);
+        return ApiResponse.<Void>builder()
                 .build();
     }
 

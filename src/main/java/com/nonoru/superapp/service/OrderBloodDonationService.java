@@ -85,7 +85,7 @@ public class OrderBloodDonationService {
                 .status(StatusOfOrderDonation.PROCESSING.getStatusCode())
                 .createDate(LocalDate.now())
                 .build();
-//        orderDonationRepo.save(order);
+        orderDonationRepo.save(order);
     }
     /* GET LIST BLOOD DONATION ORDERS - STAFF */
     public LocalDate checkPreOrder(){

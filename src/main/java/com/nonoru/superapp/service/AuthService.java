@@ -6,6 +6,7 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.nonoru.superapp.dto.request.ChangePasswordRequest;
 import com.nonoru.superapp.dto.request.IntrospectRequest;
 import com.nonoru.superapp.dto.response.AuthResponse;
 import com.nonoru.superapp.dto.response.IntrospectResponse;
@@ -25,6 +26,7 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.method.support.CompositeUriComponentsContributor;
 
 import java.text.ParseException;
 import java.time.Instant;
@@ -38,9 +40,12 @@ public class AuthService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CompositeUriComponentsContributor compositeUriComponentsContributor;
 
     public boolean checkPassword(String rawPassword, String hashedPassword) {
         return passwordEncoder.matches(rawPassword, hashedPassword);
@@ -145,5 +150,27 @@ public class AuthService {
     @PostAuthorize("returnObject.username == authentication.name")
     public UserAccount getUserAccount(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
+    }
+
+    public void changePassword(ChangePasswordRequest request) {
+        if (userService.hasId(request.getUserId())){
+            UserAccount user = userRepository.findById(request.getUserId()).orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
+            boolean validOldPass = passwordEncoder.matches(request.getOldPassword(), user.getHashPassword());
+            boolean validNewPass = request.getNewPassword().equals(request.getConfirmNewPassword());
+            if(!validOldPass) {
+                throw new AppException(ErrorCode.OLD_PASSWORD_INVALID);
+            }else {
+                if(!validNewPass) {
+                    throw new AppException(ErrorCode.PASSWORD_CONFIRM_INCORRECT);
+                }
+                String newHashPassword = passwordEncoder.encode(request.getNewPassword());
+                if(passwordEncoder.matches(request.getNewPassword(), newHashPassword)) {
+                    user.setHashPassword(newHashPassword);
+                    userRepository.save(user);
+                }
+            }
+        }else{
+            throw new AppException(ErrorCode.FUNCTION_NOT_ALLOW);
+        }
     }
 }

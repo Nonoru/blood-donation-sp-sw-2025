@@ -58,7 +58,11 @@ public enum ErrorCode {
 
     AUTHENTICATION_ORDER_ERROR(35,"Bạn có quyền truy cập vào"),
 
-    TIME_INVALID_FOR_NEXT_ORDER(36, "Cơ thể bạn vẫn chưa phục hồi. Vui lòng chờ đủ 60 ngày.")
+    TIME_INVALID_FOR_NEXT_ORDER(36, "Cơ thể bạn vẫn chưa phục hồi. Vui lòng chờ đủ 60 ngày."),
+
+    FUNCTION_NOT_ALLOW(37, "Chức năng bị cấm"),
+
+    OLD_PASSWORD_INVALID(38, "Mật khẩu cũ không chính xác")
 
     ;
     private int code;
