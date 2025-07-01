@@ -30,7 +30,6 @@ const OrderHistory = () => {
         console.log(list)
       }
     } catch (error) {
-      console.log(error.response.data)
       if (error.response.status === 401) {
         toast.error("Bạn cần đăng nhập để thực hiện chức năng này", { className: 'my-toast' });
       } else if (error.response.status === 403) {
@@ -114,7 +113,8 @@ const OrderHistory = () => {
                   <td>{item.amountBloodMl}</td>
                   <td>{item.donateDate}</td>
                   <td>{item.clinicName}</td>
-                  <td><div>
+                  <td>
+                    <div className='status-code'>
                     {renderStatusDiv(item.statusCode)}
                     </div></td>
                   <td>{item.reason}</td>

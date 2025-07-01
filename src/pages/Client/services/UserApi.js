@@ -15,3 +15,6 @@ export const getOrderDate = async () =>{
 export const getOrderHistory = async (userId) =>{
     return await axios.get(`${url}/list-order/${userId}`, { headers: createHeaders() });
 };
+export const orderDonationReceiving = async (formData) => {
+  return await axios.post(`${url}/order-receiving `, formData, { headers: createHeaders() });
+};

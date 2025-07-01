@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as StaffApi from '../services/StaffApi'
 import { toast } from 'react-toastify';
 import '../styles/OrderBloodDonation.scss';
-function OrderBloodDonationGetAll() {
+function OrderBloodDonationHistory() {
   const tHeadItems =
     ["Mã", "Tên khách hàng", "Số điện thoại", "Nhóm máu", "Lượng máu(ml)", "Ngày hẹn", "Giờ hẹn", "Xem thêm", "Trạng thái"];
 
@@ -211,4 +211,4 @@ function OrderBloodDonationGetAll() {
     </div>
   );
 }
-export default OrderBloodDonationGetAll;
+export default OrderBloodDonationHistory;

@@ -3,25 +3,6 @@ import { toast } from 'react-toastify';
 import { getUserId } from '../../../../util/Token'
 import * as UserApi from '../../services/UserApi';
 import '../../styles/DonateBlood.scss';
-// const healthQuestions = [
-//   'Bạn đã từng hiến máu chưa ?',
-//   'Hiện tại, bạn có bị các bệnh: viêm khớp, đau dạ dày, viêm gan, vàng da, bệnh tim, huyết áp thấp/cao, ho kéo dài,bệnh máu, lao ?',
-//   'Trong vòng 12 tháng gần đây, bạn có mắc các bệnh và đã được điều trị khỏi: Sốt rét, Giang mai, Lao, Viêm não, Phẫu thuật ngoại khoa ?',
-//   'Trong vòng 12 tháng gần đây, bạn có dược truyền máu và các chể phẩm máu ?',
-//   'Trong vòng 12 tháng gần đây, bạn có tiêm Vaccin bệnh dại ?',
-//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Sút cân nhanh không rõ nguyên nhân ?',
-//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Nổi hạch kéo dài ?',
-//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Chữa răng, châm cứu ?',
-//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Xăm mình, xỏ lỗ tai, lỗ mũi ?',
-//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Sử dụng ma tuý ?',
-//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: Quan hệ tình dục với người nhiễm HIV hoặc người có hành vì nguy cơ lây nhiễm HIV ?',
-//   'Trong vòng 6 tháng gần đây, bạn có triệu chứng sau không: QUan hệ tình dục với người cùng giới ?',
-//   'Trong vòng 7 ngày gần đây, bạn có: Bị cảm cúm ( ho, nhức đầu, sốt... ) ?',
-//   'Trong vòng 7 ngày gần đây, bạn có: Dùng thuốc kháng sinh: Aspirin, Corticol ?',
-//   'Trong vòng 7 ngày gần đây, bạn có: Tiêm Vacxin phòng: Viêm gan siêu vi B, Human Papilloma Virus,... ?',
-//   'Bạn có đồng ý xét nghiệm HIV, nhận thông báo và được tư vấn khi kết quả xét nghiệm HIV nghi ngờ hoặc dương tính ?',
-//   'Bạn có đồng ý hiến máu tình nguyện và tuân thủ các quy định của chương trình ?'
-// ];
 const form = {
   fullName: '',
   dob: '',
@@ -44,8 +25,8 @@ const DonateBlood = () => {
   const [agreeForTruth, setAgreeForTruth] = useState(false)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(agreeForTruth === false){
-      toast.error("Vui lòng cam kết thông tin" , { className: 'my-toast' })
+    if (agreeForTruth === false) {
+      toast.error("Vui lòng cam kết thông tin", { className: 'my-toast' })
       return
     }
     try {
@@ -84,13 +65,30 @@ const DonateBlood = () => {
   }
   const [listDate, setListDate] = useState([])
   const getListDate = async () => {
-    const response = await UserApi.getOrderDate();
-    if (response.data.code === 200) {
-      const listDate = [];
-      response.data.data.forEach(i => {
-        listDate.push(i)
-      });
-      setListDate(listDate);
+    try {
+      const response = await UserApi.getOrderDate();
+      if (response.data.code === 200) {
+        const listDate = [];
+        response.data.data.forEach(i => {
+          listDate.push(i)
+        });
+        if(listDate.length === 0)
+          toast.error("Hiện tại không có ngày đặt lịch",{className : 'my-toast'})
+        else
+          setListDate(listDate);
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        toast.error("Bạn cần đăng nhập để thực hiện chức năng này", { className: 'my-toast' });
+      } else if (error.response.status === 403) {
+        toast.error("Bạn không có quyền sử dụng", { className: 'my-toast' });
+      } else if (error.response.data) {
+        toast.error(error.response.data.message, { className: 'my-toast' });
+      } else if (error.request) {
+        toast.error("Không nhận được phản hồi từ server", { className: 'my-toast' });
+      } else {
+        toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
+      }
     }
   };
   useEffect(() => {
@@ -199,7 +197,7 @@ const DonateBlood = () => {
           </fieldset>
           <div className="form-row agree-row">
             <div className="agree-label">
-              <input type="checkbox" name="agree" onClick={e => setAgreeForTruth(!agreeForTruth)}/> 
+              <input type="checkbox" name="agree" onClick={e => setAgreeForTruth(!agreeForTruth)} />
               Tôi cam kết các thông tin trên là đúng sự thật và tự nguyện đăng ký hiến máu.
             </div>
           </div>
