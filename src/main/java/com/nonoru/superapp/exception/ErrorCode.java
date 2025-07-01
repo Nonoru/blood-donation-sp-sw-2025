@@ -62,7 +62,9 @@ public enum ErrorCode {
 
     FUNCTION_NOT_ALLOW(37, "Chức năng bị cấm"),
 
-    OLD_PASSWORD_INVALID(38, "Mật khẩu cũ không chính xác")
+    OLD_PASSWORD_INVALID(38, "Mật khẩu cũ không chính xác"),
+
+    STATUS_OF_RECEIVING_ORDER_EMPTY(39, "Trạng thái đơn nhận máu không thể bỏ trống")
 
     ;
     private int code;

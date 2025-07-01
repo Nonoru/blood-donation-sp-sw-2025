@@ -1,6 +1,7 @@
 package com.nonoru.superapp.controller;
 
 import com.nonoru.superapp.dto.request.OrderBloodDonationRequest;
+import com.nonoru.superapp.dto.request.OrderBloodReceiveRequest;
 import com.nonoru.superapp.dto.response.ApiResponse;
 import com.nonoru.superapp.dto.response.OrderDateDonationResponse;
 import com.nonoru.superapp.dto.response.UserOrderDonationResponse;
@@ -27,7 +28,6 @@ public class UserAPI {
     @PostMapping("/order-donation")
     public ApiResponse<Void> createOrder
             (@Valid @RequestBody OrderBloodDonationRequest request) {
-        System.out.println(request.toString());
         bloodDonationService.createOrderBloodDonation(request);
         return ApiResponse.<Void>builder()
                 .message("Tạo đơn hoàn tất! Vui lòng chờ để được xét duyệt")
@@ -41,9 +41,16 @@ public class UserAPI {
     }
     @GetMapping("/list-order/{id}")
     public ApiResponse<List<UserOrderDonationResponse>> getListOrder(@PathVariable("id") long id){
-        System.out.println(id);
         return ApiResponse.<List<UserOrderDonationResponse>>builder()
                 .data(userService.getOrderDonationOnlySelf(id))
+                .build();
+    }
+    @PostMapping("/order-receiving")
+    public ApiResponse<Void> createOrderReceiving
+            (@Valid @RequestBody OrderBloodReceiveRequest request) {
+        System.out.println(request.toString());
+        return ApiResponse.<Void>builder()
+                .message("Tạo đơn hoàn tất! Vui lòng chờ để được xét duyệt")
                 .build();
     }
 }

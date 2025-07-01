@@ -1,6 +1,5 @@
 package com.nonoru.superapp.entity;
 
-import com.nonoru.superapp.enums.StatusOfOrderDonation;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;

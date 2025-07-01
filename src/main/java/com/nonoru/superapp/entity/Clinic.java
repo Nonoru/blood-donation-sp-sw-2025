@@ -13,4 +13,7 @@ public class Clinic {
     private int id;
 
     private String clinicName;
+
+    @Column(columnDefinition = "NVARCHAR(20)")
+    private String type;
 }
