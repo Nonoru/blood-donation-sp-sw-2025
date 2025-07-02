@@ -5,6 +5,9 @@ import BlogPage from '../Client/pages/Blog'
 import Blog1 from '../Client/pages/Blog1'
 import Blog2 from '../Client/pages/Blog2'
 import Blog3 from '../Client/pages/Blog3'
+import Blog4 from '../Client/pages/Blog4'
+import Blog5 from '../Client/pages/Blog5'
+import Blog6 from '../Client/pages/Blog6'
 import DocPage from '../Client/pages/Doc'
 import Doc1 from '../Client/pages/Doc1'
 import Doc2 from '../Client/pages/Doc2'
@@ -16,8 +19,10 @@ import ReceiveBlood from '../Client/features/subs/ReceiveBlood'
 import OrderHistory from '../Client/features/subs/OrderHistory'
 import GiftExchange from '../Client/features/subs/GiftExchange'
 import ErrorPage from '../Client/pages/ErrorPage'
+import Chatbot from '../Client/pages/Chatbot'
 import { ToastContainer } from 'react-toastify';
 import './Client.scss'
+
 
 function Client ({userInfo, setUserInfo}) {
     return(
@@ -37,12 +42,16 @@ function Client ({userInfo, setUserInfo}) {
                 <Route path='/blog/1' element={<Blog1/>}/>
                 <Route path='/blog/2' element={<Blog2/>}/>
                 <Route path='/blog/3' element={<Blog3/>}/>
+                <Route path='/blog/4' element={<Blog4/>}/>
+                <Route path='/blog/5' element={<Blog5/>}/>
+                <Route path='/blog/6' element={<Blog6/>}/>
                 <Route path='/doc/1' element={<Doc1/>}/>
                 <Route path='/doc/2' element={<Doc2/>}/>    
                 <Route path='/doc/3' element={<Doc3/>}/>
 
                 <Route path='*' element={<ErrorPage/>}/>
             </Routes>
+            <Chatbot />
         </div>
     )
 }

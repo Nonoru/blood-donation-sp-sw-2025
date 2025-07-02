@@ -5,7 +5,7 @@
   background-color: #f2f4f6;
   max-width: 800px;
   margin: 0 auto;
-  text-align: center;
+  text-align: left;
   height: auto;
   position: absolute;
   top: 70px; /* Điều chỉnh giá trị này tùy thuộc vào chiều cao của thanh menu */
@@ -97,7 +97,6 @@ h2 {
   color: #333;
   margin-bottom: 20px;
   text-transform: uppercase;
-  // border-bottom: 2px solid #007bff;  /* Tạo đường kẻ dưới cho tiêu đề */
   padding-bottom: 10px;
   font-weight: bold;  /* Đảm bảo câu bên trong thẻ strong sẽ in đậm */
 }

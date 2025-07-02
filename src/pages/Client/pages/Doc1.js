@@ -12,7 +12,7 @@ function Doc1() {
       </p>
 
       <section className="doc-section">
-        <h2>🧬 Nhóm máu là gì?</h2>
+        <h2> Nhóm máu là gì?</h2>
         <p>
           Nhóm máu được phân loại dựa trên sự hiện diện hoặc không có của các kháng nguyên trên bề mặt hồng cầu. 
           Hệ thống phổ biến nhất là hệ ABO và yếu tố Rh, tạo nên 8 nhóm máu chính như: O+, A-, AB-, v.v.
@@ -20,14 +20,14 @@ function Doc1() {
       </section>
 
       <section className="doc-section">
-        <h2>🌍 Tỷ lệ nhóm máu tại Việt Nam và thế giới</h2>
+        <h2> Tỷ lệ nhóm máu tại Việt Nam và thế giới</h2>
         <p>
           Nhóm máu O+ là phổ biến nhất trên toàn cầu và tại Việt Nam. Trong khi đó, các nhóm máu hiếm như O- hay AB- rất cần được hiến định kỳ để bảo đảm cứu người trong các tình huống khẩn cấp.
         </p>
       </section>
 
       <section className="doc-section">
-        <h2>🔁 Khả năng truyền máu giữa các nhóm</h2>
+        <h2> Khả năng truyền máu giữa các nhóm</h2>
         <p>
           Nhóm máu O- được gọi là người cho phổ thông vì có thể truyền cho tất cả các nhóm khác, trong khi AB+ là người nhận phổ thông. 
           Việc hiểu rõ tương thích máu giúp tránh các phản ứng miễn dịch nguy hiểm.
@@ -35,19 +35,19 @@ function Doc1() {
       </section>
 
       <section className="doc-section">
-        <h2>📊 Bảng tương thích truyền máu giữa các nhóm</h2>
+        <h2> Bảng tương thích truyền máu giữa các nhóm</h2>
         <img src="/img/pics/doc1.jpg" alt="Hiến máu" className="detail-image" />
       </section>
 
       <section className="doc-section">
-        <h2>💉 Huyết tương và tiểu cầu</h2>
+        <h2> Huyết tương và tiểu cầu</h2>
         <p>
           Trong hiến huyết tương, nhóm AB là người cho huyết tương phổ thông. Khi hiến tiểu cầu, yếu tố Rh và kháng nguyên phụ cần được xét nghiệm kỹ để đảm bảo an toàn tuyệt đối.
         </p>
       </section>
 
       <section className="doc-section">
-        <h2>📚 Tài liệu tham khảo</h2>
+        <h2> Tài liệu tham khảo</h2>
         <ul className="doc-list">
           <li><a href="#">WHO Blood Type Compatibility Chart (PDF)</a></li>
           <li><a href="#">Báo cáo nhóm máu tại Việt Nam – Viện Huyết học</a></li>

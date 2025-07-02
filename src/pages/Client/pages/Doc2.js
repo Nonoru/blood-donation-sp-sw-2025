@@ -11,14 +11,14 @@ function Doc2() {
       </p>
 
       <section className="doc-section">
-        <h2>🧬 Nhóm máu và sự phân loại</h2>
+        <h2> Nhóm máu và sự phân loại</h2>
         <p>
           Nhóm máu được phân loại chủ yếu dựa trên sự hiện diện hoặc không có của các kháng nguyên trên bề mặt hồng cầu. Hệ thống phổ biến nhất là hệ ABO và yếu tố Rh, tạo nên 8 nhóm máu chính: O+, O-, A+, A-, B+, B-, AB+, AB-. Sự hiểu biết về các nhóm máu này là cơ sở để cứu sống người bệnh, đặc biệt là trong các tình huống cần truyền máu khẩn cấp.
         </p>
       </section>
 
       <section className="doc-section">
-        <h2>🌍 Tầm quan trọng của nhóm máu trong việc truyền máu</h2>
+        <h2> Tầm quan trọng của nhóm máu trong việc truyền máu</h2>
         <p>
           Nhóm máu O-: Đây là nhóm máu hiếm và có thể truyền cho tất cả các nhóm máu khác, khiến người có nhóm máu O- trở thành "người cho phổ thông". Việc duy trì nguồn máu O- là rất quan trọng trong các bệnh viện để ứng phó với các tình huống khẩn cấp.
         </p>
@@ -28,7 +28,7 @@ function Doc2() {
       </section>
 
       <section className="doc-section">
-        <h2>🔁 Lý do tại sao hiến máu lại quan trọng</h2>
+        <h2> Lý do tại sao hiến máu lại quan trọng</h2>
         <p>
           Hiến máu không chỉ giúp cứu sống người khác mà còn mang lại nhiều lợi ích cho người hiến, bao gồm:
         </p>
@@ -40,14 +40,14 @@ function Doc2() {
       </section>
 
       <section className="doc-section">
-        <h2>🏥 Thực trạng hiến máu ở Việt Nam</h2>
+        <h2> Thực trạng hiến máu ở Việt Nam</h2>
         <p>
           Việt Nam đang đối mặt với tình trạng thiếu máu trầm trọng, đặc biệt là các nhóm máu hiếm. Sự thiếu hụt này gây khó khăn trong việc cấp cứu và điều trị cho bệnh nhân cần truyền máu. Hệ thống y tế quốc gia cần có chiến lược khuyến khích người dân tham gia hiến máu định kỳ để cung cấp nguồn máu ổn định.
         </p>
       </section>
 
       <section className="doc-section">
-        <h2>📝 Làm thế nào để tham gia hiến máu?</h2>
+        <h2> Làm thế nào để tham gia hiến máu?</h2>
         <p>
           Mọi công dân từ 18 đến 60 tuổi, sức khỏe tốt đều có thể tham gia hiến máu. Quá trình hiến máu đơn giản và nhanh chóng, chỉ mất khoảng 30-45 phút, nhưng lại mang lại lợi ích rất lớn cho cộng đồng. Bạn có thể tham gia hiến máu tại các bệnh viện hoặc các chương trình hiến máu tình nguyện được tổ chức định kỳ tại các địa phương.
         </p>
@@ -55,7 +55,7 @@ function Doc2() {
 
 
       <section className="doc-section">
-        <h2>📚 Tài liệu tham khảo</h2>
+        <h2> Tài liệu tham khảo</h2>
         <ul className="doc-list">
           <li><a href="#">WHO Blood Type Compatibility Chart (PDF)</a></li>
           <li><a href="#">Báo cáo nhóm máu tại Việt Nam – Viện Huyết học</a></li>

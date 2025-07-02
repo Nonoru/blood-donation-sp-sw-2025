@@ -18,9 +18,9 @@ const posts = [
   },
   {
     id: 3,
-    title: 'Nghiên cứu mới nhất về việc phát hiện các nhóm máu hiếm và nhu cầu hiến máu',
-    subtitle: 'Các nhóm máu hiếm đang thiếu hụt nghiêm trọng, nghiên cứu tìm cách khắc phục...',
-    image: '/img/pics/blog3.jpg',
+    title: 'Phát hiện nhóm máu mới, chỉ có một người sở hữu',
+    subtitle: 'Phát hiện này được công bố bởi Cơ quan cung ứng máu quốc gia Pháp (EFS)...',
+    image: '/img/pics/doc3.jpg',
     date: 'Chủ nhật, 22/6/2025, 14:00',
   }
 ];
