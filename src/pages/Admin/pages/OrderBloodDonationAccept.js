@@ -3,9 +3,9 @@ import * as StaffApi from '../services/StaffApi'
 import { toast } from 'react-toastify';
 import '../styles/OrderBloodDonation.scss';
 import { pre } from 'framer-motion/client';
-function OrderBloodDonation() {
+function OrderBloodDonationAccept() {
   const tHeadItems =
-    ["Mã", "Tên khách hàng", "Số điện thoại", "Nhóm máu", "Lượng máu(ml)", "Ngày hẹn", "Xem thêm", "Tạo bởi", "Duyệt", "Loại"];
+    ["Mã", "Tên khách hàng", "Số điện thoại", "Nhóm máu", "Lượng máu(ml)", "Ngày hẹn", "Xem thêm", "Tạo bởi", "Duyệt", "Hủy"];
 
   const [moreInfo, setMoreInfo] = useState(false);
   const [orderInfo, setOrderInfo] = useState([]);
@@ -13,7 +13,7 @@ function OrderBloodDonation() {
   const getList = async () => {
     const execute = async () => {
       try {
-        const res = await StaffApi.getOrderBloodDonation();
+        const res = await StaffApi.getOrderBloodDonationAccept();
         await new Promise(resolve => setTimeout(resolve, 1000));
         return res;
       } catch (err) {
@@ -71,10 +71,12 @@ function OrderBloodDonation() {
   const acceptOrder = async (e, id) => {
     e.preventDefault()
     try {
-      const response = await StaffApi.acceptOrder(id);
+      const response = await StaffApi.completeOrder(id);
 
       if (response.data.code === 200) {
         toast.success(response.data.message, { className: 'my-toast' })
+        toast.success(response.data.data, { className: 'my-toast' })
+
         setStateAcceptBtn(prev => !prev)
         getList();
       }
@@ -102,7 +104,7 @@ function OrderBloodDonation() {
   const refuseOrder = async (e, id, reason) => {
     e.preventDefault();
     try {
-      const response = await StaffApi.refuseOrder(id, reason);
+      const response = await StaffApi.cancelOrder(id, reason);
 
       if (response.data.code === 200) {
         toast.success(response.data.message, { className: 'my-toast' })
@@ -163,7 +165,7 @@ function OrderBloodDonation() {
         </div>
         <button type="none" className="close-btn" onClick={e => setMoreInfo(!moreInfo)}></button>
       </div>
-      <p className={`title-table ${moreInfo || stateAcceptBtn ? 'prevent-ui' : 'normal-ui'}`}>Danh sách đơn đặt lịch xét nghiệm máu</p>
+      <p className={`title-table ${moreInfo || stateAcceptBtn ? 'prevent-ui' : 'normal-ui'}`}>Đơn đã được duyệt</p>
       <table className={`${moreInfo || stateAcceptBtn ? 'prevent-ui' : 'normal-ui'}`}>
         <thead>
           <tr>
@@ -190,12 +192,12 @@ function OrderBloodDonation() {
                 <td>{item.createByUsername}</td>
                 <td>
                   <button className="btn-accept" onClick={e => acceptUserToInfo(item)}>
-                    Nhận
+                    Hoàn tất
                   </button>
                 </td>
                 <td>
                   <button className="btn-reject" onClick={e => refuseUserToInfo(item)}>
-                    Loại
+                    Hủy
                   </button>
                 </td>
               </tr>
@@ -203,9 +205,9 @@ function OrderBloodDonation() {
         </tbody>
       </table>
       <div className={`${stateAcceptBtn ? 'show' : 'hidden'} accept-container `}>
-        <h2>Nhận đơn</h2>
+        <h2>Hoàn tất đơn</h2>
         <div className="form-accept">
-          <span className="text-w">Bạn có chắc chắn muốn nhận đơn này?</span>
+          <span className="text-w">Bạn có chắc chắn muốn hoàn tất đơn này?</span>
           <span className="text-w">Mã đơn: {chooseUserInfo.orderDonationId}</span>
           <span className="text-w">Tên khách hàng: {chooseUserInfo.fullName}</span>
           <button type="none" onClick={e => acceptOrder(e, chooseUserInfo.orderDonationId)}>Nhận</button>
@@ -214,14 +216,14 @@ function OrderBloodDonation() {
         </button>
       </div>
       <div className={`${stateRefuseBtn ? 'show' : 'hidden'} refuse-container `}>
-        <h2>Loại đơn</h2>
+        <h2>Hủy bỏ đơn</h2>
         <div className="form-accept">
-          <span className="text-w">Bạn có chắc chắn muốn loại đơn này?</span>
+          <span className="text-w">Bạn có chắc chắn muốn hủy đơn này?</span>
           <span className="text-w">Mã đơn: {chooseUserInfo.orderDonationId}</span>
           <span className="text-w">Tên khách hàng: {chooseUserInfo.fullName}</span>
           <form onSubmit={e => refuseOrder(e, chooseUserInfo.orderDonationId,reason)}>
             <label>
-              Nhập lý do loại đơn
+              Nhập lý do hủy đơn
               <input required onChange={(e) => setReason(e.target.value)}></input>
             </label>
             <button type="submit">Loại</button>
@@ -233,4 +235,4 @@ function OrderBloodDonation() {
     </div>
   );
 }
-export default OrderBloodDonation;
+export default OrderBloodDonationAccept;

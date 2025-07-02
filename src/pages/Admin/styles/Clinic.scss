@@ -1,4 +1,4 @@
-.order-blood-donation-page {
+.clinic-page {
     width: calc(100vw - 200px);
     padding: 24px !important;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -19,8 +19,9 @@
         &::after {
             content: '';
             display: block;
-            height: 4px;
-            background: linear-gradient(45deg, #d5daef 0%, #aa7ada 100%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
             margin: 8px auto !important;
             border-radius: 2px;
         }
@@ -140,42 +141,6 @@
         }
     }
 
-    .btn {
-        border-radius: 25px;
-        height: 50px;
-        width: 50px;
-        margin: 0 0 10px 0 !important;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: white;
-
-        span {
-            white-space: nowrap;
-            display: none;
-        }
-    }
-
-    .btn:hover {
-        border-radius: 50px;
-
-        span {
-            display: block;
-        }
-    }
-
-    .refresh-btn:hover {
-        width: 150px;
-    }
-
-    .btn-accept {
-        background: linear-gradient(135deg, #10b64f 0%, #0f8737 100%);
-    }
-
-    .btn-reject {
-        background: linear-gradient(135deg, #f44336 0%, #941414 100%);
-    }
-
     // Responsive design
     @media (max-width: 1024px) {
         width: calc(100vw - 120px);
@@ -241,7 +206,7 @@
         }
     }
 
-    .title-table {
+    p {
         font-size: 24px;
         font-weight: 600;
         padding: 10px !important;
@@ -250,156 +215,4 @@
         text-align: center;
         border-radius: 10px 10px 0 0;
     }
-
-    .more-info {
-        text-decoration: #0f8737 underline;
-        cursor: pointer;
-    }
-
-    .order-more-info {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        flex-direction: column;
-        background-color: #7980e4;
-        z-index: 1;
-        color: white;
-        padding: 50px !important;
-        border-radius: 15px;
-
-        h2 {
-            color: white;
-            border: none;
-
-            &::after {
-                width: 300px;
-            }
-        }
-
-        div {
-            display: flex;
-            margin-bottom: 8px !important;
-
-            span:nth-child(1) {
-                width: 90px;
-                font-weight: 600;
-                color: #ffe397;
-            }
-
-            span:nth-child(2) {
-                max-width: 400px;
-                word-wrap: break-word;
-            }
-        }
-    }
-
-    .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        height: 30px;
-        width: 30px;
-        background-image: url("../../../../public/img/icons/cancle.svg");
-        background-repeat: no-repeat;
-        background-size: cover;
-        border-radius: 50%;
-    }
-
-    .accept-container,
-    .refuse-container {
-        width: 400px;
-        position: fixed;
-        z-index: 1;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 40px 20px 20px 20px !important;
-        background: linear-gradient(135deg, #24c6c1 0%, #8998d3 100%);
-        border-radius: 15px;
-        font-weight: 600;
-
-        h2 {
-            border: none;
-
-            &::after {
-                width: 150px;
-            }
-        }
-
-        .form-accept {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            padding: 20px !important;
-
-            button {
-                width: 150px;
-                align-self: center;
-            }
-        }
-    }
-
-    .refuse-container {
-        label {
-            input {
-                margin-top: 5px !important;
-                width: 100%;
-                border-radius: 10px;
-                padding: 5px 10px !important;
-                outline: none;
-            }
-        }
-
-        form {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-    }
-}
-
-.hidden {
-    display: none;
-}
-
-.show {
-    display: block;
-}
-
-.order-blood-donation-page>div {
-    transition: all 0.3s ease;
-}
-
-// Loading animation (optional)
-@keyframes shimmer {
-    0% {
-        background-position: -200px 0;
-    }
-
-    100% {
-        background-position: calc(200px + 100%) 0;
-    }
-}
-
-.loading {
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200px 100%;
-    animation: shimmer 1.5s infinite;
-}
-
-.prevent-ui {
-    pointer-events: none;
-    filter: blur(1px);
-}
-
-.normal-ui {
-    pointer-events: auto;
-    filter: blur(0px);
 }

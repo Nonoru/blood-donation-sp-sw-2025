@@ -20,7 +20,7 @@ const posts = [
     id: 3,
     title: 'Phát hiện nhóm máu mới, chỉ có một người sở hữu',
     subtitle: 'Phát hiện này được công bố bởi Cơ quan cung ứng máu quốc gia Pháp (EFS)...',
-    image: '/img/pics/blog3.jpg',
+    image: '/img/pics/doc3.jpg',
     date: 'Chủ nhật, 22/6/2025, 14:00',
   }
 ];

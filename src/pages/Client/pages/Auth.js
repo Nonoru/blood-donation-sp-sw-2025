@@ -87,12 +87,12 @@ function Login({userInfo, setUserInfo}) {
                     console.log(decoded.role);
                     setTimeout(() => {
                         navigate('/admin');
-                    }, 2500);
+                    }, 1000);
                 }
                 else{
                     setTimeout(() => {
                         navigate('/');
-                    }, 2500);
+                    }, 1000);
                 }
             }
         } catch (error) {
