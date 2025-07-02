@@ -64,7 +64,11 @@ public enum ErrorCode {
 
     OLD_PASSWORD_INVALID(38, "Mật khẩu cũ không chính xác"),
 
-    STATUS_OF_RECEIVING_ORDER_EMPTY(39, "Trạng thái đơn nhận máu không thể bỏ trống")
+    STATUS_OF_RECEIVING_ORDER_EMPTY(39, "Trạng thái đơn nhận máu không thể bỏ trống"),
+
+    TYPE_OF_RECEIVING_ORDER_INVALID(40, "Loại  đơn không hợp hoặc không tồn tại"),
+
+    ORDER_NOT_FOUND(41, "Không tìm thâấy đơn")
 
     ;
     private int code;

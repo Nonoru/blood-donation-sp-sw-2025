@@ -3,14 +3,15 @@ package com.nonoru.superapp.controller;
 import com.nonoru.superapp.dto.request.OrderBloodDonationRequest;
 import com.nonoru.superapp.dto.request.OrderBloodReceiveRequest;
 import com.nonoru.superapp.dto.response.ApiResponse;
+import com.nonoru.superapp.dto.response.OrderBloodReceiveResponse;
 import com.nonoru.superapp.dto.response.OrderDateDonationResponse;
 import com.nonoru.superapp.dto.response.UserOrderDonationResponse;
 import com.nonoru.superapp.service.OrderBloodDonationService;
+import com.nonoru.superapp.service.OrderBloodReceiveService;
 import com.nonoru.superapp.service.OrderDateDonationService;
 import com.nonoru.superapp.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,9 @@ public class UserAPI {
     private OrderDateDonationService dateDonationService;
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderBloodReceiveService bloodReceiveService;
     @PostMapping("/order-donation")
     public ApiResponse<Void> createOrder
             (@Valid @RequestBody OrderBloodDonationRequest request) {
@@ -48,9 +52,16 @@ public class UserAPI {
     @PostMapping("/order-receiving")
     public ApiResponse<Void> createOrderReceiving
             (@Valid @RequestBody OrderBloodReceiveRequest request) {
-        System.out.println(request.toString());
+        bloodReceiveService.createOrder(request);
         return ApiResponse.<Void>builder()
                 .message("Tạo đơn hoàn tất! Vui lòng chờ để được xét duyệt")
                 .build();
     }
+    @GetMapping("/list-order/receive")
+    public ApiResponse<List<OrderBloodReceiveResponse>> getListOrderReceiveUser(){
+        return ApiResponse.<List<OrderBloodReceiveResponse>>builder()
+                .data(bloodReceiveService.getOrderForUser())
+                .build();
+    }
+
 }

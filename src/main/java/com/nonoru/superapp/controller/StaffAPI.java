@@ -1,16 +1,11 @@
 package com.nonoru.superapp.controller;
 
 import com.nonoru.superapp.dto.request.OrderDateDonationRequest;
-import com.nonoru.superapp.dto.response.ApiResponse;
-import com.nonoru.superapp.dto.response.BloodOrderStaticResponse;
-import com.nonoru.superapp.dto.response.OrderBloodDonationResponse;
-import com.nonoru.superapp.dto.response.OrderDateDonationResponse;
+import com.nonoru.superapp.dto.response.*;
 import com.nonoru.superapp.entity.Clinic;
+import com.nonoru.superapp.entity.OrderBloodReceive;
 import com.nonoru.superapp.enums.StatusOfOrderDonation;
-import com.nonoru.superapp.service.BloodService;
-import com.nonoru.superapp.service.ClinicService;
-import com.nonoru.superapp.service.OrderBloodDonationService;
-import com.nonoru.superapp.service.OrderDateDonationService;
+import com.nonoru.superapp.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +25,8 @@ public class StaffAPI {
     private ClinicService clinicService;
     @Autowired
     private BloodService bloodService;
-
+    @Autowired
+    private OrderBloodReceiveService bloodReceiveService;
     @GetMapping("/list-order")
     public ApiResponse<List<OrderBloodDonationResponse>> getAll () {
         return ApiResponse.<List<OrderBloodDonationResponse>>builder()
@@ -107,4 +103,40 @@ public class StaffAPI {
                 .build();
     }
 
+    @GetMapping("/list-order/receive")
+    public ApiResponse<List<OrderBloodReceiveResponse>> getAllReceive () {
+        return ApiResponse.<List<OrderBloodReceiveResponse>>builder()
+                .data(bloodReceiveService.getAllOrder())
+                .build();
+    }
+    @PutMapping("/accept-orders/receive/{id}")
+    public ApiResponse<Void> acceptOrderReceive(@PathVariable("id") long id){
+        bloodReceiveService.acceptOrderBloodReceive(id);
+        return ApiResponse.<Void>builder()
+                .message("Đơn đã được xét duyệt")
+                .build();
+    }
+    @PutMapping("/refuse-orders/receive/{id}")
+    public ApiResponse<Void> refuseOrderReceive(@PathVariable("id") long id,  @RequestBody Map<String, String> body){
+        String reason = body.get("reason");
+        bloodReceiveService.refuseOrderBloodReceive(id, reason);
+        return ApiResponse.<Void>builder()
+                .message("Đơn đã được từ chối")
+                .build();
+    }
+    @PutMapping("/complete-orders/receive/{id}")
+    public ApiResponse<String> completeOrderReceive(@PathVariable("id") long id){
+        String res = bloodReceiveService.completeOrderBloodReceive(id);
+        return ApiResponse.<String>builder()
+                .message("Đơn đã hoàn tất")
+                .data(res)
+                .build();
+    }
+    @PutMapping("/cancel-orders/receive/{id}")
+    public ApiResponse<Void> cancelOrderReceive(@PathVariable("id") long id, @RequestBody Map<String, String> reason){
+        bloodReceiveService.cancelOrderBloodReceive(id, reason.get("reason"));
+        return ApiResponse.<Void>builder()
+                .message("Đơn đã bị hủy")
+                .build();
+    }
 }

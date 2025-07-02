@@ -34,7 +34,6 @@ public class OrderBloodReceiveRequest {
     private String statusType;
 
     private int bloodId;
-    private long userId;
 
     private String reason;
 }

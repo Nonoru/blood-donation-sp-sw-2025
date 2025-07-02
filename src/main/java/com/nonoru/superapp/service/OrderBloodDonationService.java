@@ -166,26 +166,30 @@ public class OrderBloodDonationService {
     }
     /* SET STATUS FOR ORER DONATION - STAFF */
     public void acceptOrderBloodDonation(long orderDonationId) {
-        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId).orElse(null);
+        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
         orBD.setStatus(StatusOfOrderDonation.COMFRIMMED.getStatusCode());
         orderDonationRepo.save(orBD);
     }
     public void refuseOrderBloodDonation(long orderDonationId, String reason) {
-        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId).orElse(null);
+        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
         orBD.setReason(reason);
         orBD.setStatus(StatusOfOrderDonation.REFUSED.getStatusCode());
         orderDonationRepo.save(orBD);
     }
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
     public String completeOrderBloodDonation(long orderDonationId) {
-        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId).orElse(null);
+        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
         orBD.setStatus(StatusOfOrderDonation.COMPLETED.getStatusCode());
         getBloodFromOrder(orBD.getBlood(), orBD.getAmountBloodMl());
         orderDonationRepo.save(orBD);
         return "Đã thêm thành công "+ orBD.getAmountBloodMl() + " ml nhóm " +orBD.getBlood().getBloodType()+" vào trong kho máu";
     }
     public void cancelOrderBloodDonation(long orderDonationId, String reason) {
-        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId).orElse(null);
+        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
         orBD.setReason(reason);
         orBD.setStatus(StatusOfOrderDonation.CANCELED.getStatusCode());
         orderDonationRepo.save(orBD);

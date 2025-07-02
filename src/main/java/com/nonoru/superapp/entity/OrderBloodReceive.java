@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @ToString
-public class OrderBloodReceiving {
+public class OrderBloodReceive {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long orderReceivingId;
@@ -38,10 +38,13 @@ public class OrderBloodReceiving {
     private String type;
 
     private LocalDate createDate;
-    private LocalDate actualDoneDate;
+
+    @Column(nullable = true)
+    private LocalDate doneDate;
+
     private int status;
 
-    @Column(nullable = false, columnDefinition = "NVARCHAR(300)")
+    @Column(nullable = true, columnDefinition = "NVARCHAR(300)")
     private String reasonCancel;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -56,10 +59,9 @@ public class OrderBloodReceiving {
     @JoinColumn(name = "clinic-room")
     private Clinic clinic;
 
-
     @Builder
 
-    public OrderBloodReceiving(String fullName, int amountBloodMl, String cccdNumber, String phone, String address, String reason, String type, LocalDate createDate, LocalDate actualDoneDate, int status, String reasonCancel, BloodStorage blood, UserAccount userAccount, Clinic clinic) {
+    public OrderBloodReceive(String fullName, int amountBloodMl, String cccdNumber, String phone, String address, String reason, String type, LocalDate createDate, LocalDate doneDate, int status, String reasonCancel, BloodStorage blood, UserAccount userAccount, Clinic clinic) {
         this.fullName = fullName;
         this.amountBloodMl = amountBloodMl;
         this.cccdNumber = cccdNumber;
@@ -68,7 +70,7 @@ public class OrderBloodReceiving {
         this.reason = reason;
         this.type = type;
         this.createDate = createDate;
-        this.actualDoneDate = actualDoneDate;
+        this.doneDate = doneDate;
         this.status = status;
         this.reasonCancel = reasonCancel;
         this.blood = blood;
