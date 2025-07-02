@@ -19,8 +19,10 @@ import ReceiveBlood from '../Client/features/subs/ReceiveBlood'
 import OrderHistory from '../Client/features/subs/OrderHistory'
 import GiftExchange from '../Client/features/subs/GiftExchange'
 import ErrorPage from '../Client/pages/ErrorPage'
+import Chatbot from '../Client/pages/Chatbot'
 import { ToastContainer } from 'react-toastify';
 import './Client.scss'
+
 
 function Client ({userInfo, setUserInfo}) {
     return(
@@ -49,6 +51,7 @@ function Client ({userInfo, setUserInfo}) {
 
                 <Route path='*' element={<ErrorPage/>}/>
             </Routes>
+            <Chatbot />
         </div>
     )
 }
