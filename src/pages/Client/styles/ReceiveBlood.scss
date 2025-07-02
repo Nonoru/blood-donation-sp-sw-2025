@@ -3,39 +3,22 @@
 /* ReceiveBlood page styles */
 .receive-blood-page {
   @extend .donate-blood-page;
-  
+  height: 800px !important;
   .form-actions {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 18px;
-    margin-bottom: 24px;
   }
-
-  .emergency-btn {
-    margin: 10px -360px 0 auto !important;
-    background: linear-gradient(90deg, #B63B3B, #ff6b6b);
-    color: #fff;
-    font-weight: 700;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 8px;
-    padding: 8.9px 36px !important;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
-    box-shadow: 0 2px 12px rgba(255,23,68,0.15);
-    
-    &:hover {
-      background: linear-gradient(90deg, #ff6b6b, #B63B3B);
-      transform: translateY(-3px) scale(1.06);
-      box-shadow: 0 4px 20px rgba(255,23,68,0.22);
+  .status{
+    padding-left: 16px !important;
+    font-weight: 600;
+    .radio-status{
+      display: flex;
+      gap: 10px;
     }
-
-    .emergency-icon {
-      font-size: 1.3em;
-      margin-right: 4px !important;
-      color: #fff200;
-      filter: drop-shadow(0 0 4px #ff1744);
+    .note-status{
+      span{color: #ff6b6b;}
     }
   }
+  
 } 

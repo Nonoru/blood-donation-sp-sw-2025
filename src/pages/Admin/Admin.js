@@ -12,6 +12,8 @@ import * as Token from '../../util/Token';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import './Admin.scss'
+import OrderBloodDonationHistory from './pages/OrderBloodDonationHistory';
+import OrderBloodReceiving from './pages/OrderBloodReceiving';
 function AdminPage(){
     const navigate = useNavigate();
     const goToHome = () => {
@@ -37,8 +39,10 @@ function AdminPage(){
                 <Route path='/accounts' element={<ManageAccountRoute><AdminManageAccount/></ManageAccountRoute>}/>
                 <Route path='/manage/clinics' element={<Clinic/>}/>
                 <Route path='/manage/schedules' element={<OrderDateDonation/>}/>
-                <Route path='/orders/donates' element={<OrderBloodDonation/>}/>
-                <Route path='/orders/accepts' element={<OrderBloodDonationAccept/>}/>
+                <Route path='/orders/donate' element={<OrderBloodDonation/>}/>
+                <Route path='/orders/donate/accept' element={<OrderBloodDonationAccept/>}/>
+                <Route path='/orders/donate/history' element={<OrderBloodDonationHistory/>}/>
+                <Route path='/orders/receive' element={<OrderBloodReceiving/>}></Route>
                 <Route path='/for-bidden' element={<ForBidden/>}/>
             </Routes>
         </div>

@@ -18,12 +18,12 @@ const items = [
     {
         id: 4, name: 'Dịch vụ', path: '/admin/orders',
         child: [
-            { id: 4.1, name: 'Đơn yêu cầu hiến máu', path: '/donates' },
-            { id: 4.2, name: 'Đơn hiến máu', path:'/accepts' },
-            { id: 4.3, name: 'Lịch sử đơn hiến máu' },
-            { id: 4.4, name: 'Đơn yêu cầu nhận máu' },
-            { id: 4.5, name: 'Lịch hẹn nhận máu' },
-            { id: 4.6, name: 'Lịch sử nhận máu' },
+            { id: 4.1, name: 'Đơn yêu cầu hiến máu', path: '/donate' },
+            { id: 4.2, name: 'Đơn hiến máu đã duyệt', path:'/donate/accept' },
+            { id: 4.3, name: 'Lịch sử đơn hiến máu', path:'/donate/history'},
+            { id: 4.4, name: 'Đơn yêu cầu nhận máu', path: '/receive'},
+            { id: 4.5, name: 'Đơn nhận máu đã duyệt', path: '/receive/accept'},
+            { id: 4.6, name: 'Lịch sử đơn nhận máu', path: '/receive/history'},
         ]
     },
     {

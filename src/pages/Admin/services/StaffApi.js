@@ -33,3 +33,6 @@ export const getOrderDates = async () => {
 export const addOrderDate = async (formDate) => {
     return await axios.post(`${url}/create-date-donation`, formDate, {headers: createHeaders()});
 }
+export const getAllOrderDonate = async () => {
+    return await axios.get(`${url}/list-order`, {headers: createHeaders()});
+}

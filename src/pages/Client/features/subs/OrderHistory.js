@@ -1,27 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import * as Token from '../../../../util/Token'
+import * as UserApi from '../../services/UserApi'
+import { toast } from 'react-toastify';
 import '../../styles/OrderHistory.scss';
 
-const donationHistory = [
-  { id: 1, date: '01-05-2025', location: 'Bệnh viện A', status: 'Đã hiến', amount: '350ml' },
-  { id: 2, date: '15-03-2025', location: 'Bệnh viện B', status: 'Đã hiến', amount: '350ml' },
-];
-const testHistory = [
-  { id: 1, date: '10-04-2025', result: 'Âm tính', location: 'Bệnh viện A', note: 'Bình thường' },
-  { id: 2, date: '20-02-2025', result: 'Dương tính', location: 'Bệnh viện B', note: 'Cần theo dõi' },
-];
 const receiveHistory = [
   { id: 1, date: '05-05-2025', hospital: 'Bệnh viện C', status: 'Đã nhận', amount: '250ml' },
 ];
 
 const tabs = [
   { key: 'donate', label: 'Lịch sử hiến máu' },
-  { key: 'test', label: 'Lịch sử xét nghiệm máu' },
   { key: 'receive', label: 'Yêu cầu nhận máu' },
 ];
 
 const OrderHistory = () => {
   const [activeTab, setActiveTab] = useState('donate');
 
+  const [listOrderHistory, setListOrderHistory] = useState([])
+  const getListDate = async () => {
+    const userId = Token.getUserId()
+    try {
+      const response = await UserApi.getOrderHistory(userId);
+      if (response.data.code === 200) {
+        const list = [];
+        response.data.data.forEach(i => {
+          list.push(i)
+        });
+        setListOrderHistory(list);
+        console.log(list)
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        toast.error("Bạn cần đăng nhập để thực hiện chức năng này", { className: 'my-toast' });
+      } else if (error.response.status === 403) {
+        toast.error("Bạn không có quyền sử dụng", { className: 'my-toast' });
+      } else if (error.response.data) {
+        toast.error(error.response.data.message, { className: 'my-toast' });
+      } else if (error.request) {
+        toast.error("Không nhận được phản hồi từ server", { className: 'my-toast' });
+      } else {
+        toast.error("Lỗi không xác định", error.message, { className: 'my-toast' });
+      }
+    }
+  };
+  useEffect(() => {
+    getListDate();
+  }, []);
+  const renderStatusDiv = (statusCode) => {
+    switch (statusCode) {
+      case 1:
+        return <div className="bg-yellow-500 text-white px-2 py-1 rounded font-semibold">Chờ xác nhận</div>;
+      case 2:
+        return <div className="bg-blue-500 text-white px-2 py-1 rounded font-semibold">Đã xác nhận</div>;
+      case 3:
+        return <div className="bg-green-500 text-white px-2 py-1 rounded font-semibold">Đã hoàn tất</div>;
+      case 4:
+        return <div className="bg-red-600 text-white px-2 py-1 rounded font-semibold">Đã từ chối đơn</div>;
+      case 5:
+        return <div className="bg-red-400 text-white px-2 py-1 rounded font-semibold">Đã hủy đơn</div>;
+      default:
+        return <div className="bg-gray-400 text-white px-2 py-1 rounded font-semibold">Không xác định</div>;
+    }
+  };
   return (
     <div className="order-history-page">
       <div className="donate-title-section">
@@ -54,45 +94,30 @@ const OrderHistory = () => {
           <table className="order-table">
             <thead>
               <tr>
-                <th>STT</th>
-                <th>Ngày hiến</th>
-                <th>Địa điểm</th>
+                <th>Mã đơn</th>
+                <th>Ngày tạo</th>
+                <th>Loại máu</th>
                 <th>Số lượng</th>
+                <th>Ngày hiến</th>
+                <th>Phòng khám</th>
                 <th>Trạng thái</th>
+                <th>Lý do</th>
               </tr>
             </thead>
             <tbody>
-              {donationHistory.map((item, idx) => (
+              {listOrderHistory.map((item, idx) => (
                 <tr key={item.id}>
-                  <td>{idx + 1}</td>
-                  <td>{item.date}</td>
-                  <td>{item.location}</td>
-                  <td>{item.amount}</td>
-                  <td>{item.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-        {activeTab === 'test' && (
-          <table className="order-table">
-            <thead>
-              <tr>
-                <th>STT</th>
-                <th>Ngày xét nghiệm</th>
-                <th>Kết quả</th>
-                <th>Địa điểm</th>
-                <th>Ghi chú</th>
-              </tr>
-            </thead>
-            <tbody>
-              {testHistory.map((item, idx) => (
-                <tr key={item.id}>
-                  <td>{idx + 1}</td>
-                  <td>{item.date}</td>
-                  <td>{item.result}</td>
-                  <td>{item.location}</td>
-                  <td>{item.note}</td>
+                  <td>{item.orderDonationId + 1}</td>
+                  <td>{item.createDate}</td>
+                  <td>{item.bloodType}</td>
+                  <td>{item.amountBloodMl}</td>
+                  <td>{item.donateDate}</td>
+                  <td>{item.clinicName}</td>
+                  <td>
+                    <div className='status-code'>
+                    {renderStatusDiv(item.statusCode)}
+                    </div></td>
+                  <td>{item.reason}</td>
                 </tr>
               ))}
             </tbody>

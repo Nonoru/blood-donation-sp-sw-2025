@@ -3,9 +3,9 @@ import * as StaffApi from '../services/StaffApi'
 import { toast } from 'react-toastify';
 import '../styles/OrderBloodDonation.scss';
 import { pre } from 'framer-motion/client';
-function OrderBloodDonation() {
+function OrderBloodReceiving() {
   const tHeadItems =
-    ["Mã", "Tên khách hàng", "Số điện thoại", "Nhóm máu", "Lượng máu(ml)", "Ngày hẹn", "Giờ hẹn", "Xem thêm", "Duyệt", "Loại"];
+    ["Mã", "Tên khách hàng", "Số điện thoại", "Nhóm máu", "Lượng máu(ml)", "Trạng thái", "Xem thêm", "Duyệt", "Loại"];
 
   const [moreInfo, setMoreInfo] = useState(false);
   const [orderInfo, setOrderInfo] = useState([]);
@@ -202,7 +202,7 @@ function OrderBloodDonation() {
         </div>
         <button type="none" className="close-btn" onClick={e => setMoreInfo(!moreInfo)}></button>
       </div>
-      <p className={`title-table ${moreInfo || stateAcceptBtn ? 'prevent-ui' : 'normal-ui'}`}>Danh sách đơn đặt lịch xét nghiệm máu</p>
+      <p className={`title-table ${moreInfo || stateAcceptBtn ? 'prevent-ui' : 'normal-ui'}`}>Danh sách đơn đặt hẹn nhận hỗ trợ máu</p>
       <table className={`${moreInfo || stateAcceptBtn ? 'prevent-ui' : 'normal-ui'}`}>
         <thead>
           <tr>
@@ -284,4 +284,4 @@ function OrderBloodDonation() {
     </div>
   );
 }
-export default OrderBloodDonation;
+export default OrderBloodReceiving;
