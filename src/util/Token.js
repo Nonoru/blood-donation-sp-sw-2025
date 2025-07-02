@@ -12,6 +12,12 @@ export const isTokenValid = () => {
   }
 };
 
+export const checkAndClearToken = () => {
+  if (!isTokenValid()) {
+    localStorage.removeItem("token");
+  }
+};
+
 export const getUsernameFromToken = () => {
   const token = localStorage.getItem("token");
   if (!token) return null;

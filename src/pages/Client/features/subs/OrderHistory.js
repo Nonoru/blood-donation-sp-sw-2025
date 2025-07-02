@@ -27,7 +27,6 @@ const OrderHistory = () => {
           list.push(i)
         });
         setListOrderHistory(list);
-        console.log(list)
       }
     } catch (error) {
       if (error.response.status === 401) {
