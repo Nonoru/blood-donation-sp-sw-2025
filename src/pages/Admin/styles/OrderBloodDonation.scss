@@ -422,3 +422,54 @@
         font-weight: 600;
     }
 }
+
+.count-order {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f4f6f8;
+    border: 1px solid #ddd;
+    padding: 12px 20px !important;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 16px;
+    color: #333;
+    transition: all 0.3s ease;
+    height: 50px;
+    cursor: default;
+    width: max-content;
+    margin-bottom: 15px !important;
+
+    &:hover {
+        background: #e9eff4;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    span:first-child {
+        font-weight: 500;
+    }
+
+    span:last-child {
+        font-weight: bold;
+        font-size: 18px;
+        color: #0077cc;
+        background: #e0f3ff;
+        padding: 5px !important;
+        border-radius: 8px;
+
+        &:hover {
+            background: #cce7fa;
+        }
+    }
+}
+.form-select-clinic{
+    display: flex;
+    flex-direction: column;
+    label{
+        margin-bottom: 10px !important;
+        display: flex;
+        gap: 10px;
+        select{border-radius: 10px;padding: 3px !important; outline: none;}
+    }
+}

@@ -107,6 +107,10 @@ function OrderDateDonation() {
     }
     return (
         <div className="clinic-page">
+            <div className='count-order'>
+                <span>Tổng số ngày hẹn</span>
+                <span>{orderDateInfo.length}</span>
+            </div>
             {/* CREATE */}
             <button className="add-btn btn" onClick={clickAddBtn}>
                 <img src="/img/icons/add.svg"></img>

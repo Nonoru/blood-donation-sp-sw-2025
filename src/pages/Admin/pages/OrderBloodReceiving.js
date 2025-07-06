@@ -140,6 +140,10 @@ function OrderBloodReceiving() {
   }
   return (
     <div className="order-blood-donation-page">
+      <div className='count-order'>
+        <span>Tổng số đơn</span>
+        <span>{orderInfo.length}</span>
+      </div>
       <div
         className={`order-more-info ${moreInfo ? 'show' : 'hidden'}`}
       >
@@ -225,9 +229,9 @@ function OrderBloodReceiving() {
           <span className="text-w">Xác nhận duyệt đơn</span>
           <span className="text-w">Mã đơn: {chooseUserInfo.orderId}</span>
           <span className="text-w">Tên khách hàng: {chooseUserInfo.fullName}</span>
-          <form onSubmit={e => acceptOrder(e, chooseUserInfo.orderId)}>
+          <form onSubmit={e => acceptOrder(e, chooseUserInfo.orderId)} className='form-select-clinic'>
             <label>
-              Nơi hẹn
+              <span>Nơi hẹn</span>
               <select onChange={(e) => setClinicId(e.target.value)} required>
                 <option value="" disabled selected >Chọn điểm hẹn</option>
                 {clinics.map((item, index) => (

@@ -53,6 +53,10 @@ function Clinic() {
     }, []);
     return (
         <div className="clinic-page">
+            <div className='count-order'>
+                <span>Tổng số phòng khám</span>
+                <span>{clinicInfo.length}</span>
+            </div>
             <div>
                 <p>Danh sách phòng khám</p>
                 <table>

@@ -18,3 +18,6 @@ export const getOrderHistory = async (userId) =>{
 export const orderDonationReceiving = async (formData) => {
   return await axios.post(`${url}/order-receiving `, formData, { headers: createHeaders() });
 };
+export const getOrderReceiveHistory = async (userId) =>{
+    return await axios.get(`${url}/list-order/receive`, { headers: createHeaders() });
+};

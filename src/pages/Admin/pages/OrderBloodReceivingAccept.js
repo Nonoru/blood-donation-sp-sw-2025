@@ -140,6 +140,10 @@ function OrderBloodReceivingAccept() {
   }
   return (
     <div className="order-blood-donation-page">
+      <div className='count-order'>
+        <span>Tổng số đơn</span>
+        <span>{orderInfo.length}</span>
+      </div>
       <div
         className={`order-more-info ${moreInfo ? 'show' : 'hidden'}`}
       >
