@@ -68,7 +68,9 @@ public enum ErrorCode {
 
     TYPE_OF_RECEIVING_ORDER_INVALID(40, "Loại  đơn không hợp hoặc không tồn tại"),
 
-    ORDER_NOT_FOUND(41, "Không tìm thâấy đơn")
+    ORDER_NOT_FOUND(41, "Không tìm thâấy đơn"),
+
+    BLOOD_NOT_ENOUGH(42, "Nhóm máu này hiện tại không đủ trong kho")
 
     ;
     private int code;

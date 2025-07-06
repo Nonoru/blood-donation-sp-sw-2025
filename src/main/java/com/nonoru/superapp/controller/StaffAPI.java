@@ -104,14 +104,27 @@ public class StaffAPI {
     }
 
     @GetMapping("/list-order/receive")
-    public ApiResponse<List<OrderBloodReceiveResponse>> getAllReceive () {
+    public ApiResponse<List<OrderBloodReceiveResponse>> getAllReceiveOrders () {
         return ApiResponse.<List<OrderBloodReceiveResponse>>builder()
                 .data(bloodReceiveService.getAllOrder())
                 .build();
     }
+    @GetMapping("/list-order/receive/processing")
+    public ApiResponse<List<OrderBloodReceiveResponse>> getReceiveOrderProcessing () {
+        return ApiResponse.<List<OrderBloodReceiveResponse>>builder()
+                .data(bloodReceiveService.getOrderByStatus(StatusOfOrderDonation.PROCESSING))
+                .build();
+    }
+    @GetMapping("/list-order/receive/accept")
+    public ApiResponse<List<OrderBloodReceiveResponse>> getReceiveOrderAccept () {
+        return ApiResponse.<List<OrderBloodReceiveResponse>>builder()
+                .data(bloodReceiveService.getOrderByStatus(StatusOfOrderDonation.COMFRIMMED))
+                .build();
+    }
     @PutMapping("/accept-orders/receive/{id}")
-    public ApiResponse<Void> acceptOrderReceive(@PathVariable("id") long id){
-        bloodReceiveService.acceptOrderBloodReceive(id);
+    public ApiResponse<Void> acceptOrderReceive(@PathVariable("id") long id, @RequestBody Map<String, String> body){
+        int clinicId = Integer.parseInt(body.get("clinicId"));
+        bloodReceiveService.acceptOrderBloodReceive(id, clinicId);
         return ApiResponse.<Void>builder()
                 .message("Đơn đã được xét duyệt")
                 .build();

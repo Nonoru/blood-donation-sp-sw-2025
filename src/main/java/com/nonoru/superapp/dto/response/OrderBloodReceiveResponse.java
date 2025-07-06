@@ -24,5 +24,7 @@ public class OrderBloodReceiveResponse {
     private LocalDate createDate;
     private int status;
     private String bloodType;
-    private String doneDate;
+    private LocalDate doneDate;
+    private String createdByUsername;
+    private String clinicName;
 }

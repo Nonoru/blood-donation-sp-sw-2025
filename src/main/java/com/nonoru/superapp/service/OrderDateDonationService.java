@@ -3,7 +3,6 @@ package com.nonoru.superapp.service;
 import com.nonoru.superapp.dto.ClinicDTO;
 import com.nonoru.superapp.dto.request.OrderDateDonationRequest;
 import com.nonoru.superapp.dto.response.OrderDateDonationResponse;
-import com.nonoru.superapp.dto.response.UserAccountManageResponse;
 import com.nonoru.superapp.entity.Clinic;
 import com.nonoru.superapp.entity.OrderDateDonation;
 import com.nonoru.superapp.exception.AppException;
@@ -13,7 +12,6 @@ import com.nonoru.superapp.repository.OrderDateDonationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
