@@ -5,15 +5,16 @@ import '../styles/OrderBloodDonation.scss';
 import { pre } from 'framer-motion/client';
 function OrderBloodReceiving() {
   const tHeadItems =
-    ["Mã", "Tên khách hàng", "Số điện thoại", "Nhóm máu", "Lượng máu(ml)", "Trạng thái", "Xem thêm", "Duyệt", "Loại"];
+    ["Mã", "Tên khách hàng", "Số điện thoại", "Nhóm máu", "Lượng máu(ml)", "Tình trạng", "Ngày tạo", "Xem thêm", "Duyệt", "Loại"];
 
   const [moreInfo, setMoreInfo] = useState(false);
   const [orderInfo, setOrderInfo] = useState([]);
+  const [clinics, setClinics] = useState([])
 
   const getList = async () => {
     const execute = async () => {
       try {
-        const res = await StaffApi.getOrderBloodDonation();
+        const res = await StaffApi.getOrderReceiveProcessing();
         await new Promise(resolve => setTimeout(resolve, 1000));
         return res;
       } catch (err) {
@@ -37,6 +38,11 @@ function OrderBloodReceiving() {
               const orderList = [];
               data.data.data.forEach(i => {
                 orderList.push(i)
+              });
+              orderList.sort((a, b) => {
+                if (a.type === 'urgent' && b.type !== 'urgent') return -1;
+                if (a.type !== 'urgent' && b.type === 'urgent') return 1;
+                return new Date(a.createDate) - new Date(b.createDate);
               });
               setOrderInfo(orderList);
               return 'Đã tải danh sách thành công!';
@@ -64,17 +70,25 @@ function OrderBloodReceiving() {
     setChooseUserInfo(info)
   }
   const [stateAcceptBtn, setStateAcceptBtn] = useState(false);
-  const acceptUserToInfo = (info) => {
+  const acceptUserToInfo = async (info) => {
+    const res = await StaffApi.getClinics();
+    const clinicList = [];
+    res.data.data.forEach(i => {
+      clinicList.push(i)
+    });
+    setClinics(clinicList);
     setStateAcceptBtn(prev => !prev)
     setChooseUserInfo(info)
   }
+  const [clinicId, setClinicId] = useState()
   const acceptOrder = async (e, id) => {
     e.preventDefault()
     try {
-      const response = await StaffApi.acceptOrder(id);
+      const response = await StaffApi.acceptOrderReceive(id, clinicId);
 
       if (response.data.code === 200) {
         toast.success(response.data.message, { className: 'my-toast' })
+        setClinicId()
         setStateAcceptBtn(prev => !prev)
         getList();
       }
@@ -102,7 +116,7 @@ function OrderBloodReceiving() {
   const refuseOrder = async (e, id, reason) => {
     e.preventDefault();
     try {
-      const response = await StaffApi.refuseOrder(id, reason);
+      const response = await StaffApi.refuseOrderReceive(id, reason);
 
       if (response.data.code === 200) {
         toast.success(response.data.message, { className: 'my-toast' })
@@ -124,41 +138,6 @@ function OrderBloodReceiving() {
       }
     }
   }
-  const parseDate = (str) => {
-    if (!str) return new Date(0);
-    const [day, month, year] = str.split('/');
-    return new Date(`${year}-${month}-${day}`);
-  };
-  const [sortDirection, setSortDirection] = useState('asc');
-
-  const sortRow = (row) => {
-    const direction = sortDirection === 'asc' ? 1 : -1;
-
-    switch (row) {
-      case 1:
-        setOrderInfo([...orderInfo].sort((a, b) => (a.orderDonationId - b.orderDonationId) * direction));
-        break;
-
-      case 4:
-        setOrderInfo([...orderInfo].sort((a, b) => a.bloodType.localeCompare(b.bloodType) * direction));
-        break;
-
-      case 5:
-        setOrderInfo([...orderInfo].sort((a, b) => (a.amountBloodMl - b.amountBloodMl) * direction));
-        break;
-
-      case 6:
-        setOrderInfo([...orderInfo].sort((a, b) => {
-          const dateA = parseDate(a.orderDate);
-          const dateB = parseDate(b.orderDate);
-          return (dateA - dateB) * direction;
-        }));
-        break;
-      default:
-        break;
-    }
-    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-  };
   return (
     <div className="order-blood-donation-page">
       <div
@@ -167,11 +146,11 @@ function OrderBloodReceiving() {
         <h2>Thông tin khách hàng</h2>
         <div>
           <span>Mã đơn</span>
-          <span>{chooseUserInfo.orderDonationId}</span>
+          <span>{chooseUserInfo.orderId}</span>
         </div>
         <div>
           <span>Tạo bởi username</span>
-          <span>{chooseUserInfo.createByUsername}</span>
+          <span>{chooseUserInfo.createdByUsername}</span>
         </div>
         <div>
           <span>Họ tên</span>
@@ -182,19 +161,12 @@ function OrderBloodReceiving() {
           <span>{chooseUserInfo.cccdNumber}</span>
         </div>
         <div>
-          <span>Giới tính</span>
-          <span>{chooseUserInfo.gender}</span></div>
-        <div>
-          <span>Cân nặng</span>
-          <span>{chooseUserInfo.weight}</span>
-        </div>
-        <div>
-          <span>Ngày sinh</span>
-          <span>{chooseUserInfo.dob}</span>
-        </div>
-        <div>
           <span>Địa chỉ</span>
           <span>{chooseUserInfo.address}</span>
+        </div>
+        <div>
+          <span>Lý do</span>
+          <span>{chooseUserInfo.reason}</span>
         </div>
         <div>
           <span>Ngày tạo</span>
@@ -208,17 +180,9 @@ function OrderBloodReceiving() {
           <tr>
             {tHeadItems.map((item, index) => (
               <th key={index}>
-                {
-                  (index + 1) === 1 || (index + 1) === 4 || (index + 1) === 5 || (index + 1) === 6?
-                    <div onClick={e => sortRow(index + 1)} className='cursor-pointer'>
-                      {item}
-                      <img src='/img/icons/sort.svg' className='img-sort'></img>
-                    </div>
-                    :
-                    <div>
-                      {item}
-                    </div>
-                }
+                <div>
+                  {item}
+                </div>
               </th>
             ))}
           </tr>
@@ -226,18 +190,20 @@ function OrderBloodReceiving() {
         <tbody>
           {
             orderInfo.map((item, index) => (
-              <tr key={index}>
-                <td>{item.orderDonationId}</td>
+              <tr key={index} className={`${item.type === 'urgent' ? 'urgent-order' : ''}`}>
+                <td>{item.orderId}</td>
                 <td>{item.fullName}</td>
                 <td>{item.phone}</td>
                 <td>{item.bloodType}</td>
                 <td>{item.amountBloodMl}</td>
-                <td>{item.orderDate}</td>
-                <td>{item.orderTime}</td>
+                <td>
+                  {item.type === 'normal' ? 'Bình thường' : 'Khẩn cấp'}
+                </td>
+                <td>{item.createDate}</td>
                 <td
                   className="more-info"
                   onClick={() => watchUserInfo(item)}>
-                  <span>Thông tin khách hàng</span>
+                  <span>Thông tin</span>
                 </td>
                 <td>
                   <button className="btn-accept" onClick={e => acceptUserToInfo(item)}>
@@ -256,10 +222,21 @@ function OrderBloodReceiving() {
       <div className={`${stateAcceptBtn ? 'show' : 'hidden'} accept-container `}>
         <h2>Nhận đơn</h2>
         <div className="form-accept">
-          <span className="text-w">Bạn có chắc chắn muốn nhận đơn này?</span>
-          <span className="text-w">Mã đơn: {chooseUserInfo.orderDonationId}</span>
+          <span className="text-w">Xác nhận duyệt đơn</span>
+          <span className="text-w">Mã đơn: {chooseUserInfo.orderId}</span>
           <span className="text-w">Tên khách hàng: {chooseUserInfo.fullName}</span>
-          <button type="none" onClick={e => acceptOrder(e, chooseUserInfo.orderDonationId)}>Nhận</button>
+          <form onSubmit={e => acceptOrder(e, chooseUserInfo.orderId)}>
+            <label>
+              Nơi hẹn
+              <select onChange={(e) => setClinicId(e.target.value)} required>
+                <option value="" disabled selected >Chọn điểm hẹn</option>
+                {clinics.map((item, index) => (
+                  <option value={item.id} >{item.clinicName}</option>
+                ))}
+              </select>
+            </label>
+            <button type="submit">Nhận</button>
+          </form>
         </div>
         <button type="none" className="close-btn" onClick={e => setStateAcceptBtn(!stateAcceptBtn)}>
         </button>
@@ -268,9 +245,9 @@ function OrderBloodReceiving() {
         <h2>Loại đơn</h2>
         <div className="form-accept">
           <span className="text-w">Bạn có chắc chắn muốn loại đơn này?</span>
-          <span className="text-w">Mã đơn: {chooseUserInfo.orderDonationId}</span>
+          <span className="text-w">Mã đơn: {chooseUserInfo.orderId}</span>
           <span className="text-w">Tên khách hàng: {chooseUserInfo.fullName}</span>
-          <form onSubmit={e => refuseOrder(e, chooseUserInfo.orderDonationId, reason)}>
+          <form onSubmit={e => refuseOrder(e, chooseUserInfo.orderId, reason)}>
             <label>
               Nhập lý do loại đơn
               <input required onChange={(e) => setReason(e.target.value)}></input>

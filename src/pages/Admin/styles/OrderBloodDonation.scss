@@ -414,3 +414,11 @@
     pointer-events: auto;
     filter: blur(0px);
 }
+
+.urgent-order {
+    td {
+        background-color: rgb(255, 182, 174) !important;
+        background-clip: padding-box;
+        font-weight: 600;
+    }
+}

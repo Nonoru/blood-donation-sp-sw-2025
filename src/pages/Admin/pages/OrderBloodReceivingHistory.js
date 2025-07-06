@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import * as StaffApi from '../services/StaffApi'
 import { toast } from 'react-toastify';
 import '../styles/OrderBloodDonation.scss';
-function OrderBloodDonationHistory() {
+function OrderBloodReceivingHistory() {
   const tHeadItems =
-    ["Mã", "Tên khách hàng", "Số điện thoại", "Nhóm máu", "Lượng máu(ml)", "Ngày hẹn", "Giờ hẹn", "Xem thêm", "Trạng thái"];
+    ["Mã", "Tên khách hàng", "Số điện thoại", "Nhóm máu", "Lượng máu(ml)", "Trạng thái", "Ngày tạo", "Địa điểm", "Xem thêm", "Trạng thái"];
 
   const [moreInfo, setMoreInfo] = useState(false);
   const [orderInfo, setOrderInfo] = useState([]);
@@ -12,7 +12,7 @@ function OrderBloodDonationHistory() {
   const getList = async () => {
     const execute = async () => {
       try {
-        const res = await StaffApi.getAllOrderDonate();
+        const res = await StaffApi.getAllOrderReceive();
         await new Promise(resolve => setTimeout(resolve, 1000));
         return res;
       } catch (err) {
@@ -79,11 +79,7 @@ function OrderBloodDonationHistory() {
     }
   };
 
-  const parseDate = (str) => {
-    if (!str) return new Date(0);
-    const [day, month, year] = str.split('/');
-    return new Date(`${year}-${month}-${day}`);
-  };
+
   const [sortDirection, setSortDirection] = useState('asc');
 
   const sortRow = (row) => {
@@ -91,7 +87,7 @@ function OrderBloodDonationHistory() {
 
     switch (row) {
       case 1:
-        setOrderInfo([...orderInfo].sort((a, b) => (a.orderDonationId - b.orderDonationId) * direction));
+        setOrderInfo([...orderInfo].sort((a, b) => (a.orderId - b.orderId) * direction));
         break;
 
       case 4:
@@ -102,16 +98,14 @@ function OrderBloodDonationHistory() {
         setOrderInfo([...orderInfo].sort((a, b) => (a.amountBloodMl - b.amountBloodMl) * direction));
         break;
 
-      case 6:
+      case 7:
         setOrderInfo([...orderInfo].sort((a, b) => {
-          const dateA = parseDate(a.orderDate);
-          const dateB = parseDate(b.orderDate);
-          return (dateA - dateB) * direction;
+          return (new Date(a.createDate) - new Date(b.createDate)) * direction;
         }));
         break;
 
-      case 9:
-        setOrderInfo([...orderInfo].sort((a, b) => (a.statusCode - b.statusCode) * direction));
+      case 10:
+        setOrderInfo([...orderInfo].sort((a, b) => (a.status - b.status) * direction));
         break;
 
       default:
@@ -129,11 +123,11 @@ function OrderBloodDonationHistory() {
         <h2>Thông tin khách hàng</h2>
         <div>
           <span>Mã đơn</span>
-          <span>{chooseUserInfo.orderDonationId}</span>
+          <span>{chooseUserInfo.orderId}</span>
         </div>
         <div>
           <span>Tạo bởi username</span>
-          <span>{chooseUserInfo.createByUsername}</span>
+          <span>{chooseUserInfo.createdByUsername}</span>
         </div>
         <div>
           <span>Họ tên</span>
@@ -144,19 +138,12 @@ function OrderBloodDonationHistory() {
           <span>{chooseUserInfo.cccdNumber}</span>
         </div>
         <div>
-          <span>Giới tính</span>
-          <span>{chooseUserInfo.gender}</span></div>
-        <div>
-          <span>Cân nặng</span>
-          <span>{chooseUserInfo.weight}</span>
-        </div>
-        <div>
-          <span>Ngày sinh</span>
-          <span>{chooseUserInfo.dob}</span>
-        </div>
-        <div>
           <span>Địa chỉ</span>
           <span>{chooseUserInfo.address}</span>
+        </div>
+        <div>
+          <span>Lý do</span>
+          <span>{chooseUserInfo.reason}</span>
         </div>
         <div>
           <span>Ngày tạo</span>
@@ -164,14 +151,14 @@ function OrderBloodDonationHistory() {
         </div>
         <button type="none" className="close-btn" onClick={e => setMoreInfo(!moreInfo)}></button>
       </div>
-      <p className={`title-table`}>Đơn đã được duyệt</p>
+      <p className={`title-table`}>Lịch sử các đơn nhận máu</p>
       <table className={`${moreInfo ? 'prevent-ui' : 'normal-ui'}`}>
         <thead>
           <tr>
             {tHeadItems.map((item, index) => (
               <th key={index}>
                 {
-                  (index + 1) === 1 || (index + 1) === 4 || (index + 1) === 5 || (index + 1) === 9 || (index + 1) === 6 ?
+                  (index + 1) === 1 || (index + 1) === 4 || (index + 1) === 5 || (index + 1) === 10 || (index + 1) === 7 ?
                     <div onClick={e => sortRow(index + 1)} className='cursor-pointer'>
                       {item}
                       <img src='/img/icons/sort.svg' className='img-sort'></img>
@@ -189,20 +176,23 @@ function OrderBloodDonationHistory() {
           {
             orderInfo.map((item, index) => (
               <tr key={index}>
-                <td>{item.orderDonationId}</td>
+                <td>{item.orderId}</td>
                 <td>{item.fullName}</td>
                 <td>{item.phone}</td>
                 <td>{item.bloodType}</td>
                 <td>{item.amountBloodMl}</td>
-                <td>{item.orderDate}</td>
-                <td>{item.orderTime}</td>
+                <td>
+                  {item.type === 'normal' ? 'Bình thường' : 'Khẩn cấp'}
+                </td>
+                <td>{item.createDate}</td>
+                <td>{item.clinicName}</td>
                 <td
                   className="more-info"
                   onClick={() => watchUserInfo(item)}>
                   <span>Thông tin khách hàng</span>
                 </td>
                 <td>
-                  {renderStatusDiv(item.statusCode)}
+                  {renderStatusDiv(item.status)}
                 </td>
               </tr>
             ))}
@@ -211,4 +201,4 @@ function OrderBloodDonationHistory() {
     </div>
   );
 }
-export default OrderBloodDonationHistory;
+export default OrderBloodReceivingHistory;

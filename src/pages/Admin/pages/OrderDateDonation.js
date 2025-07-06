@@ -77,7 +77,6 @@ function OrderDateDonation() {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log("📦 JSON gửi lên:", formDate);
         try {
             const response = await StaffApi.addOrderDate(formDate);
 

@@ -1,4 +1,4 @@
-import { Routes , Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import ManageAccountRoute from './components/ManageAccountRoute';
 import AdminMenu from './pages/AdminMenu';
 import AdminStatistic from './pages/AdminStatistic';
@@ -14,12 +14,14 @@ import { useNavigate } from 'react-router-dom';
 import './Admin.scss'
 import OrderBloodDonationHistory from './pages/OrderBloodDonationHistory';
 import OrderBloodReceiving from './pages/OrderBloodReceiving';
-function AdminPage(){
+import OrderBloodReceivingAccept from './pages/OrderBloodReceivingAccept';
+import OrderBloodReceivingHistory from './pages/OrderBloodReceivingHistory';
+function AdminPage() {
     const navigate = useNavigate();
     const goToHome = () => {
         navigate('/');
     }
-    return(
+    return (
         <div className="admin-page">
             <div className='user-info'>
                 <div className='user-name'>
@@ -33,17 +35,19 @@ function AdminPage(){
                 </button>
             </div>
             <ToastContainer position="top-right" autoClose={1500} />
-            <AdminMenu/>
+            <AdminMenu />
             <Routes>
-                <Route path='/' element={<AdminStatistic/>}/>
-                <Route path='/accounts' element={<ManageAccountRoute><AdminManageAccount/></ManageAccountRoute>}/>
-                <Route path='/manage/clinics' element={<Clinic/>}/>
-                <Route path='/manage/schedules' element={<OrderDateDonation/>}/>
-                <Route path='/orders/donate' element={<OrderBloodDonation/>}/>
-                <Route path='/orders/donate/accept' element={<OrderBloodDonationAccept/>}/>
-                <Route path='/orders/donate/history' element={<OrderBloodDonationHistory/>}/>
-                <Route path='/orders/receive' element={<OrderBloodReceiving/>}></Route>
-                <Route path='/for-bidden' element={<ForBidden/>}/>
+                <Route path='/' element={<AdminStatistic />} />
+                <Route path='/accounts' element={<ManageAccountRoute><AdminManageAccount /></ManageAccountRoute>} />
+                <Route path='/manage/clinics' element={<Clinic />} />
+                <Route path='/manage/schedules' element={<OrderDateDonation />} />
+                <Route path='/orders/donate' element={<OrderBloodDonation />} />
+                <Route path='/orders/donate/accept' element={<OrderBloodDonationAccept />} />
+                <Route path='/orders/donate/history' element={<OrderBloodDonationHistory />} />
+                <Route path='/orders/receive' element={<OrderBloodReceiving />} />
+                <Route path='/orders/receive/accept' element={<OrderBloodReceivingAccept />} />
+                <Route path='/orders/receive/history' element={<OrderBloodReceivingHistory />} />
+                <Route path='/for-bidden' element={<ForBidden />} />
             </Routes>
         </div>
     )

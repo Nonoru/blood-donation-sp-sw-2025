@@ -164,7 +164,7 @@ function OrderBloodDonationHistory() {
         </div>
         <button type="none" className="close-btn" onClick={e => setMoreInfo(!moreInfo)}></button>
       </div>
-      <p className={`title-table`}>Đơn đã được duyệt</p>
+      <p className={`title-table`}>Lịch sử các đơn hiến máu</p>
       <table className={`${moreInfo ? 'prevent-ui' : 'normal-ui'}`}>
         <thead>
           <tr>
