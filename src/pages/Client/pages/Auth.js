@@ -118,12 +118,6 @@ function Login({userInfo, setUserInfo}) {
                 <div className='form-section login-form-section'>
                     <h2>Đăng nhập</h2>
                     
-                    <div className='social-login'>
-                        <button className='social-btn google'>
-                            <i className='fab fa-google'></i>
-                        </button>
-                    </div>
-
                     <div className='input-block'>
                         <LoginInput handleChangeLogin = {handleChangeLogin} formLogin = {formLogin}/>
                     </div>

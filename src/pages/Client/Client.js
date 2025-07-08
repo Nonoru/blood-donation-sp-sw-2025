@@ -1,4 +1,4 @@
-import { Routes , Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Header from '../Client/pages/Header'
 import HomePage from '../Client/pages/Home'
 import BlogPage from '../Client/pages/Blog'
@@ -20,36 +20,37 @@ import OrderHistory from '../Client/features/subs/OrderHistory'
 import GiftExchange from '../Client/features/subs/GiftExchange'
 import ErrorPage from '../Client/pages/ErrorPage'
 import Chatbot from '../Client/pages/Chatbot'
+import ChangePassword from './pages/ChangePassword'
 import { ToastContainer } from 'react-toastify';
 import './Client.scss'
 
 
-function Client ({userInfo, setUserInfo}) {
-    return(
+function Client({ userInfo, setUserInfo }) {
+    return (
         <div className="client-page">
             <ToastContainer position="top-center" autoClose={600} />
-            <Header userInfo={userInfo} setUserInfo={setUserInfo}/>
+            <Header userInfo={userInfo} setUserInfo={setUserInfo} />
             <Routes>
-                <Route path='/' element={<HomePage/>}/>
-                <Route path='/blog' element={<BlogPage/>}/>
-                <Route path='/doc' element={<DocPage/>}/>
-                <Route path='/login' element={<Auth userInfo={userInfo} setUserInfo={setUserInfo}/>}/>
-                <Route path='/feature' element={<FeaturesPage/>}/>
-                <Route path='/feature/donate-blood' element={<DonateBlood/>}/>
-                <Route path='/feature/receive-blood' element={<ReceiveBlood/>}/>
-                <Route path='/feature/order-history' element={<OrderHistory/>}/>
-                <Route path='/feature/gift-exchange' element={<GiftExchange/>}/>
-                <Route path='/blog/1' element={<Blog1/>}/>
-                <Route path='/blog/2' element={<Blog2/>}/>
-                <Route path='/blog/3' element={<Blog3/>}/>
-                <Route path='/blog/4' element={<Blog4/>}/>
-                <Route path='/blog/5' element={<Blog5/>}/>
-                <Route path='/blog/6' element={<Blog6/>}/>
-                <Route path='/doc/1' element={<Doc1/>}/>
-                <Route path='/doc/2' element={<Doc2/>}/>    
-                <Route path='/doc/3' element={<Doc3/>}/>
-
-                <Route path='*' element={<ErrorPage/>}/>
+                <Route path='/' element={<HomePage />} />
+                <Route path='/blog' element={<BlogPage />} />
+                <Route path='/doc' element={<DocPage />} />
+                <Route path='/login' element={<Auth userInfo={userInfo} setUserInfo={setUserInfo} />} />
+                <Route path='/feature' element={<FeaturesPage />} />
+                <Route path='/feature/donate-blood' element={<DonateBlood />} />
+                <Route path='/feature/receive-blood' element={<ReceiveBlood />} />
+                <Route path='/feature/order-history' element={<OrderHistory />} />
+                <Route path='/feature/gift-exchange' element={<GiftExchange />} />
+                <Route path='/blog/1' element={<Blog1 />} />
+                <Route path='/blog/2' element={<Blog2 />} />
+                <Route path='/blog/3' element={<Blog3 />} />
+                <Route path='/blog/4' element={<Blog4 />} />
+                <Route path='/blog/5' element={<Blog5 />} />
+                <Route path='/blog/6' element={<Blog6 />} />
+                <Route path='/doc/1' element={<Doc1 />} />
+                <Route path='/doc/2' element={<Doc2 />} />
+                <Route path='/doc/3' element={<Doc3 />} />
+                <Route path='/change-pass' element={<ChangePassword />} />
+                <Route path='*' element={<ErrorPage />} />
             </Routes>
             <Chatbot />
         </div>
