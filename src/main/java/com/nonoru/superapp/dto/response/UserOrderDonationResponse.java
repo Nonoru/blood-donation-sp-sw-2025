@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserOrderDonationResponse {
     private long orderDonationId;
+    private String fullName;
     private String createDate;
     private String bloodType;
     private float amountBloodMl;

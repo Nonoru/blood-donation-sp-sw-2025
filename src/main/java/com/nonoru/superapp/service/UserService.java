@@ -56,6 +56,7 @@ public class UserService {
             String donationDate = order.getOrderDate().getOrderDate().format(formatter);
             UserOrderDonationResponse response = UserOrderDonationResponse.builder()
                     .orderDonationId(order.getOrderDonationId())
+                    .fullName(order.getFullName())
                     .createDate(createDate)
                     .bloodType(order.getBlood().getBloodType())
                     .amountBloodMl(order.getAmountBloodMl())

@@ -51,7 +51,7 @@ public class SecurityConfig {
             .requestMatchers(ADMIN_URLS).hasAuthority("ROLE_ADMIN")
             .requestMatchers(STAFF_URLS).hasAnyAuthority("ROLE_STAFF", "ROLE_ADMIN")
             .requestMatchers(USER_URLS).hasAnyAuthority("ROLE_STAFF", "ROLE_ADMIN", "ROLE_USER")
-
+                .requestMatchers(HttpMethod.PUT, "/auth/user/change/password").hasAnyAuthority("ROLE_STAFF", "ROLE_ADMIN", "ROLE_USER")
             .anyRequest().authenticated());
         httpSecurity.oauth2ResourceServer(oauth2 ->
                 oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));

@@ -63,6 +63,7 @@ public class AuthAPI {
     ApiResponse<Void> changePassword (@RequestBody @Valid ChangePasswordRequest request){
         authService.changePassword(request);
         return ApiResponse.<Void>builder()
+                .message("Đổi mật khẩu thành công")
                 .build();
     }
 

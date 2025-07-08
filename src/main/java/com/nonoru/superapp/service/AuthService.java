@@ -24,7 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.method.support.CompositeUriComponentsContributor;
 
@@ -153,8 +155,10 @@ public class AuthService {
     }
 
     public void changePassword(ChangePasswordRequest request) {
-        if (userService.hasId(request.getUserId())){
-            UserAccount user = userRepository.findById(request.getUserId()).orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long idJwt = jwt.getClaim("id");
+        if (userService.hasId(idJwt)){
+            UserAccount user = userRepository.findById(idJwt).orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
             boolean validOldPass = passwordEncoder.matches(request.getOldPassword(), user.getHashPassword());
             boolean validNewPass = request.getNewPassword().equals(request.getConfirmNewPassword());
             if(!validOldPass) {

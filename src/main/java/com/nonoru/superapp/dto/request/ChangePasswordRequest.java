@@ -8,8 +8,6 @@ import org.hibernate.validator.constraints.Length;
 @Data
 
 public class ChangePasswordRequest {
-    private long userId;
-
     @NotBlank(message = "PASSWORD_EMPTY")
     private String oldPassword;
 

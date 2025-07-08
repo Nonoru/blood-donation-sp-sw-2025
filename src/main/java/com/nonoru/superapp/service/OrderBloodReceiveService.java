@@ -126,6 +126,10 @@ public class OrderBloodReceiveService {
         List<OrderBloodReceiveResponse> responses = new ArrayList<>();
         List<OrderBloodReceive> orders = orBReceiveRepo.findAllByUserAccount_Id(idUser);
         orders.forEach(order -> {
+            String clinicName = null;
+            if( order.getClinic() != null){
+                clinicName = order.getClinic().getClinicName();
+            }
             OrderBloodReceiveResponse o = OrderBloodReceiveResponse.builder()
                     .orderId(order.getOrderReceivingId())
                     .fullName(order.getFullName())
@@ -136,6 +140,9 @@ public class OrderBloodReceiveService {
                     .bloodType(order.getBlood().getBloodType())
                     .status(order.getStatus())
                     .type(order.getType())
+                    .clinicName(clinicName)
+                    .reasonCancel(order.getReasonCancel())
+                    .doneDate(order.getDoneDate())
                     .build();
             responses.add(o);
         });
