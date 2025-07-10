@@ -60,3 +60,24 @@ export const getAllOrderReceive = async () => {
 export const getBlood = async () => {
     return await axios.get(`${url}/blood`, { headers: createHeaders() });
 }
+// STATISTIC
+export const getBloodDonateToday = async () => {
+    return await axios.get(`${url}/statistic/today`, { headers: createHeaders() });
+}
+export const getBloodDonateYesterday = async () => {
+    return await axios.get(`${url}/statistic/yesterday`, { headers: createHeaders() });
+}
+export const getBloodDonateMonth = async () => {
+    return await axios.get(`${url}/statistic/month`, { headers: createHeaders() });
+}
+
+//
+export const getBloodDonateTodayReceive = async () => {
+    return await axios.get(`${url}/statistic/receive/today`, { headers: createHeaders() });
+}
+export const getBloodDonateYesterdayReceive = async () => {
+    return await axios.get(`${url}/statistic/receive/yesterday`, { headers: createHeaders() });
+}
+export const getBloodDonateMonthReceive = async () => {
+    return await axios.get(`${url}/statistic/receive/month`, { headers: createHeaders() });
+}
