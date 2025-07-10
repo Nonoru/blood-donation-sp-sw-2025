@@ -1,7 +1,9 @@
 package com.nonoru.superapp.controller;
 
+import com.nonoru.superapp.dto.BloodStorageChangeDTO;
 import com.nonoru.superapp.dto.request.OrderDateDonationRequest;
 import com.nonoru.superapp.dto.response.*;
+import com.nonoru.superapp.entity.BloodStorage;
 import com.nonoru.superapp.entity.Clinic;
 import com.nonoru.superapp.entity.OrderBloodReceive;
 import com.nonoru.superapp.enums.StatusOfOrderDonation;
@@ -96,12 +98,6 @@ public class StaffAPI {
                 .data(dateDonationService.getOrderDateDonationForStaff())
                 .build();
     }
-    @GetMapping("/statistic/today")
-    public ApiResponse<BloodOrderStaticResponse> getStatisticToday(){
-        return ApiResponse.<BloodOrderStaticResponse>builder()
-                .data(bloodDonationService.getBloodStaticToday())
-                .build();
-    }
 
     @GetMapping("/list-order/receive")
     public ApiResponse<List<OrderBloodReceiveResponse>> getAllReceiveOrders () {
@@ -150,6 +146,19 @@ public class StaffAPI {
         bloodReceiveService.cancelOrderBloodReceive(id, reason.get("reason"));
         return ApiResponse.<Void>builder()
                 .message("Đơn đã bị hủy")
+                .build();
+    }
+
+    @GetMapping("/blood")
+    public ApiResponse<List<BloodStorageResponse<BloodStorageChangeDTO>>> getBloodStorage(){
+        return ApiResponse.<List<BloodStorageResponse<BloodStorageChangeDTO>>>builder()
+                .data(bloodService.getAllBloodStorage())
+                .build();
+    }
+    @GetMapping("/statistic/today")
+    public ApiResponse<BloodOrderStaticResponse> getStatisticToday(){
+        return ApiResponse.<BloodOrderStaticResponse>builder()
+                .data(bloodService.getBloodStaticToday())
                 .build();
     }
 }

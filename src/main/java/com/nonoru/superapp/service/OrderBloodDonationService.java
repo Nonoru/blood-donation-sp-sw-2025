@@ -201,30 +201,5 @@ public class OrderBloodDonationService {
         bloodStorage.setStorage(oldAmount + amount);
         bloodStorageRepo.save(bloodStorage);
     }
-    /* STATISTIC ORDER */
-    public BloodOrderStaticResponse getBloodStaticToday() {
 
-        int processingCode = StatusOfOrderDonation.PROCESSING.getStatusCode();
-        int confirmedCode = StatusOfOrderDonation.COMFRIMMED.getStatusCode();
-        int completedCode = StatusOfOrderDonation.COMPLETED.getStatusCode();
-        int refusedCode = StatusOfOrderDonation.REFUSED.getStatusCode();
-        int canceledCode = StatusOfOrderDonation.CANCELED.getStatusCode();
-
-        LocalDate today = LocalDate.now();
-        List<Long> listIdDate = orderDateRepo.findListIdByDate(today);
-
-        BloodOrderStaticResponse response = BloodOrderStaticResponse.builder()
-                .countAllOrderDonation
-                        (orderDonationRepo.countAllColumnOrderByStatus(listIdDate))
-                .countAllOrderDonationWaiting
-                        (orderDonationRepo.countColumnOrderByStatus(processingCode ,confirmedCode , listIdDate))
-                .countAllOrderDonationCompleted
-                        (orderDonationRepo.countColumnOrderByStatus(completedCode, completedCode, listIdDate))
-                .countAllOrderDonationDenied
-                        (orderDonationRepo.countColumnOrderByStatus(refusedCode, canceledCode, listIdDate))
-                .donationBloodAmount
-                        (orderDonationRepo.sumBloodAmountByStatus(completedCode, listIdDate))
-                .build();
-        return response;
-    }
 }

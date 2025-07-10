@@ -1,5 +1,7 @@
 package com.nonoru.superapp.repository;
 
+import com.nonoru.superapp.dto.BloodStorageChangeDTO;
+import com.nonoru.superapp.entity.BloodStorage;
 import com.nonoru.superapp.entity.OrderBloodDonation;
 import com.nonoru.superapp.entity.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,4 +32,10 @@ public interface OrderBloodDonationRepository extends JpaRepository<OrderBloodDo
     Integer countColumnOrderByStatus(@Param("status1") int status1, @Param("status2") int status2, @Param("listIdDate") List<Long> listIdDate);
 
     List<OrderBloodDonation> findAllByUserAccount_Id(Long userAccountId);
+
+    @Query(value = """
+    SELECT new com.nonoru.superapp.dto.BloodStorageChangeDTO(o.createDate, o.userAccount.username ,
+        'Donate' as type, o.amountBloodMl) FROM OrderBloodDonation o WHERE o.status = 3 AND o.blood = :blood
+    """)
+    List<BloodStorageChangeDTO> getOrderBloodDonations(@Param("blood") BloodStorage blood);
 }
