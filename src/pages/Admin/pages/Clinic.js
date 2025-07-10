@@ -64,7 +64,7 @@ function Clinic() {
                         <tr>
                             <th>Mã</th>
                             <th>Tên phòng khám</th>
-                            <th>Trưởng phòng</th>
+                            <th>Loại phòng khám</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,7 +72,7 @@ function Clinic() {
                             <tr key={index}>
                                 <th>{item.id}</th>
                                 <th>{item.clinicName}</th>
-                                <th>Huy</th>
+                                <th>{item.type}</th>
                             </tr>
                         ))}
                     </tbody>

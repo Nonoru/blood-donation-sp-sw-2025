@@ -8,14 +8,15 @@ import OrderBloodDonation from './pages/OrderBloodDonation';
 import Clinic from './pages/Clinic';
 import OrderDateDonation from './pages/OrderDateDonation';
 import OrderBloodDonationAccept from './pages/OrderBloodDonationAccept'
-import * as Token from '../../util/Token';
-import { ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import './Admin.scss'
+import BloodStorage from './pages/BloodStorage';
 import OrderBloodDonationHistory from './pages/OrderBloodDonationHistory';
 import OrderBloodReceiving from './pages/OrderBloodReceiving';
 import OrderBloodReceivingAccept from './pages/OrderBloodReceivingAccept';
 import OrderBloodReceivingHistory from './pages/OrderBloodReceivingHistory';
+import * as Token from '../../util/Token';
+import { ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import './Admin.scss'
 function AdminPage() {
     const navigate = useNavigate();
     const goToHome = () => {
@@ -47,6 +48,7 @@ function AdminPage() {
                 <Route path='/orders/receive' element={<OrderBloodReceiving />} />
                 <Route path='/orders/receive/accept' element={<OrderBloodReceivingAccept />} />
                 <Route path='/orders/receive/history' element={<OrderBloodReceivingHistory />} />
+                <Route path='/blood' element={<BloodStorage />} />
                 <Route path='/for-bidden' element={<ForBidden />} />
             </Routes>
         </div>

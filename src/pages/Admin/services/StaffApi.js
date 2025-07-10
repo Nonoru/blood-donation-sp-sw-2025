@@ -57,3 +57,6 @@ export const cancelOrderReceive = async (id, reason) => {
 export const getAllOrderReceive = async () => {
     return await axios.get(`${url}/list-order/receive`, {headers: createHeaders()});
 }
+export const getBlood = async () => {
+    return await axios.get(`${url}/blood`, { headers: createHeaders() });
+}

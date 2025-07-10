@@ -20,7 +20,6 @@ function App() {
 
   return (
     <div className="App">
-      <ToastContainer position="top-center" autoClose={600} />
       <Routes>
         <Route path='/*' element={<ClientPage userInfo={userInfo} setUserInfo={setUserInfo} />} />
         <Route path="/admin/*" element={<AdminRoute> <AdminPage /> </AdminRoute>} />

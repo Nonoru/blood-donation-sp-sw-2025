@@ -26,13 +26,7 @@ const items = [
             { id: 4.6, name: 'Lịch sử đơn nhận máu', path: '/receive/history'},
         ]
     },
-    {
-        id: 5, name: 'Kho',
-        child: [
-            { id: 5.1, name: 'Kho vật tư' },
-            { id: 5.2, name: 'Ngân hàng máu' },
-        ]
-    }
+    { id: 5, name: 'Kho máu', path: '/admin/blood' },
 ]
 function AdminMenu() {
     const [itemShow, setItemShow] = useState(new Array(items.length).fill(false));
@@ -55,7 +49,7 @@ function AdminMenu() {
                         onClick={() => clickItem(item.id - 1)}
                     >
                         {
-                            item.id === 1 || item.id === 2 ?
+                            item.id === 1 || item.id === 2 || item.id === 5 ?
                                 <Link to={item.path}>
                                     {item.name}
                                 </Link>
