@@ -158,7 +158,37 @@ public class StaffAPI {
     @GetMapping("/statistic/today")
     public ApiResponse<BloodOrderStaticResponse> getStatisticToday(){
         return ApiResponse.<BloodOrderStaticResponse>builder()
-                .data(bloodService.getBloodStaticToday())
+                .data(bloodService.getBloodDonateStatic(0, false))
+                .build();
+    }
+    @GetMapping("/statistic/yesterday")
+    public ApiResponse<BloodOrderStaticResponse> getStatisticYesterday(){
+        return ApiResponse.<BloodOrderStaticResponse>builder()
+                .data(bloodService.getBloodDonateStatic(1, false))
+                .build();
+    }
+    @GetMapping("/statistic/month")
+    public ApiResponse<BloodOrderStaticResponse> getStatisticMonth(){
+        return ApiResponse.<BloodOrderStaticResponse>builder()
+                .data(bloodService.getBloodDonateStatic(0, true))
+                .build();
+    }
+    @GetMapping("/statistic/receive/today")
+    public ApiResponse<BloodOrderStaticResponse> getStatisticReceiveToday(){
+        return ApiResponse.<BloodOrderStaticResponse>builder()
+                .data(bloodService.getBloodReceiveStatic(0, false))
+                .build();
+    }
+    @GetMapping("/statistic/receive/yesterday")
+    public ApiResponse<BloodOrderStaticResponse> getStatisticReceiveYesterday(){
+        return ApiResponse.<BloodOrderStaticResponse>builder()
+                .data(bloodService.getBloodReceiveStatic(1, false))
+                .build();
+    }
+    @GetMapping("/statistic/receive/month")
+    public ApiResponse<BloodOrderStaticResponse> getStatisticReceiveMonth(){
+        return ApiResponse.<BloodOrderStaticResponse>builder()
+                .data(bloodService.getBloodReceiveStatic(0, true))
                 .build();
     }
 }

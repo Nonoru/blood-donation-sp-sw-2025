@@ -40,4 +40,9 @@ public interface OrderDateDonationRepository extends JpaRepository<OrderDateDona
     SELECT od.orderDateId FROM OrderDateDonation od WHERE od.orderDate = :date
     """)
     List<Long> findListIdByDate(@Param("date") LocalDate date);
+
+    @Query(value = """
+    SELECT od.orderDateId FROM OrderDateDonation od WHERE od.orderDate BETWEEN :fDate AND :eDate
+    """)
+    List<Long> findListIdInMonth(@Param("fDate") LocalDate fDate, @Param("eDate") LocalDate eDate);
 }

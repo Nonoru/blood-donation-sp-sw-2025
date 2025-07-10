@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OrderBloodDonationRepository extends JpaRepository<OrderBloodDonation, Long>
@@ -18,7 +19,7 @@ public interface OrderBloodDonationRepository extends JpaRepository<OrderBloodDo
     @Query(value = """
     SELECT SUM(o.amountBloodMl) FROM OrderBloodDonation o WHERE o.status = :status AND o.orderDate.orderDateId IN(:listIdDate)
     """)
-    Float sumBloodAmountByStatus(@Param("status") int status, @Param("listIdDate") List<Long> listIdDate);
+    Optional<Float> sumBloodAmountByStatus(@Param("status") int status, @Param("listIdDate") List<Long> listIdDate);
 
     @Query(value = """
     SELECT COUNT(o) FROM OrderBloodDonation o WHERE o.orderDate.orderDateId IN(:listIdDate)
@@ -38,4 +39,5 @@ public interface OrderBloodDonationRepository extends JpaRepository<OrderBloodDo
         'Donate' as type, o.amountBloodMl) FROM OrderBloodDonation o WHERE o.status = 3 AND o.blood = :blood
     """)
     List<BloodStorageChangeDTO> getOrderBloodDonations(@Param("blood") BloodStorage blood);
+
 }
