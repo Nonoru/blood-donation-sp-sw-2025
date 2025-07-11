@@ -1,15 +1,12 @@
 package com.nonoru.superapp.controller;
 
 import com.nimbusds.jose.JOSEException;
-import com.nonoru.superapp.dto.request.ChangePasswordRequest;
-import com.nonoru.superapp.dto.request.IntrospectRequest;
+import com.nonoru.superapp.dto.request.*;
 import com.nonoru.superapp.dto.response.ApiResponse;
 import com.nonoru.superapp.dto.response.AuthResponse;
 import com.nonoru.superapp.dto.response.IntrospectResponse;
 import com.nonoru.superapp.entity.UserAccount;
 import com.nonoru.superapp.repository.UserRepository;
-import com.nonoru.superapp.dto.request.LoginAccountRequest;
-import com.nonoru.superapp.dto.request.RegisterAccountRequest;
 import com.nonoru.superapp.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -67,4 +64,25 @@ public class AuthAPI {
                 .build();
     }
 
+    @PostMapping("/user/forgot-password")
+    ApiResponse<Void> sendEmailToGetOtp (@RequestBody @Valid ForgotPasswordEmailRequest request){
+        authService.createAndSendOtp(request.getEmail());
+        return ApiResponse.<Void>builder()
+                .message("Đã gởi OPT đến gmail. Nhập OPT để thay đổi mật khẩu")
+                .build();
+    }
+    @PostMapping("/user/check-otp")
+    ApiResponse<AuthResponse> checkOtp (@RequestBody @Valid ForgotPasswordEmailRequest request){
+        return ApiResponse.<AuthResponse>builder()
+                .data(authService.checkOtp(request))
+                .build();
+    }
+    @PostMapping("/user/reset-password")
+    ApiResponse<Void> resetPassword (@RequestBody @Valid ResetPasswordRequest request)
+    throws ParseException, JOSEException {
+        authService.resetPassword(request);
+        return ApiResponse.<Void>builder()
+                .message("Đã tạo mới mật khẩu cho tài khoản")
+                .build();
+    }
 }

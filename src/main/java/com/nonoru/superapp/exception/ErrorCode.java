@@ -70,7 +70,11 @@ public enum ErrorCode {
 
     ORDER_NOT_FOUND(41, "Không tìm thâấy đơn"),
 
-    BLOOD_NOT_ENOUGH(42, "Nhóm máu này hiện tại không đủ trong kho")
+    BLOOD_NOT_ENOUGH(42, "Nhóm máu này hiện tại không đủ trong kho"),
+
+    EMAIL_NOT_FOUND(43, "Email này chưa được đăng ký"),
+
+    OTP_ERROR(44, "Mã OTP không chính xác hoặc đã hết hạn")
 
     ;
     private int code;
