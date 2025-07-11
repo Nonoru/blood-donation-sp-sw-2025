@@ -9,18 +9,6 @@ import {
 import { m } from 'framer-motion';
 
 function AdminStatistic() {
-
-  const topProductsByRevenue = [
-    { name: 'Nhóm Máu A+', tiepNhan: 1000, truyenDi: 3000, conLai: 5000 },
-    { name: 'Nhóm Máu A-', tiepNhan: 1000, truyenDi: 3000, conLai: 5000 },
-    { name: 'Nhóm Máu B+', tiepNhan: 1600, truyenDi: 2500, conLai: 6100 },
-    { name: 'Nhóm Máu B-', tiepNhan: 8600, truyenDi: 2500, conLai: 6100 },
-    { name: 'Nhóm Máu AB+', tiepNhan: 8000, truyenDi: 4000, conLai: 7000 },
-    { name: 'Nhóm Máu AB-', tiepNhan: 8000, truyenDi: 4000, conLai: 7000 },
-    { name: 'Nhóm Máu O+', tiepNhan: 32000, truyenDi: 8000, conLai: 8000 },
-    { name: 'Nhóm Máu O-', tiepNhan: 8400, truyenDi: 2900, conLai: 5500 },
-  ];
-
   const [todayDonateInfo, setTodayDonateInfo] = useState([])
   const [yesterdayDonateInfo, setYesterdaDonateInfo] = useState([])
   const [monthDonateInfo, setMonthDonateInfo] = useState([])
@@ -28,6 +16,8 @@ function AdminStatistic() {
   const [todayReceiveInfo, setTodayReceiveInfo] = useState([])
   const [yesterdayReceiveInfo, setYesterdaReceiveInfo] = useState([])
   const [monthReceiveInfo, setMonthReceiveInfo] = useState([])
+
+  const [bloodGraph, setBloodGraph] = useState([])
 
   const getInfo = async () => {
     try {
@@ -37,6 +27,7 @@ function AdminStatistic() {
       const responseTodayReceive = await StaffApi.getBloodDonateTodayReceive();
       const responseYesterdayReceive = await StaffApi.getBloodDonateYesterdayReceive();
       const responseMonthReceive = await StaffApi.getBloodDonateMonthReceive();
+      const responseBloodGraph = await StaffApi.getBloodStatisticGraph();
 
       if (responseYesterday.data.code === 200 && responseToday.data.code === 200 && responseMonth.data.code === 200) {
         setTodayDonateInfo(responseToday.data.data);
@@ -45,6 +36,9 @@ function AdminStatistic() {
         setTodayReceiveInfo(responseTodayReceive.data.data);
         setYesterdaReceiveInfo(responseYesterdayReceive.data.data);
         setMonthReceiveInfo(responseMonthReceive.data.data);
+      }
+      if (responseBloodGraph.data.code === 200){
+        setBloodGraph(responseBloodGraph.data.data)
       }
     } catch (error) {
       console.log(error.response)
@@ -163,15 +157,15 @@ function AdminStatistic() {
             <strong>Số máu tiếp nhận:</strong>
           </p>
           <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={topProductsByRevenue}>
+            <BarChart data={bloodGraph}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
+              <XAxis dataKey="bloodType" />
               <YAxis />
               <Tooltip content={<CustomTooltip />} />
               <Legend />
-              <Bar dataKey="tiepNhan" name="Tiếp nhận" fill="#4285F4" />
-              <Bar dataKey="truyenDi" name="Truyền đi" fill="#EA4335" />
-              <Bar dataKey="conLai" name="Còn lại" fill="#FBBC05" />
+              <Bar dataKey="changeDonate" name="Tiếp nhận" fill="#4285F4" />
+              <Bar dataKey="changeReceive" name="Truyền đi" fill="#EA4335" />
+              <Bar dataKey="storage" name="Còn lại" fill="#FBBC05" />
             </BarChart>
           </ResponsiveContainer>
         </div>

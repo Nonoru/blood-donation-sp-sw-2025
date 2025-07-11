@@ -61,6 +61,7 @@ export const getBlood = async () => {
     return await axios.get(`${url}/blood`, { headers: createHeaders() });
 }
 // STATISTIC
+// BLOOD DONATE
 export const getBloodDonateToday = async () => {
     return await axios.get(`${url}/statistic/today`, { headers: createHeaders() });
 }
@@ -71,7 +72,7 @@ export const getBloodDonateMonth = async () => {
     return await axios.get(`${url}/statistic/month`, { headers: createHeaders() });
 }
 
-//
+// BLOOD RECEIVE
 export const getBloodDonateTodayReceive = async () => {
     return await axios.get(`${url}/statistic/receive/today`, { headers: createHeaders() });
 }
@@ -81,3 +82,8 @@ export const getBloodDonateYesterdayReceive = async () => {
 export const getBloodDonateMonthReceive = async () => {
     return await axios.get(`${url}/statistic/receive/month`, { headers: createHeaders() });
 }
+// GRAPH
+export const getBloodStatisticGraph = async () => {
+    return await axios.get(`${url}/statistic/blood/graph`, { headers: createHeaders() });
+}
+
