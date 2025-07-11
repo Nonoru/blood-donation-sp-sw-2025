@@ -2,6 +2,7 @@ package com.nonoru.superapp.service;
 
 import com.nonoru.superapp.dto.BloodStorageChangeDTO;
 import com.nonoru.superapp.dto.response.BloodOrderStaticResponse;
+import com.nonoru.superapp.dto.response.BloodStatisticResponse;
 import com.nonoru.superapp.dto.response.BloodStorageResponse;
 import com.nonoru.superapp.entity.BloodStorage;
 import com.nonoru.superapp.enums.StatusOfOrderDonation;
@@ -51,6 +52,24 @@ public class BloodService {
                     .change(allChange)
                     .build();
             responses.add(response);
+        });
+        return responses;
+    }
+
+    public List<BloodStatisticResponse> getAllBloodStorageForStatistic() {
+        List<BloodStatisticResponse> responses = new ArrayList<>();
+        List<BloodStorage> bloodStorageList = bloodRepo.findAll();
+        bloodStorageList.forEach(bloodStorage -> {
+            Float changeDonate = orderDonationRepo.getTotalBloodAmountByBlood(bloodStorage).orElse(0.0f);
+            Float changeReceive = orderReceiveRepo.getTotalBloodAmountByBlood(bloodStorage).orElse(0.0f);
+            BloodStatisticResponse blood = BloodStatisticResponse.builder()
+                    .id(bloodStorage.getId())
+                    .bloodType(bloodStorage.getBloodType())
+                    .storage(bloodStorage.getStorage())
+                    .changeDonate(changeDonate)
+                    .changeReceive(changeReceive)
+                    .build();
+            responses.add(blood);
         });
         return responses;
     }

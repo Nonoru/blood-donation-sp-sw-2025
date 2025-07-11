@@ -40,4 +40,9 @@ public interface OrderBloodDonationRepository extends JpaRepository<OrderBloodDo
     """)
     List<BloodStorageChangeDTO> getOrderBloodDonations(@Param("blood") BloodStorage blood);
 
+    /* FOR BLOOD STATISTIC */
+    @Query(value = """
+    SELECT SUM(o.amountBloodMl) FROM OrderBloodDonation o WHERE o.status = 3 AND o.blood = :blood
+    """)
+    Optional<Float> getTotalBloodAmountByBlood(@Param("blood") BloodStorage blood);
 }

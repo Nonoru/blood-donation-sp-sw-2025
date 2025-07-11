@@ -191,4 +191,10 @@ public class StaffAPI {
                 .data(bloodService.getBloodReceiveStatic(0, true))
                 .build();
     }
+    @GetMapping("/statistic/blood/graph")
+    public ApiResponse<List<BloodStatisticResponse>> getBloodStatisticGraph(){
+        return ApiResponse.<List<BloodStatisticResponse>>builder()
+                .data(bloodService.getAllBloodStorageForStatistic())
+                .build();
+    }
 }

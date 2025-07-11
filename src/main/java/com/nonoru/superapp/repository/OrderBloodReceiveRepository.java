@@ -74,5 +74,10 @@ public interface OrderBloodReceiveRepository extends JpaRepository<OrderBloodRec
     """)
     Integer countColumnOrderCompletedInMonth( @Param("fDate") LocalDate fDate, @Param("eDate") LocalDate eDate);
 
+    /*BLOOD STATISTIC*/
+    @Query(value = """
+    SELECT SUM(o.amountBloodMl) FROM OrderBloodReceive o WHERE o.status = 3 AND o.blood = :blood
+    """)
+    Optional<Float> getTotalBloodAmountByBlood(@Param("blood") BloodStorage blood);
 
 }
