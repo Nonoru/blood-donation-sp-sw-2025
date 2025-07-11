@@ -21,6 +21,7 @@ import GiftExchange from '../Client/features/subs/GiftExchange'
 import ErrorPage from '../Client/pages/ErrorPage'
 import Chatbot from '../Client/pages/Chatbot'
 import ChangePassword from './pages/ChangePassword'
+import ForgotPassword from './pages/ForgotPassword'
 import { ToastContainer } from 'react-toastify';
 import './Client.scss'
 
@@ -50,6 +51,7 @@ function Client({ userInfo, setUserInfo }) {
                 <Route path='/doc/2' element={<Doc2 />} />
                 <Route path='/doc/3' element={<Doc3 />} />
                 <Route path='/change-pass' element={<ChangePassword />} />
+                <Route path='/forgot-password' element={<ForgotPassword />} />
                 <Route path='*' element={<ErrorPage />} />
             </Routes>
             <Chatbot />

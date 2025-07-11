@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {LoginInput} from '../components/LoginInput'
 import {RegisterInput} from '../components/RegisterInput'
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
 import * as AuthApi from '../services/AuthApi'
@@ -134,9 +134,9 @@ function Login({userInfo, setUserInfo}) {
                         </label>
                     </div>
 
-                    <a href='#' className='forget-pass'>
+                    <Link to={`/forgot-password`} className='link-forgot'>
                         Quên mật khẩu?
-                    </a>
+                    </Link>
 
                     <button className='auth-btn' onClick={e => handleLogin(e)}>Đăng nhập</button>
                 </div>

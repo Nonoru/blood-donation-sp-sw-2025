@@ -13,3 +13,12 @@ export const login = async (formLogin) => await axios.post(`${url}/login`, formL
 export const changePassword = async (formData) => {
   return await axios.put(`${url}/user/change/password `, formData, { headers: createHeaders() });
 };
+export const forgotPassword = async (email) => {
+  return await axios.post(`${url}/user/forgot-password `, {email:email}, { headers: createHeaders() });
+};
+export const checkOtp = async (email, otp) => {
+  return await axios.post(`${url}/user/check-otp `, {email:email, otp:otp}, { headers: createHeaders() });
+};
+export const resetPassword = async (token, newPassword, confirmNewPassword) => {
+  return await axios.post(`${url}/user/reset-password `, {token:token, newPassword:newPassword, confirmNewPassword:confirmNewPassword}, { headers: createHeaders() });
+};
