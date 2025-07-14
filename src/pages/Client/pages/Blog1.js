@@ -4,6 +4,7 @@ import '../styles/Blogx.scss';
 function Blog1() {
   return (
     <div className="blog-detail">
+      <div className='blog-color'></div>
       <h1 className="blog-detail-title">Những chia sẻ đáng yêu về hiến máu</h1>
       <p className="blog-meta"><em>Thứ 2, 3/3/2025, 16:15</em></p>
       <img src="/img/pics/blog11.jpg" alt="Hiến máu" className="detail-image" />

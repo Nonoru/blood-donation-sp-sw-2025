@@ -16,7 +16,7 @@ const Chatbot = () => {
     'xin chào': 'Xin chào! Tôi có thể giúp gì cho bạn?',
     hello: 'Hello! How can I help you?',
     'giờ làm việc': 'Chúng tôi làm việc từ 8:00 - 18:00, Thứ 2 - Thứ 6. \nThứ 7: 8:00 - 12:00',
-    'liên hệ': '📞 Hotline: 1900-6848\n📧 Email: bloodbridge5555@gmail.com\n🏢 106 Thiên Phước, Phường 9, Tân Bình, TP. Hồ Chí Minh, Việt Nam',
+    'liên hệ': '📞 Hotline: 0123456789\n📧 Email: huynnse183313@fpt.edu.vn\n🏢 Đại học FPT',
     'dịch vụ': {
       content: '• Đăng ký hiến máu\n• Quà tặng\n• Giải đáp thắc mắc',
       quickReplies: ['Đăng ký hiến máu', 'Quà tặng', 'Giải đáp thắc mắc']

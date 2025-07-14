@@ -48,7 +48,7 @@ function Home(){
                 </div>
                 <div className='section-1-content'>
                     <div className='section-1-title'>
-                      <p className='title-main'>Phần mềm Quản lý Y tế Học đường</p>
+                      <p className='title-main'>Phần mềm hỗ trợ hiến máu học đường</p>
                       <div className='title-sub'>
                           <p>Giải pháp toàn diện giúp nhà trường quản lý sức khỏe học sinh hiệu quả, kết nối giữa nhà trường, phụ huynh và các đơn vị y tế.</p>
                       </div>                      <div className='section-1-buttons'>

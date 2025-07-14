@@ -4,6 +4,7 @@ import '../styles/Blogx.scss';
 function Blog6() {
   return (
     <div className="blog-detail">
+      <div className='blog-color'></div>
       <h1 className="blog-detail-title">Lễ Phát Động Tháng Nhân Đạo 2025: “Hành trình nhân đạo - Lan tỏa yêu thương”</h1>
       <p className="blog-meta"><em>Thứ 5, 8/5/2025, TP.HCM</em></p>
       <img src="/img/pics/blog66.jpg" alt="Lễ phát động Tháng Nhân đạo" className="detail-image" />

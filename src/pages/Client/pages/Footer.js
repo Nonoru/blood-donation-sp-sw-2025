@@ -48,7 +48,7 @@ function Footer(){
                 {/* Left Contact Info */}
                 <div className="footer-contact">
                     <div className="contact-info">
-                        <p>Địa chỉ: 106 Thiên Phước, Phường 9, Tân Bình</p>
+                        <p>Địa chỉ: FPT University</p>
                         <p>TP. Hồ Chí Minh, Việt Nam</p>
                         <br />
                         <p>Hotline: 1900 6848</p>

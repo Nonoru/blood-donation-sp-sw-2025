@@ -170,8 +170,8 @@ function Login({userInfo, setUserInfo}) {
                         
                         {/* Right Overlay Panel */}
                         <div className='overlay-panel overlay-right'>
-                            <h2>Hello, Donater!</h2>
-                            <p>Chào mừng bạn đến với Blood Bridge</p>
+                            <h2>Chào mừng bạn đến với Blood Bridge</h2>
+                            <p>Hãy đăng ký để sử chức năng của trang web</p>
                             <button className='ghost-btn' onClick={toggleMode}>
                                 Đăng ký
                             </button>

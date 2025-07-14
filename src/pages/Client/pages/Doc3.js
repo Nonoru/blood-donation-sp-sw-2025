@@ -4,6 +4,7 @@ import '../styles/Docx.scss';
 function Doc3() {
   return (
     <div className="doc-container">
+      <div className='blog-color'></div>
       <h1 className="doc-title">Nghiên cứu mới nhất về việc phát hiện các nhóm máu hiếm và nhu cầu hiến máu</h1>
       <img src="/img/pics/doc3.jpg" alt="Hiến máu" className="detail-image" />
 
@@ -39,7 +40,7 @@ function Doc3() {
         </ul>
       </section>
 
-      <div className="doc-cta">
+      <div className="doc-card">
         <h3>Bạn đã biết nhóm máu của mình chưa?</h3>
         <p>Hãy đăng ký tham gia hiến máu để được xét nghiệm miễn phí và hỗ trợ cộng đồng!</p>
         <a href="/feature/donate-blood" className="doc-btn">→ Đăng ký hiến máu</a>

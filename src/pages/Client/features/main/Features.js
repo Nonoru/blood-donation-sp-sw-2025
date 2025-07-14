@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import * as Token from '../../../../util/Token';
 import '../../styles/Features.scss';
+import { toast } from 'react-toastify';
 
 const Features = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -37,15 +39,19 @@ const Features = () => {
     },
     {
       id: 4,
-      title: 'Đổi Quà Tặng',
-      icon: '🎁',
-      description: 'Đổi điểm tích lũy thành quà tặng và ưu đãi',
+      title: 'Comming soon',
+      icon: '🔧',
+      description: 'Chức năng sắp ra mắt, hãy theo dõi!',
       color: '#FF9800',
       path: '/feature/gift-exchange',
     }
   ];
 
   const handleFeatureClick = (featurePath) => {
+    if(Token.getToken() === null) {
+      toast.error("Bạn cần đăng nhập để sử dụng tính năng này", { className: 'my-toast' });
+      return;
+    }
     navigate(featurePath);
   };
 
@@ -88,7 +94,7 @@ const Features = () => {
             {features.map((feature) => (
               <div 
                 key={feature.id} 
-                className="feature-card"
+                className={`feature-card ${feature.id === 4 ? 'pointer-events-none' :''}`}
                 onClick={() => handleFeatureClick(feature.path)}
                 style={{ '--feature-color': feature.color }}
               >

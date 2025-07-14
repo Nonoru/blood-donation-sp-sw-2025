@@ -1,21 +1,28 @@
-
- 
- .blog-detail {
+.blog-detail {
   font-family: 'Arial', sans-serif;
-  padding: 20px !important;
   background-color: #f2f4f6;
   max-width: 800px;
+  padding: 36px !important;
   margin: 0 auto;
   text-align: left;
   height: auto;
-  position: absolute;
-  top: 70px; /* Điều chỉnh giá trị này tùy thuộc vào chiều cao của thanh menu */
+  position: relative;
+  top: 70px;
+  /* Điều chỉnh giá trị này tùy thuộc vào chiều cao của thanh menu */
   left: 50%;
   transform: translateX(-50%);
-   /* Giữ phần tử căn giữa theo chiều ngang */
+  /* Giữ phần tử căn giữa theo chiều ngang */
 }
 
-
+.blog-color {
+  position: fixed;
+  width: 100vw;
+  height: 8vh;
+  top: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #bf4042;
+}
 
 .blog-detail-title {
   font-size: 2rem;
@@ -73,4 +80,3 @@
 .back-link:hover {
   text-decoration: underline;
 }
-

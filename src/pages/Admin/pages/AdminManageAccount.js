@@ -277,10 +277,10 @@ function AdminManageAccount() {
                     <span>Thêm tài khoản</span>
                 </button>
 
-                <button className="search-btn btn" >
+                {/* <button className="search-btn btn" >
                     <img src="/img/icons/search.svg"></img>
                     <span>Tìm tài khoản</span>
-                </button>
+                </button> */}
                 <button className="refresh-btn btn" onClick={reload} >
                     <img src="/img/icons/refresh.svg"></img>
                     <span>Tải lại trang</span>

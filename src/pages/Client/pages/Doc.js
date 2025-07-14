@@ -28,6 +28,19 @@ const posts = [
 function Doc() {
   return (
     <div className="doc-page">
+      <div className="banner">
+        <div className="banner-title-content">
+          <h2 className="main-title">
+            <span className="blood-bridge">Blood Bridge</span>
+            <span className="features-text">Trang nghiên cứu</span>
+          </h2>
+          <div className="title-decoration">
+            <div className="decoration-line"></div>
+            <div className="decoration-circle">🩸</div>
+            <div className="decoration-line"></div>
+          </div>
+        </div>
+      </div>
       <h2 className="section-title">Bài viết nổi bật</h2>
       <div className="doc-list">
         {posts.map(post => (
@@ -48,11 +61,11 @@ function Doc() {
   );
 }
 <section className="doc-section">
-        <h2>📚 Tài liệu tham khảo</h2>
-        <ul className="doc-list">
-          <li><a href="#">WHO Blood Type Compatibility Chart (PDF)</a></li>
-          <li><a href="#">Báo cáo nhóm máu tại Việt Nam – Viện Huyết học</a></li>
-          <li><a href="#">NCBI: ABO Blood Group and Disease Association</a></li>
-        </ul>
-      </section>
+  <h2>📚 Tài liệu tham khảo</h2>
+  <ul className="doc-list">
+    <li><a href="#">WHO Blood Type Compatibility Chart (PDF)</a></li>
+    <li><a href="#">Báo cáo nhóm máu tại Việt Nam – Viện Huyết học</a></li>
+    <li><a href="#">NCBI: ABO Blood Group and Disease Association</a></li>
+  </ul>
+</section>
 export default Doc;
