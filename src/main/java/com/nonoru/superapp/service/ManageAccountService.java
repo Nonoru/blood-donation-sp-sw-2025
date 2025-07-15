@@ -81,6 +81,7 @@ public class ManageAccountService {
                     .email(request.getEmail())
                     .role(role)
                     .fullName(request.getFullName())
+                    .status(true)
                     .build();
             userRepository.save(user);
         }

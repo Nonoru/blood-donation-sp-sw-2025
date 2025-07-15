@@ -127,7 +127,7 @@ public class StaffAPI {
     }
     @PutMapping("/refuse-orders/receive/{id}")
     public ApiResponse<Void> refuseOrderReceive(@PathVariable("id") long id,  @RequestBody Map<String, String> body){
-        String reason = body.get("reason");
+        String reason = body.get("reasonCancel");
         bloodReceiveService.refuseOrderBloodReceive(id, reason);
         return ApiResponse.<Void>builder()
                 .message("Đơn đã được từ chối")

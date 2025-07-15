@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -17,7 +16,7 @@ import java.time.LocalTime;
 public class OrderDateDonation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long orderDateId;
+    private Long orderDateId;
 
     private LocalDate orderDate;
 
