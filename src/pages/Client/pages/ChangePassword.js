@@ -23,6 +23,8 @@ function ChangePassword() {
                     newPassword: '',
                     confirmNewPassword: ''
                 })
+                localStorage.removeItem('token');
+                window.location.href = '/login';
                 toast.success(response.data.message, { className: 'my-toast' })
             }
         } catch (error) {

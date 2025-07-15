@@ -3,11 +3,10 @@ import { useEffect, useState } from 'react';
 import { itemMenu, items } from '../components/HeaderForm'
 import logo from '../../../assets/logo/logo.png'
 import title from '../../../assets/logo/title.png'
-import { toast } from 'react-toastify/unstyled';
-import * as AuthApi from '../services/AuthApi'
 import '../styles/Header.scss'
+import { s } from 'framer-motion/client';
 
-function Header({ userInfo, setUserInfo }) {
+function Header({userInfo, setUserInfo}) {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [hasScrolled, setHasScrolled] = useState(false);

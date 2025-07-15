@@ -45,8 +45,8 @@ export const getOrderReceiveAccept = async () => {
 export const acceptOrderReceive = async (id, clinicId) => {
     return await axios.put(`${url}/accept-orders/receive/${id}`, {clinicId:clinicId},{ headers: createHeaders() });
 }
-export const refuseOrderReceive = async (id, clinicId) => {
-    return await axios.put(`${url}/refuse-orders/receive/${id}`, {clinicId:clinicId},{ headers: createHeaders() });
+export const refuseOrderReceive = async (id, reasonCancel) => {
+    return await axios.put(`${url}/refuse-orders/receive/${id}`, {reasonCancel:reasonCancel},{ headers: createHeaders() });
 }
 export const completeOrderReceive = async (id) => {
     return await axios.put(`${url}/complete-orders/receive/${id}`, null,{ headers: createHeaders() });

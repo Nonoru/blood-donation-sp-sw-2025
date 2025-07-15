@@ -265,7 +265,7 @@ function OrderBloodDonationAccept() {
           <span className="text-w">Bạn có chắc chắn muốn hoàn tất đơn này?</span>
           <span className="text-w">Mã đơn: {chooseUserInfo.orderDonationId}</span>
           <span className="text-w">Tên khách hàng: {chooseUserInfo.fullName}</span>
-          <button type="none" onClick={e => acceptOrder(e, chooseUserInfo.orderDonationId)}>Nhận</button>
+          <button type="none" onClick={e => acceptOrder(e, chooseUserInfo.orderDonationId)}>Hoàn tất</button>
         </div>
         <button type="none" className="close-btn" onClick={e => setStateAcceptBtn(!stateAcceptBtn)}>
         </button>

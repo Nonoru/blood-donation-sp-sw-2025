@@ -16,6 +16,11 @@ function App() {
 
   useEffect(() => {
     Token.checkAndClearToken();
+
+    setUserInfo({
+      isAuthenticated: Token.isTokenValid(),
+      username: Token.getUsernameFromToken()
+    });
   }, []);
 
   return (
