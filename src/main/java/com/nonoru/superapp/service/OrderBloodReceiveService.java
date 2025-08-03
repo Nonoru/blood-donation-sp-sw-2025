@@ -1,17 +1,16 @@
 package com.nonoru.superapp.service;
 
+import com.nonoru.superapp.dto.request.CancelReasonReceiveRequest;
+import com.nonoru.superapp.dto.request.CancelReasonRequest;
 import com.nonoru.superapp.dto.request.OrderBloodReceiveRequest;
+import com.nonoru.superapp.dto.response.BloodBagResponse;
 import com.nonoru.superapp.dto.response.OrderBloodReceiveResponse;
 import com.nonoru.superapp.entity.*;
 import com.nonoru.superapp.enums.StatusOfOrderDonation;
 import com.nonoru.superapp.exception.AppException;
 import com.nonoru.superapp.exception.ErrorCode;
-import com.nonoru.superapp.repository.BloodStorageRepository;
-import com.nonoru.superapp.repository.ClinicRepository;
-import com.nonoru.superapp.repository.OrderBloodReceiveRepository;
-import com.nonoru.superapp.repository.UserRepository;
+import com.nonoru.superapp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
@@ -25,13 +24,13 @@ public class OrderBloodReceiveService {
     @Autowired
     private OrderBloodReceiveRepository orBReceiveRepo;
     @Autowired
-    private BloodStorageRepository bStorageRepo;
+    private BloodTypeRepository bStorageRepo;
     @Autowired
     private UserRepository userRepo;
     @Autowired
-    private UserService userService;
+    private CancellationReasonRepository cReasonRepo;
     @Autowired
-    private ClinicRepository clinicRepo;
+    private BloodBagRepository bloodBagRepository;
 
     public void createOrder(OrderBloodReceiveRequest request){
         String typeOrder = request.getStatusType();
@@ -42,7 +41,7 @@ public class OrderBloodReceiveService {
             throw new AppException(ErrorCode.TYPE_OF_RECEIVING_ORDER_INVALID);
         }
 
-        BloodStorage bs = bStorageRepo.findById(request.getBloodId()).orElseThrow(() -> new AppException(ErrorCode.BLOOD_ID_NOTFOUND));
+        BloodType bs = bStorageRepo.findById(request.getBloodId()).orElseThrow(() -> new AppException(ErrorCode.BLOOD_ID_NOTFOUND));
 
         UserAccount userAccount = userRepo.findById(idUser).orElseThrow(()
                 -> new AppException(ErrorCode.USER_NOTFOUND));
@@ -53,69 +52,102 @@ public class OrderBloodReceiveService {
                 .cccdNumber(String.valueOf(request.getCccdNumber()))
                 .phone(request.getPhone())
                 .address(request.getAddress())
-                .reason(request.getReason())
+                .userReason(request.getReason())
                 .createDate(LocalDate.now())
                 .blood(bs)
                 .userAccount(userAccount)
-                .status(StatusOfOrderDonation.PROCESSING.getStatusCode())
+                .status(StatusOfOrderDonation.PENDING.getStatusCode())
                 .type(typeOrder)
                 .build();
         orBReceiveRepo.save(order);
     }
-
     public List<OrderBloodReceiveResponse> getAllOrder(){
         List<OrderBloodReceiveResponse> responses = new ArrayList<>();
         List<OrderBloodReceive> orders = orBReceiveRepo.findAll();
         orders.forEach(order -> {
-            String clinicName = null;
-            if( order.getClinic() != null){
-                clinicName = order.getClinic().getClinicName();
+            String cancelReasonStr = null;
+            CancellationReason cancelReason = order.getCancellationReason();
+            if(cancelReason != null){
+                if(cancelReason.getCancellationReasonId() != 1){
+                    cancelReasonStr = cancelReason.getCancellationReasonName();
+                }else
+                    cancelReasonStr = order.getOtherCancelReason();
             }
             OrderBloodReceiveResponse o = OrderBloodReceiveResponse.builder()
-                    .orderId(order.getOrderReceivingId())
+                    .orderReceivingId(order.getOrderReceivingId())
                     .fullName(order.getFullName())
                     .amountBloodMl(order.getAmountBloodMl())
                     .cccdNumber(order.getCccdNumber())
                     .phone(order.getPhone())
                     .address(order.getAddress())
-                    .reason(order.getReason())
+                    .userReason(order.getUserReason())
                     .createDate(order.getCreateDate())
+                    .estimateDate(order.getEstimateDate())
+                    .doneDate(order.getDoneDate())
                     .bloodType(order.getBlood().getBloodType())
                     .status(order.getStatus())
                     .type(order.getType())
+                    .cancelReason(cancelReasonStr)
                     .createdByUsername(order.getUserAccount().getUsername())
-                    .clinicName(clinicName)
                     .build();
+            if(order.getStatus() == StatusOfOrderDonation.PROCESSING.getStatusCode() || order.getStatus() == StatusOfOrderDonation.COMPLETED.getStatusCode()){
+                List<BloodBag> bloodBagList = bloodBagRepository.findByOrderBloodReceive(order);
+                List<BloodBagResponse> bloodBagResponses = new ArrayList<>();
+                bloodBagList.forEach(bloodBag -> {
+                    BloodBagResponse bloodBagResponse = BloodBagResponse.builder()
+                            .bloodBagId(bloodBag.getBloodBagId())
+                            .bloodType(bloodBag.getBloodType().getBloodType())
+                            .volumeMl(bloodBag.getVolumeMl())
+                            .build();
+                    bloodBagResponses.add(bloodBagResponse);
+                });
+                o.setBloodBagResponses(bloodBagResponses);
+            }
             responses.add(o);
         });
         return responses;
     }
-    public List<OrderBloodReceiveResponse> getOrderByStatus(StatusOfOrderDonation status){
+    public List<OrderBloodReceiveResponse> getOrderByType(int status){
         List<OrderBloodReceiveResponse> responses = new ArrayList<>();
-        List<OrderBloodReceive> orders = orBReceiveRepo.findAll();
+        List<OrderBloodReceive> orders = orBReceiveRepo.findAllByStatus(status);
         orders.forEach(order -> {
-            if(order.getStatus() == status.getStatusCode()){
-                String clinicName = null;
-                if( order.getClinic() != null){
-                    clinicName = order.getClinic().getClinicName();
-                }
-                OrderBloodReceiveResponse o = OrderBloodReceiveResponse.builder()
-                        .orderId(order.getOrderReceivingId())
-                        .fullName(order.getFullName())
-                        .amountBloodMl(order.getAmountBloodMl())
-                        .cccdNumber(order.getCccdNumber())
-                        .phone(order.getPhone())
-                        .address(order.getAddress())
-                        .reason(order.getReason())
-                        .createDate(order.getCreateDate())
-                        .bloodType(order.getBlood().getBloodType())
-                        .status(order.getStatus())
-                        .type(order.getType())
-                        .createdByUsername(order.getUserAccount().getUsername())
-                        .clinicName(clinicName)
-                        .build();
-                responses.add(o);
+            String cancelReasonStr = null;
+            CancellationReason cancelReason = order.getCancellationReason();
+            if(cancelReason != null){
+                if(cancelReason.getCancellationReasonId() != 1){
+                    cancelReasonStr = cancelReason.getCancellationReasonName();
+                }else
+                    cancelReasonStr = order.getOtherCancelReason();
             }
+            OrderBloodReceiveResponse o = OrderBloodReceiveResponse.builder()
+                    .orderReceivingId(order.getOrderReceivingId())
+                    .fullName(order.getFullName())
+                    .amountBloodMl(order.getAmountBloodMl())
+                    .cccdNumber(order.getCccdNumber())
+                    .phone(order.getPhone())
+                    .address(order.getAddress())
+                    .userReason(order.getUserReason())
+                    .createDate(order.getCreateDate())
+                    .bloodType(order.getBlood().getBloodType())
+                    .status(order.getStatus())
+                    .type(order.getType())
+                    .cancelReason(cancelReasonStr)
+                    .createdByUsername(order.getUserAccount().getUsername())
+                    .build();
+            if(status == StatusOfOrderDonation.PROCESSING.getStatusCode()){
+                List<BloodBag> bloodBagList = bloodBagRepository.findByOrderBloodReceive(order);
+                List<BloodBagResponse> bloodBagResponses = new ArrayList<>();
+                bloodBagList.forEach(bloodBag -> {
+                    BloodBagResponse bloodBagResponse = BloodBagResponse.builder()
+                            .bloodBagId(bloodBag.getBloodBagId())
+                            .bloodType(bloodBag.getBloodType().getBloodType())
+                            .volumeMl(bloodBag.getVolumeMl())
+                            .build();
+                    bloodBagResponses.add(bloodBagResponse);
+                });
+                o.setBloodBagResponses(bloodBagResponses);
+            }
+            responses.add(o);
         });
         return responses;
     }
@@ -126,71 +158,88 @@ public class OrderBloodReceiveService {
         List<OrderBloodReceiveResponse> responses = new ArrayList<>();
         List<OrderBloodReceive> orders = orBReceiveRepo.findAllByUserAccount_Id(idUser);
         orders.forEach(order -> {
-            String clinicName = null;
-            if( order.getClinic() != null){
-                clinicName = order.getClinic().getClinicName();
+            String cancelReasonStr = null;
+            CancellationReason cancelReason = order.getCancellationReason();
+            if(cancelReason != null){
+                if(cancelReason.getCancellationReasonId() != 1){
+                    cancelReasonStr = cancelReason.getCancellationReasonName();
+                }else
+                    cancelReasonStr = order.getOtherCancelReason();
             }
+
             OrderBloodReceiveResponse o = OrderBloodReceiveResponse.builder()
-                    .orderId(order.getOrderReceivingId())
+                    .orderReceivingId(order.getOrderReceivingId())
                     .fullName(order.getFullName())
                     .amountBloodMl(order.getAmountBloodMl())
+                    .cccdNumber(order.getCccdNumber())
+                    .phone(order.getPhone())
                     .address(order.getAddress())
-                    .reason(order.getReason())
+                    .userReason(order.getUserReason())
                     .createDate(order.getCreateDate())
+                    .doneDate(order.getDoneDate())
+                    .estimateDate(order.getEstimateDate())
                     .bloodType(order.getBlood().getBloodType())
                     .status(order.getStatus())
                     .type(order.getType())
-                    .clinicName(clinicName)
-                    .reasonCancel(order.getReasonCancel())
-                    .doneDate(order.getDoneDate())
+                    .cancelReason(cancelReasonStr)
                     .build();
             responses.add(o);
         });
         return responses;
     }
-
-    public void acceptOrderBloodReceive(long orderReceiveId, int clinicId) {
-        Clinic clinic = clinicRepo.findById(clinicId).orElseThrow(
-                () -> new AppException(ErrorCode.CLINIC_ID_NOTFOUND)
-        );
-        OrderBloodReceive orBS = orBReceiveRepo.findById(orderReceiveId)
+    public void updNegativeOrderReceiving(CancelReasonReceiveRequest request, int type) {
+        OrderBloodReceive orBR = orBReceiveRepo.findById(request.getOrderReceiveId())
                 .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
-        orBS.setStatus(StatusOfOrderDonation.COMFRIMMED.getStatusCode());
-        orBS.setClinic(clinic);
-        orBReceiveRepo.save(orBS);
-    }
-    public void refuseOrderBloodReceive(long orderReceiveId, String reason) {
-        OrderBloodReceive orBS = orBReceiveRepo.findById(orderReceiveId)
-                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
-        orBS.setReasonCancel(reason);
-        orBS.setStatus(StatusOfOrderDonation.REFUSED.getStatusCode());
-        orBReceiveRepo.save(orBS);
-    }
-    public String completeOrderBloodReceive(long orderReceiveId) {
-        OrderBloodReceive orBS = orBReceiveRepo.findById(orderReceiveId)
-                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
-        BloodStorage bloodStorage = bStorageRepo.findById(orBS.getBlood().getId()).orElseThrow(
-                () -> new AppException(ErrorCode.BLOOD_ID_NOTFOUND)
-        );
-        float curAmount = bloodStorage.getStorage();
 
-        if(orBS.getAmountBloodMl() < curAmount) {
-            orBS.setStatus(StatusOfOrderDonation.COMPLETED.getStatusCode());
-            orBS.setDoneDate(LocalDate.now());
-            orBReceiveRepo.save(orBS);
-
-            bloodStorage.setStorage(curAmount - orBS.getAmountBloodMl());
-            bStorageRepo.save(bloodStorage);
-            return "Đã trừ thành công " + orBS.getAmountBloodMl() + " ml nhóm " + orBS.getBlood().getBloodType() + " trong kho máu";
-        }else{
-            throw new AppException(ErrorCode.BLOOD_NOT_ENOUGH);
+        CancellationReason reason = cReasonRepo.findById(request.getCancelReasonId()).orElseThrow(() ->
+                new AppException(ErrorCode.CANCELREASON_ISNULL));
+        orBR.setCancellationReason(reason);
+        if(orBR.getCancellationReason().getCancellationReasonId() == 1){
+            if(request.getOtherReason() == null || request.getOtherReason().isEmpty()){
+                throw new AppException(ErrorCode.OTHER_REASON_ISBLANK);
+            }
+            if(request.getOtherReason().length() > 300){
+                throw new AppException(ErrorCode.OTHER_REASON_LENGTH_INVALID);
+            }
+            orBR.setOtherCancelReason(request.getOtherReason());
         }
+        if (type == StatusOfOrderDonation.REFUSED.getStatusCode()) {
+            orBR.setStatus(StatusOfOrderDonation.REFUSED.getStatusCode());
+        }
+        if (type == StatusOfOrderDonation.CANCELED.getStatusCode()) {
+            List<BloodBag> bloodBagList = bloodBagRepository.findByOrderBloodReceive(orBR);
+            bloodBagList.forEach(bloodBag -> {
+                bloodBag.setDelivered(false);
+                bloodBag.setExisted(true);
+                bloodBag.setOrderBloodReceive(null);
+                bloodBagRepository.save(bloodBag);
+            });
+            orBR.setStatus(StatusOfOrderDonation.CANCELED.getStatusCode());
+        }
+        orBReceiveRepo.save(orBR);
     }
-    public void cancelOrderBloodReceive(long orderReceiveId, String reason) {
-        OrderBloodReceive orBS = orBReceiveRepo.findById(orderReceiveId)
+    public void acceptOrderReceive(LocalDate estimateDate, Long orderReceivingId) {
+        OrderBloodReceive orBR = orBReceiveRepo.findById(orderReceivingId)
                 .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
-        orBS.setReasonCancel(reason);
-        orBS.setStatus(StatusOfOrderDonation.CANCELED.getStatusCode());
-        orBReceiveRepo.save(orBS);
+        orBR.setEstimateDate(estimateDate);
+        orBR.setStatus(StatusOfOrderDonation.PROCESSING.getStatusCode());
+        orBReceiveRepo.save(orBR);
     }
+    public void completeOrderReceive(Long orderReceivingId) {
+        OrderBloodReceive orBR = orBReceiveRepo.findById(orderReceivingId)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
+        List<BloodBag> bloodBagList = bloodBagRepository.findByOrderBloodReceive(orBR);
+        float totalAmount = 0f;
+        for (BloodBag bloodBag : bloodBagList) {
+            totalAmount += bloodBag.getVolumeMl();
+            bloodBag.setDelivered(false);
+            bloodBagRepository.save(bloodBag);
+        }
+
+        orBR.setDoneDate(LocalDate.now());
+        orBR.setAmountBloodMl(totalAmount);
+        orBR.setStatus(StatusOfOrderDonation.COMPLETED.getStatusCode());
+        orBReceiveRepo.save(orBR);
+    }
+
 }

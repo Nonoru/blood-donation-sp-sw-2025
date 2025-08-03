@@ -2,14 +2,10 @@ package com.nonoru.superapp.controller;
 
 import com.nonoru.superapp.dto.request.OrderBloodDonationRequest;
 import com.nonoru.superapp.dto.request.OrderBloodReceiveRequest;
-import com.nonoru.superapp.dto.response.ApiResponse;
-import com.nonoru.superapp.dto.response.OrderBloodReceiveResponse;
-import com.nonoru.superapp.dto.response.OrderDateDonationResponse;
-import com.nonoru.superapp.dto.response.UserOrderDonationResponse;
-import com.nonoru.superapp.service.OrderBloodDonationService;
-import com.nonoru.superapp.service.OrderBloodReceiveService;
-import com.nonoru.superapp.service.OrderDateDonationService;
-import com.nonoru.superapp.service.UserService;
+import com.nonoru.superapp.dto.response.*;
+import com.nonoru.superapp.entity.BloodType;
+import com.nonoru.superapp.service.*;
+//import com.nonoru.superapp.service.OrderBloodReceiveService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +22,17 @@ public class UserAPI {
     private OrderDateDonationService dateDonationService;
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private BloodService bloodService;
     @Autowired
     private OrderBloodReceiveService bloodReceiveService;
+    @Autowired
+    private BloodBagService bloodBagService;
+
+
     @PostMapping("/order-donation")
     public ApiResponse<Void> createOrder
             (@Valid @RequestBody OrderBloodDonationRequest request) {
-        System.out.println(request.toString());
         bloodDonationService.createOrderBloodDonation(request);
         return ApiResponse.<Void>builder()
                 .message("Tạo đơn hoàn tất! Vui lòng chờ để được xét duyệt")
@@ -41,13 +41,20 @@ public class UserAPI {
     @GetMapping("/get-order-date")
     public ApiResponse<List<OrderDateDonationResponse>> getOrderDate(){
         return ApiResponse.<List<OrderDateDonationResponse>>builder()
-                .data(dateDonationService.getOrderDateDonationForUser())
+                .data(dateDonationService.getOrderDateDonation())
                 .build();
     }
-    @GetMapping("/list-order/{id}")
-    public ApiResponse<List<UserOrderDonationResponse>> getListOrder(@PathVariable("id") long id){
+    @GetMapping("/list-order")
+    public ApiResponse<List<UserOrderDonationResponse>> getListOrder(){
         return ApiResponse.<List<UserOrderDonationResponse>>builder()
-                .data(userService.getOrderDonationOnlySelf(id))
+                .data(userService.getOrderDonationOnlySelf())
+                .build();
+    }
+
+    @GetMapping("/list-bloods")
+    public ApiResponse<List<BloodType>> getBloodTypes(){
+        return ApiResponse.<List<BloodType>>builder()
+                .data(bloodService.getAllBloodTypes())
                 .build();
     }
     @PostMapping("/order-receiving")
@@ -64,5 +71,16 @@ public class UserAPI {
                 .data(bloodReceiveService.getOrderForUser())
                 .build();
     }
-
+    @GetMapping("/list-blood-valid-bags")
+    public ApiResponse<List<BloodBagResponse>> getBloodBagsValid(){
+        return ApiResponse.<List<BloodBagResponse>>builder()
+                .data(bloodBagService.getBloodBagsValid())
+                .build();
+    }
+    @GetMapping("/list-order-receive-urgent")
+    public ApiResponse<List<OrderReceiveUrgentPublicResponse>> getOrderReceiveUgent(){
+        return ApiResponse.<List<OrderReceiveUrgentPublicResponse>>builder()
+                .data(userService.getOrderReceiveUrgentPublic())
+                .build();
+    }
 }

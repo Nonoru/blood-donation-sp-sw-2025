@@ -33,7 +33,7 @@ public class OrderBloodReceiveRequest {
     @NotBlank(message = "STATUS_OF_RECEIVING_ORDER_EMPTY")
     private String statusType;
 
-    private int bloodId;
+    private Long bloodId;
 
     private String reason;
 }

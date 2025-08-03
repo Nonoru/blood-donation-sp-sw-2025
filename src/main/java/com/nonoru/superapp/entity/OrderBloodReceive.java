@@ -20,7 +20,7 @@ public class OrderBloodReceive {
     @Column(nullable = false, columnDefinition = "NVARCHAR(50)")
     private String fullName;
 
-    private int amountBloodMl;
+    private float amountBloodMl;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(60)")
     private String cccdNumber;
@@ -32,49 +32,50 @@ public class OrderBloodReceive {
     private String address;
 
     @Column(nullable = false, columnDefinition = "NVARCHAR(300)")
-    private String reason;
+    private String userReason;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(10)")
     private String type;
 
     private LocalDate createDate;
+    private LocalDate estimateDate;
 
     @Column(nullable = true)
     private LocalDate doneDate;
 
     private int status;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cancellation_reason")
+    private CancellationReason cancellationReason;
+
     @Column(nullable = true, columnDefinition = "NVARCHAR(300)")
-    private String reasonCancel;
+    private String otherCancelReason;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blood_id")
-    private BloodStorage blood;
+    private BloodType blood;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "create_by")
     private UserAccount userAccount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "clinic-room")
-    private Clinic clinic;
-
     @Builder
-
-    public OrderBloodReceive(String fullName, int amountBloodMl, String cccdNumber, String phone, String address, String reason, String type, LocalDate createDate, LocalDate doneDate, int status, String reasonCancel, BloodStorage blood, UserAccount userAccount, Clinic clinic) {
+    public OrderBloodReceive(String fullName, int amountBloodMl, String cccdNumber, String phone, String address, String userReason, String type, LocalDate createDate, LocalDate estimateDate, LocalDate doneDate, int status, CancellationReason cancellationReason, String otherCancelReason, BloodType blood, UserAccount userAccount) {
         this.fullName = fullName;
         this.amountBloodMl = amountBloodMl;
         this.cccdNumber = cccdNumber;
         this.phone = phone;
         this.address = address;
-        this.reason = reason;
+        this.userReason = userReason;
         this.type = type;
         this.createDate = createDate;
+        this.estimateDate = estimateDate;
         this.doneDate = doneDate;
         this.status = status;
-        this.reasonCancel = reasonCancel;
+        this.cancellationReason = cancellationReason;
+        this.otherCancelReason = otherCancelReason;
         this.blood = blood;
         this.userAccount = userAccount;
-        this.clinic = clinic;
     }
 }

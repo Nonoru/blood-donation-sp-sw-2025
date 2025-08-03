@@ -8,32 +8,22 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class OrderBloodDonationResponse {
+@Builder
+public class OrderBloodDonationForStaff {
     private long orderDonationId;
-
     private String fullName;
+    private String cccdNumber;
     private String phone;
     private String bloodType;
-
-    private float amountBloodMl;
-
     private LocalDate orderDate;
     private LocalTime orderTime;
-    private String createDate;
-
-    private String createByUsername;
-
-    private String dob;
-    private String gender;
-    private String cccdNumber;
-    private String address;
-
-    private Integer statusCode;
+    private LocalDate createDate;
+    private String cancelReason;
+    private int status;
+    private float amountBloodDonation = 0.0f;
 }

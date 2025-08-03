@@ -7,25 +7,32 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderBloodReceiveResponse {
-    private long orderId;
+    private long orderReceivingId;
     private String fullName;
-    private int amountBloodMl;
+    private float amountBloodMl;
     private String cccdNumber;
     private String phone;
     private String address;
-    private String reason;
+    private String userReason;
     private String type;
     private LocalDate createDate;
-    private int status;
-    private String bloodType;
+    private LocalDate estimateDate;
     private LocalDate doneDate;
+    private String cancelReason;
+    private String bloodType;
+
+    private int status;
     private String createdByUsername;
-    private String clinicName;
-    private String reasonCancel;
+
+//    FOR PROCESSING RECEIVE
+    private List<BloodBagResponse> bloodBagResponses;
+
 }

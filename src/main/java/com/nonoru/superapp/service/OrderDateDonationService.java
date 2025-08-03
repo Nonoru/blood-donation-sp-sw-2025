@@ -51,7 +51,7 @@ public class OrderDateDonationService {
     }
 
     /* GET INFO DATE ORDER - USER*/
-    public List<OrderDateDonationResponse> getOrderDateDonationForUser(){
+    public List<OrderDateDonationResponse> getOrderDateDonation(){
         List<OrderDateDonation> listDate = orderDateRepo.findAll();
         List<OrderDateDonationResponse> responses = new ArrayList<>();
         listDate.forEach(orD -> {
@@ -63,50 +63,15 @@ public class OrderDateDonationService {
                     if(nP == null){
                         nP = 0;
                     }
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                    String date = orD.getOrderDate().format(formatter);
-                    OrderDateDonationResponse orDR = OrderDateDonationResponse.builder()
-                            .orderDateId(orD.getOrderDateId())
-                            .orderDate(date)
-                            .orderTime(orD.getOrderTime())
-                            .numberOfPeople(nP)
-                            .build();
-                    responses.add(orDR);
-                }
-            }
-        });
-        return responses.stream()
-                .sorted(Comparator
-                        .comparing( OrderDateDonationResponse::getOrderDate )
-                        .thenComparing( OrderDateDonationResponse::getOrderTime )
-                )
-                .collect(Collectors.toList());
-    }
-    public List<OrderDateDonationResponse> getOrderDateDonationForStaff(){
-        List<OrderDateDonation> listDate = orderDateRepo.findAll();
 
-        List<OrderDateDonationResponse> responses = new ArrayList<>();
-        listDate.forEach(orD -> {
-            LocalDate dateNow = LocalDate.now();
-            if(dateNow.isEqual(orD.getOrderDate()) || dateNow.isBefore(orD.getOrderDate())){
-                LocalTime timeNow = LocalTime.now();
-                if(timeNow.isBefore(orD.getOrderTime()) || orD.getOrderDate().isAfter(dateNow)){
-                    Integer nP = orderDateRepo.countOrderByOrderDateAndTime(orD.getOrderDate(), orD.getOrderTime());
-                    if(nP == null){
-                        nP = 0;
-                    }
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                     String date = orD.getOrderDate().format(formatter);
-                    ClinicDTO clinic = ClinicDTO.builder()
-                            .clinicId(orD.getClinic().getId())
-                            .clinicName(orD.getClinic().getClinicName())
-                            .build();
                     OrderDateDonationResponse orDR = OrderDateDonationResponse.builder()
                             .orderDateId(orD.getOrderDateId())
                             .orderDate(date)
                             .orderTime(orD.getOrderTime())
-                            .clinic(clinic)
                             .numberOfPeople(nP)
+                            .clinicName(orD.getClinic().getClinicName())
                             .build();
                     responses.add(orDR);
                 }

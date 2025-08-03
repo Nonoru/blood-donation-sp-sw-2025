@@ -1,9 +1,9 @@
 package com.nonoru.superapp.repository;
 
-import com.nonoru.superapp.entity.BloodStorage;
+import com.nonoru.superapp.entity.BloodType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BloodStorageRepository extends JpaRepository<BloodStorage, Integer> {
+public interface BloodTypeRepository extends JpaRepository<BloodType, Long> {
 }

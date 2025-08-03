@@ -1,11 +1,14 @@
 package com.nonoru.superapp.controller;
 
 import com.nonoru.superapp.dto.BloodStorageChangeDTO;
+import com.nonoru.superapp.dto.request.AcceptReceiveOrderRequest;
+import com.nonoru.superapp.dto.request.CancelReasonRequest;
 import com.nonoru.superapp.dto.request.OrderDateDonationRequest;
 import com.nonoru.superapp.dto.response.*;
-import com.nonoru.superapp.entity.BloodStorage;
+import com.nonoru.superapp.entity.BloodBag;
+import com.nonoru.superapp.entity.BloodType;
+import com.nonoru.superapp.entity.CancellationReason;
 import com.nonoru.superapp.entity.Clinic;
-import com.nonoru.superapp.entity.OrderBloodReceive;
 import com.nonoru.superapp.enums.StatusOfOrderDonation;
 import com.nonoru.superapp.service.*;
 import jakarta.validation.Valid;
@@ -20,33 +23,20 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000/")
 public class StaffAPI {
     @Autowired
-    private OrderBloodDonationService bloodDonationService;
-    @Autowired
     private OrderDateDonationService dateDonationService;
+
     @Autowired
     private ClinicService clinicService;
+
+    @Autowired
+    private CancellationReasonService cancellationReasonService;
+
     @Autowired
     private BloodService bloodService;
+
     @Autowired
-    private OrderBloodReceiveService bloodReceiveService;
-    @GetMapping("/list-order")
-    public ApiResponse<List<OrderBloodDonationResponse>> getAll () {
-        return ApiResponse.<List<OrderBloodDonationResponse>>builder()
-                .data(bloodDonationService.getAllOrder())
-                .build();
-    }
-    @GetMapping("/list-order/processing")
-    public ApiResponse<List<OrderBloodDonationResponse>> getDonationOrdersProcessing () {
-        return ApiResponse.<List<OrderBloodDonationResponse>>builder()
-                .data(bloodDonationService.getListOrderBloodDonationWaitingToAccept(StatusOfOrderDonation.PROCESSING))
-                .build();
-    }
-    @GetMapping("/list-order/accept")
-    public ApiResponse<List<OrderBloodDonationResponse>> getDonationOrdersConfirmed (){
-        return ApiResponse.<List<OrderBloodDonationResponse>>builder()
-                .data(bloodDonationService.getListOrderBloodDonationWaitingToAccept(StatusOfOrderDonation.COMFRIMMED))
-                .build();
-    }
+    private BloodBagService bloodBagService;
+
     @PostMapping("/create-date-donation")
     public ApiResponse<Void> createDateDonation(@RequestBody @Valid OrderDateDonationRequest request){
         dateDonationService.create(request);
@@ -62,139 +52,89 @@ public class StaffAPI {
                 .build();
     }
 
-    @PutMapping("/accept-orders/{id}")
-    public ApiResponse<Void> acceptOrder(@PathVariable("id") long id){
-        bloodDonationService.acceptOrderBloodDonation(id);
-        return ApiResponse.<Void>builder()
-                .message("Đơn đã được xét duyệt")
-                .build();
-    }
-    @PutMapping("/refuse-orders/{id}")
-    public ApiResponse<Void> refuseOrder(@PathVariable("id") long id,  @RequestBody Map<String, String> body){
-        String reason = body.get("reason");
-        bloodDonationService.refuseOrderBloodDonation(id, reason);
-        return ApiResponse.<Void>builder()
-                .message("Đơn đã được từ chối")
-                .build();
-    }
-    @PutMapping("/complete-orders/{id}")
-    public ApiResponse<String> completeOrder(@PathVariable("id") long id){
-        String res = bloodDonationService.completeOrderBloodDonation(id);
-        return ApiResponse.<String>builder()
-                .message("Đơn đã hoàn tất")
-                .data(res)
-                .build();
-    }
-    @PutMapping("/cancel-orders/{id}")
-    public ApiResponse<Void> cancelOrder(@PathVariable("id") long id, @RequestBody Map<String, String> reason){
-        bloodDonationService.cancelOrderBloodDonation(id, reason.get("reason"));
-        return ApiResponse.<Void>builder()
-                .message("Đơn đã bị hủy")
-                .build();
-    }
     @GetMapping("/list-schedules")
     public ApiResponse<List<OrderDateDonationResponse>> getOrderDate(){
         return ApiResponse.<List<OrderDateDonationResponse>>builder()
-                .data(dateDonationService.getOrderDateDonationForStaff())
+                .data(dateDonationService.getOrderDateDonation())
                 .build();
     }
 
-    @GetMapping("/list-order/receive")
-    public ApiResponse<List<OrderBloodReceiveResponse>> getAllReceiveOrders () {
-        return ApiResponse.<List<OrderBloodReceiveResponse>>builder()
-                .data(bloodReceiveService.getAllOrder())
-                .build();
-    }
-    @GetMapping("/list-order/receive/processing")
-    public ApiResponse<List<OrderBloodReceiveResponse>> getReceiveOrderProcessing () {
-        return ApiResponse.<List<OrderBloodReceiveResponse>>builder()
-                .data(bloodReceiveService.getOrderByStatus(StatusOfOrderDonation.PROCESSING))
-                .build();
-    }
-    @GetMapping("/list-order/receive/accept")
-    public ApiResponse<List<OrderBloodReceiveResponse>> getReceiveOrderAccept () {
-        return ApiResponse.<List<OrderBloodReceiveResponse>>builder()
-                .data(bloodReceiveService.getOrderByStatus(StatusOfOrderDonation.COMFRIMMED))
-                .build();
-    }
-    @PutMapping("/accept-orders/receive/{id}")
-    public ApiResponse<Void> acceptOrderReceive(@PathVariable("id") long id, @RequestBody Map<String, String> body){
-        int clinicId = Integer.parseInt(body.get("clinicId"));
-        bloodReceiveService.acceptOrderBloodReceive(id, clinicId);
-        return ApiResponse.<Void>builder()
-                .message("Đơn đã được xét duyệt")
-                .build();
-    }
-    @PutMapping("/refuse-orders/receive/{id}")
-    public ApiResponse<Void> refuseOrderReceive(@PathVariable("id") long id,  @RequestBody Map<String, String> body){
-        String reason = body.get("reasonCancel");
-        bloodReceiveService.refuseOrderBloodReceive(id, reason);
-        return ApiResponse.<Void>builder()
-                .message("Đơn đã được từ chối")
-                .build();
-    }
-    @PutMapping("/complete-orders/receive/{id}")
-    public ApiResponse<String> completeOrderReceive(@PathVariable("id") long id){
-        String res = bloodReceiveService.completeOrderBloodReceive(id);
-        return ApiResponse.<String>builder()
-                .message("Đơn đã hoàn tất")
-                .data(res)
-                .build();
-    }
-    @PutMapping("/cancel-orders/receive/{id}")
-    public ApiResponse<Void> cancelOrderReceive(@PathVariable("id") long id, @RequestBody Map<String, String> reason){
-        bloodReceiveService.cancelOrderBloodReceive(id, reason.get("reason"));
-        return ApiResponse.<Void>builder()
-                .message("Đơn đã bị hủy")
+    @GetMapping("/cancel-reason")
+    public ApiResponse<List<CancellationReason>> listCancellationReasons(){
+        return ApiResponse.<List<CancellationReason>>builder()
+                .data(cancellationReasonService.findAll())
                 .build();
     }
 
-    @GetMapping("/blood")
-    public ApiResponse<List<BloodStorageResponse<BloodStorageChangeDTO>>> getBloodStorage(){
-        return ApiResponse.<List<BloodStorageResponse<BloodStorageChangeDTO>>>builder()
-                .data(bloodService.getAllBloodStorage())
+    @GetMapping("/list-bloods")
+    public ApiResponse<List<BloodType>> getBloodTypes(){
+        return ApiResponse.<List<BloodType>>builder()
+                .data(bloodService.getAllBloodTypes())
                 .build();
     }
-    @GetMapping("/statistic/today")
-    public ApiResponse<BloodOrderStaticResponse> getStatisticToday(){
-        return ApiResponse.<BloodOrderStaticResponse>builder()
-                .data(bloodService.getBloodDonateStatic(0, false))
+
+    @GetMapping("/list-blood-bags")
+    public ApiResponse<List<BloodBagResponse>> getBloodBags(){
+        return ApiResponse.<List<BloodBagResponse>>builder()
+                .data(bloodBagService.getAllBloodBagsForStaff())
                 .build();
     }
-    @GetMapping("/statistic/yesterday")
-    public ApiResponse<BloodOrderStaticResponse> getStatisticYesterday(){
-        return ApiResponse.<BloodOrderStaticResponse>builder()
-                .data(bloodService.getBloodDonateStatic(1, false))
+    @GetMapping("/list-blood-valid-bags")
+    public ApiResponse<List<BloodBagResponse>> getBloodBagsValid(){
+        return ApiResponse.<List<BloodBagResponse>>builder()
+                .data(bloodBagService.getBloodBagsValid())
                 .build();
     }
-    @GetMapping("/statistic/month")
-    public ApiResponse<BloodOrderStaticResponse> getStatisticMonth(){
-        return ApiResponse.<BloodOrderStaticResponse>builder()
-                .data(bloodService.getBloodDonateStatic(0, true))
-                .build();
-    }
-    @GetMapping("/statistic/receive/today")
-    public ApiResponse<BloodOrderStaticResponse> getStatisticReceiveToday(){
-        return ApiResponse.<BloodOrderStaticResponse>builder()
-                .data(bloodService.getBloodReceiveStatic(0, false))
-                .build();
-    }
-    @GetMapping("/statistic/receive/yesterday")
-    public ApiResponse<BloodOrderStaticResponse> getStatisticReceiveYesterday(){
-        return ApiResponse.<BloodOrderStaticResponse>builder()
-                .data(bloodService.getBloodReceiveStatic(1, false))
-                .build();
-    }
-    @GetMapping("/statistic/receive/month")
-    public ApiResponse<BloodOrderStaticResponse> getStatisticReceiveMonth(){
-        return ApiResponse.<BloodOrderStaticResponse>builder()
-                .data(bloodService.getBloodReceiveStatic(0, true))
-                .build();
-    }
-    @GetMapping("/statistic/blood/graph")
-    public ApiResponse<List<BloodStatisticResponse>> getBloodStatisticGraph(){
-        return ApiResponse.<List<BloodStatisticResponse>>builder()
-                .data(bloodService.getAllBloodStorageForStatistic())
-                .build();
-    }
+    
+
+    
+
+//    @GetMapping("/blood")
+//    public ApiResponse<List<BloodStorageResponse<BloodStorageChangeDTO>>> getBloodStorage(){
+//        return ApiResponse.<List<BloodStorageResponse<BloodStorageChangeDTO>>>builder()
+//                .data(bloodService.getAllBloodStorage())
+//                .build();
+//    }
+//    @GetMapping("/statistic/today")
+//    public ApiResponse<BloodOrderStaticResponse> getStatisticToday(){
+//        return ApiResponse.<BloodOrderStaticResponse>builder()
+//                .data(bloodService.getBloodDonateStatic(0, false))
+//                .build();
+//    }
+//    @GetMapping("/statistic/yesterday")
+//    public ApiResponse<BloodOrderStaticResponse> getStatisticYesterday(){
+//        return ApiResponse.<BloodOrderStaticResponse>builder()
+//                .data(bloodService.getBloodDonateStatic(1, false))
+//                .build();
+//    }
+//    @GetMapping("/statistic/month")
+//    public ApiResponse<BloodOrderStaticResponse> getStatisticMonth(){
+//        return ApiResponse.<BloodOrderStaticResponse>builder()
+//                .data(bloodService.getBloodDonateStatic(0, true))
+//                .build();
+//    }
+//    @GetMapping("/statistic/receive/today")
+//    public ApiResponse<BloodOrderStaticResponse> getStatisticReceiveToday(){
+//        return ApiResponse.<BloodOrderStaticResponse>builder()
+//                .data(bloodService.getBloodReceiveStatic(0, false))
+//                .build();
+//    }
+//    @GetMapping("/statistic/receive/yesterday")
+//    public ApiResponse<BloodOrderStaticResponse> getStatisticReceiveYesterday(){
+//        return ApiResponse.<BloodOrderStaticResponse>builder()
+//                .data(bloodService.getBloodReceiveStatic(1, false))
+//                .build();
+//    }
+//    @GetMapping("/statistic/receive/month")
+//    public ApiResponse<BloodOrderStaticResponse> getStatisticReceiveMonth(){
+//        return ApiResponse.<BloodOrderStaticResponse>builder()
+//                .data(bloodService.getBloodReceiveStatic(0, true))
+//                .build();
+//    }
+//    @GetMapping("/statistic/blood/graph")
+//    public ApiResponse<List<BloodStatisticResponse>> getBloodStatisticGraph(){
+//        return ApiResponse.<List<BloodStatisticResponse>>builder()
+//                .data(bloodService.getAllBloodStorageForStatistic())
+//                .build();
+//    }
 }

@@ -35,15 +35,9 @@ public class OrderBloodDonation {
     @Column(nullable = false, columnDefinition = "NVARCHAR(300)")
     private String address;
 
-    @Column(nullable = false)
-    private float amountBloodMl;
-
-    @Column(nullable = false)
-    private float weight;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blood-id")
-    private BloodStorage blood;
+    private BloodType blood;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order-date-id")
@@ -57,23 +51,32 @@ public class OrderBloodDonation {
 
     private LocalDate createDate;
 
-    @Column(nullable = true, columnDefinition = "NVARCHAR(300)")
-    private String reason;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cancle-reason")
+    private CancellationReason cancelReason;
+
+    private String otherReason;
+
+    private float amountBloodDonation;
 
     @Builder
-    public OrderBloodDonation(String fullName, LocalDate dob, String gender, String cccdNumber, String phone, String address, float amountBloodMl, float weight, BloodStorage blood, OrderDateDonation orderDateId, UserAccount userAccount, int status, LocalDate createDate) {
+
+    public OrderBloodDonation(String fullName, LocalDate dob, String gender, String cccdNumber, String phone,
+            String address, BloodType blood, OrderDateDonation orderDate, UserAccount userAccount, int status,
+            CancellationReason cancelReason, String otherReason, float amountBloodDonation) {
         this.fullName = fullName;
         this.dob = dob;
         this.gender = gender;
         this.cccdNumber = cccdNumber;
         this.phone = phone;
         this.address = address;
-        this.amountBloodMl = amountBloodMl;
-        this.weight = weight;
         this.blood = blood;
-        this.orderDate = orderDateId;
+        this.orderDate = orderDate;
         this.userAccount = userAccount;
         this.status = status;
-        this.createDate = createDate;
+        this.createDate = LocalDate.now();
+        this.cancelReason = cancelReason;
+        this.otherReason = otherReason ;
+        this.amountBloodDonation = amountBloodDonation;
     }
 }

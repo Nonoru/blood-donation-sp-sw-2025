@@ -1,72 +1,57 @@
 package com.nonoru.superapp.service;
 
+import com.nonoru.superapp.dto.request.AcceptDonationOrderRequest;
+import com.nonoru.superapp.dto.request.CancelReasonRequest;
 import com.nonoru.superapp.dto.request.OrderBloodDonationRequest;
-import com.nonoru.superapp.dto.response.BloodOrderStaticResponse;
+import com.nonoru.superapp.dto.response.BloodStatisticResponse;
+import com.nonoru.superapp.dto.response.OrderBloodDonationForStaff;
 import com.nonoru.superapp.dto.response.OrderBloodDonationResponse;
-import com.nonoru.superapp.entity.BloodStorage;
-import com.nonoru.superapp.entity.OrderBloodDonation;
-import com.nonoru.superapp.entity.OrderDateDonation;
-import com.nonoru.superapp.entity.UserAccount;
+import com.nonoru.superapp.entity.*;
 import com.nonoru.superapp.enums.StatusOfOrderDonation;
 import com.nonoru.superapp.exception.AppException;
 import com.nonoru.superapp.exception.ErrorCode;
-import com.nonoru.superapp.repository.BloodStorageRepository;
-import com.nonoru.superapp.repository.OrderBloodDonationRepository;
-import com.nonoru.superapp.repository.OrderDateDonationRepository;
-import com.nonoru.superapp.repository.UserRepository;
-import jakarta.persistence.Id;
+import com.nonoru.superapp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderBloodDonationService {
     @Autowired
     private OrderBloodDonationRepository orderDonationRepo;
     @Autowired
-    private BloodStorageRepository bloodRepo;
+    private BloodTypeRepository bloodRepo;
     @Autowired
     private OrderDateDonationRepository orderDateRepo;
     @Autowired
     private UserRepository userRepo;
     @Autowired
-    private BloodStorageRepository bloodStorageRepo;
+    private CancellationReasonRepository cancellationReasonRepo;
+    @Autowired
+    private BloodBagRepository bloodBagRepo;
 
     /* CREATE BLOOD DONATION ORDERs - USER*/
     public void createOrderBloodDonation(OrderBloodDonationRequest request) {
-//        OrderDateDonation preOrderDonation = checkPreOrder();
-//        long timePreOrder = 9999;
-//        if(preOrderDonation != null) {
-//            timePreOrder = ChronoUnit.DAYS.between(preOrderDonation.getOrderDate(), LocalDate.now());
-//        }
-//        if(timePreOrder < 60){
-//            throw new AppException(ErrorCode.TIME_INVALID_FOR_NEXT_ORDER);
-//        }
         int age = LocalDate.now().getYear() - request.getDob().getYear();
         if(age < 18){
             throw new AppException(ErrorCode.YEAR_LOWER_18);
         }
-        int ammountBloodAllowToDonate = (int)request.getWeight() * 9;
-        if(request.getAmountBloodMl() > ammountBloodAllowToDonate){
-            throw  new AppException(ErrorCode.AMMOUNT_BLOOD_ERROR);
-        }
-        BloodStorage bloodStorage = bloodRepo.findById(request.getBloodId()).orElseThrow(()
-                -> new AppException(ErrorCode.BLOOD_ID_NOTFOUND));
         OrderDateDonation orderDate = orderDateRepo.findById(request.getOrderDateId()).orElseThrow(()
                 -> new AppException(ErrorCode.ORDER_DATE_ID_NOTFOUND));
-        System.out.println("4");
-        UserAccount userAccount = userRepo.findById(request.getUserId()).orElseThrow(()
+
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long idUser = jwt.getClaim("id");
+        UserAccount userAccount = userRepo.findById(idUser).orElseThrow(()
                 -> new AppException(ErrorCode.USER_NOTFOUND));
 
         String gender = request.getGender() == 1 ? "Nam" : "Nữ";
@@ -74,136 +59,182 @@ public class OrderBloodDonationService {
         OrderBloodDonation order = OrderBloodDonation.builder()
                 .fullName(request.getFullName())
                 .dob(request.getDob())
-                .amountBloodMl(request.getAmountBloodMl())
                 .gender(gender)
-                .weight(request.getWeight())
                 .cccdNumber(request.getCccdNumber())
                 .phone(request.getPhone())
                 .address(request.getAddress())
-                .blood(bloodStorage)
-                .orderDateId(orderDate)
+                .orderDate(orderDate)
                 .userAccount(userAccount)
-                .status(StatusOfOrderDonation.PROCESSING.getStatusCode())
-                .createDate(LocalDate.now())
+                .status(StatusOfOrderDonation.PENDING.getStatusCode())
                 .build();
         orderDonationRepo.save(order);
     }
-    /* GET LIST BLOOD DONATION ORDERS - STAFF */
-    /* ERROR FUNCTION */
-//    public OrderDateDonation checkPreOrder(){
-//        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Long idJwt = jwt.getClaim("id");
-//        List<OrderBloodDonation> orders = orderDonationRepo.findAllByUserAccount_Id(idJwt);
-//        orders.removeIf(order -> order.getStatus() != StatusOfOrderDonation.COMPLETED.getStatusCode());
-//        OrderBloodDonation order = orders.stream().max(Comparator.comparing(x -> x.getOrderDate().getOrderDate())).orElse(null);
-//        return order.getOrderDate();
-//    }
+//     /* GET LIST BLOOD DONATION ORDERS - STAFF */
+     public List<OrderBloodDonationResponse> getListOrderBloodDonationWaitingToAccept(StatusOfOrderDonation sts) {
+         List<OrderBloodDonation> listOrder = orderDonationRepo.findAll();
+         List<OrderBloodDonationResponse> response = new ArrayList<>();
+         LocalDate today = LocalDate.now();
+         LocalTime now = LocalTime.now();
+         listOrder.forEach(order -> {
+             LocalDate orderDate = order.getOrderDate().getOrderDate();
+             LocalTime orderTime = order.getOrderDate().getOrderTime();
+             if((today.isEqual(orderDate) && now.isBefore(orderTime) || today.isBefore(orderDate))){
+                 if(order.getStatus() == sts.getStatusCode())
+                 {
+                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                     String dob = order.getDob().format(formatter);
+                     String createDate = order.getCreateDate().format(formatter);
 
+                     OrderBloodDonationResponse orderResponse = OrderBloodDonationResponse.builder()
+                             .orderDonationId(order.getOrderDonationId())
+                             .fullName(order.getFullName())
+                             .phone(order.getPhone())
+                             .orderDate(orderDate)
+                             .orderTime(orderTime)
+                             .createByUsername(order.getUserAccount().getUsername())
+                             .dob(dob)
+                             .createDate(createDate)
+                             .gender(order.getGender())
+                             .cccdNumber(order.getCccdNumber())
+                             .address(order.getAddress())
+                             .build();
+                     response.add(orderResponse);
+                 }
+             }
+            });
+         return response;
+     }
+//     /* SET STATUS FOR ORER DONATION - STAFF */
+     public void acceptOrderBloodDonation(long orderDonationId) {
+         OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId)
+                 .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
+         orBD.setStatus(StatusOfOrderDonation.PROCESSING.getStatusCode());
+         orderDonationRepo.save(orBD);
+     }
 
-    public List<OrderBloodDonationResponse> getListOrderBloodDonationWaitingToAccept(StatusOfOrderDonation sts) {
+     public void updNegativeStatus(CancelReasonRequest request, int type) {
+         OrderBloodDonation orBD = orderDonationRepo.findById(request.getOrderDonationId())
+                 .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
+         CancellationReason reason = cancellationReasonRepo.findById(request.getCancelReasonId()).orElseThrow(() ->
+                 new AppException(ErrorCode.CANCELREASON_ISNULL));
+         orBD.setCancelReason(reason);
+         if(orBD.getCancelReason().getCancellationReasonId() == 1){
+             if(request.getOtherReason() == null || request.getOtherReason().isEmpty()){
+                 throw new AppException(ErrorCode.OTHER_REASON_ISBLANK);
+             }
+             if(request.getOtherReason().length() > 300){
+                 throw new AppException(ErrorCode.OTHER_REASON_LENGTH_INVALID);
+             }
+             orBD.setOtherReason(request.getOtherReason());
+         }
+         if (type == StatusOfOrderDonation.REFUSED.getStatusCode()) {
+             orBD.setStatus(StatusOfOrderDonation.REFUSED.getStatusCode());
+         }
+         if (type == StatusOfOrderDonation.CANCELED.getStatusCode()) {
+             bloodRepo.findById(request.getBloodType()).ifPresent(orBD::setBlood);
+             orBD.setStatus(StatusOfOrderDonation.CANCELED.getStatusCode());
+         }
+         orderDonationRepo.save(orBD);
+     }
+
+     public String completeOrderBloodDonation(AcceptDonationOrderRequest request) {
+         OrderBloodDonation orBD = orderDonationRepo.findById(request.getOrderDonationId())
+                 .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
+
+         BloodType blood  = bloodRepo.findById(request.getBloodType())
+                 .orElseThrow(() -> new AppException(ErrorCode.BLOOD_ID_NOTFOUND));
+
+         LocalDateTime collectionDate = LocalDateTime.now();
+
+         BloodBag newBloodBag = BloodBag.builder()
+                 .bloodType(blood)
+                 .volumeMl(request.getVolumeMl())
+                 .collectionDate(collectionDate)
+                 .expiryDate(request.getExpiryDate())
+                 .orderBloodDonation(orBD)
+                 .build();
+
+         bloodBagRepo.save(newBloodBag);
+
+         orBD.setBlood(blood);
+         orBD.setStatus(StatusOfOrderDonation.COMPLETED.getStatusCode());
+         orBD.setAmountBloodDonation(request.getVolumeMl());
+         orderDonationRepo.save(orBD);
+         return "Đã tạo thành công 1 túi máu "+newBloodBag.getBloodType().getBloodType()+" : "+newBloodBag.getVolumeMl()+"ml";
+     }
+
+    public List<OrderBloodDonationForStaff> listAllOrderForStaff() {
         List<OrderBloodDonation> listOrder = orderDonationRepo.findAll();
-        List<OrderBloodDonationResponse> response = new ArrayList<>();
-        LocalDate today = LocalDate.now();
-        LocalTime now = LocalTime.now();
+        List<OrderBloodDonationForStaff> responses = new ArrayList<>();
         listOrder.forEach(order -> {
-            LocalDate orderDate = order.getOrderDate().getOrderDate();
-            LocalTime orderTime = order.getOrderDate().getOrderTime();
-            if((today.isEqual(orderDate) && now.isBefore(orderTime) || today.isBefore(orderDate))){
-                if(order.getStatus() == sts.getStatusCode())
-                {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                    String orderDateStr = orderDate.format(formatter);
-                    String dob = order.getDob().format(formatter);
-                    String createDate = order.getCreateDate().format(formatter);
-
-                    OrderBloodDonationResponse orderResponse = OrderBloodDonationResponse.builder()
-                            .orderDonationId(order.getOrderDonationId())
-                            .fullName(order.getFullName())
-                            .phone(order.getPhone())
-                            .bloodType(order.getBlood().getBloodType())
-                            .amountBloodMl(order.getAmountBloodMl())
-                            .orderDate(orderDateStr)
-                            .orderTime(orderTime)
-                            .createByUsername(order.getUserAccount().getUsername())
-                            .dob(dob)
-                            .createDate(createDate)
-                            .gender(order.getGender())
-                            .weight(order.getWeight())
-                            .cccdNumber(order.getCccdNumber())
-                            .address(order.getAddress())
-                            .build();
-                    response.add(orderResponse);
-                }
+            String bloodType = null;
+            BloodType blood = order.getBlood();
+            if(blood != null){
+                bloodType = blood.getBloodType();
             }
-        });
-        return response;
-    }
-    public List<OrderBloodDonationResponse> getAllOrder() {
-        List<OrderBloodDonation> listOrder = orderDonationRepo.findAll();
-        List<OrderBloodDonationResponse> response = new ArrayList<>();
-        listOrder.forEach(order -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String orderDate = order.getOrderDate().getOrderDate().format(formatter);
-            String dob = order.getDob().format(formatter);
-            String createDate = order.getCreateDate().format(formatter);
-            LocalTime orderTime = order.getOrderDate().getOrderTime();
-            OrderBloodDonationResponse orderResponse = OrderBloodDonationResponse.builder()
+
+            String cancelReason = null;
+            CancellationReason cancellationReason = order.getCancelReason();
+            if(cancellationReason != null){
+                cancelReason = cancellationReason.getCancellationReasonName();
+            }
+
+            float volumeMl = order.getAmountBloodDonation();
+
+            OrderBloodDonationForStaff orderForStaff = OrderBloodDonationForStaff.builder()
                     .orderDonationId(order.getOrderDonationId())
                     .fullName(order.getFullName())
-                    .phone(order.getPhone())
-                    .bloodType(order.getBlood().getBloodType())
-                    .amountBloodMl(order.getAmountBloodMl())
-                    .orderDate(orderDate)
-                    .orderTime(orderTime)
-                    .createByUsername(order.getUserAccount().getUsername())
-                    .dob(dob)
-                    .createDate(createDate)
-                    .gender(order.getGender())
-                    .weight(order.getWeight())
                     .cccdNumber(order.getCccdNumber())
-                    .address(order.getAddress())
-                    .statusCode(order.getStatus())
+                    .phone(order.getPhone())
+                    .bloodType(bloodType)
+                    .orderDate(order.getOrderDate().getOrderDate())
+                    .orderTime(order.getOrderDate().getOrderTime())
+                    .createDate(order.getCreateDate())
+                    .cancelReason(cancelReason)
+                    .status(order.getStatus())
+                    .amountBloodDonation(volumeMl)
                     .build();
-            response.add(orderResponse);
+            responses.add(orderForStaff);
         });
-        return response;
-    }
-    /* SET STATUS FOR ORER DONATION - STAFF */
-    public void acceptOrderBloodDonation(long orderDonationId) {
-        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId)
-                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
-        orBD.setStatus(StatusOfOrderDonation.COMFRIMMED.getStatusCode());
-        orderDonationRepo.save(orBD);
-    }
-    public void refuseOrderBloodDonation(long orderDonationId, String reason) {
-        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId)
-                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
-        orBD.setReason(reason);
-        orBD.setStatus(StatusOfOrderDonation.REFUSED.getStatusCode());
-        orderDonationRepo.save(orBD);
-    }
-    @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public String completeOrderBloodDonation(long orderDonationId) {
-        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId)
-                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
-        orBD.setStatus(StatusOfOrderDonation.COMPLETED.getStatusCode());
-        getBloodFromOrder(orBD.getBlood(), orBD.getAmountBloodMl());
-        orderDonationRepo.save(orBD);
-        return "Đã thêm thành công "+ orBD.getAmountBloodMl() + " ml nhóm " +orBD.getBlood().getBloodType()+" vào trong kho máu";
-    }
-    public void cancelOrderBloodDonation(long orderDonationId, String reason) {
-        OrderBloodDonation orBD = orderDonationRepo.findById(orderDonationId)
-                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
-        orBD.setReason(reason);
-        orBD.setStatus(StatusOfOrderDonation.CANCELED.getStatusCode());
-        orderDonationRepo.save(orBD);
+
+        return responses;
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public void getBloodFromOrder(BloodStorage bloodStorage, float amount) {
-        float oldAmount = bloodStorage.getStorage();
-        bloodStorage.setStorage(oldAmount + amount);
-        bloodStorageRepo.save(bloodStorage);
-    }
+
+     public BloodStatisticResponse statisticOrderBloodDonation() {
+        // Tính ngày bắt đầu (30 ngày trước)
+        LocalDate startDate = LocalDate.now().minusDays(30);
+        
+        // Lấy tổng số đơn trong 30 ngày
+        int totalOrders = orderDonationRepo.countOrdersInLast30Days(startDate);
+        
+        // Lấy số đơn thành công (status = 3)
+        int successfulOrders = orderDonationRepo.countSuccessfulOrdersInLast30Days(startDate);
+        
+        // Lấy số đơn từ chối (status = 4,5)
+        int rejectedOrders = orderDonationRepo.countRejectedOrdersInLast30Days(startDate);
+        
+        // Lấy danh sách đơn từ chối để thống kê lý do
+        List<OrderBloodDonation> rejectedOrderList = orderDonationRepo.findRejectedOrdersInLast30Days(startDate);
+        
+        // Thống kê lý do từ chối
+        Map<String, Integer> rejectionReasons = new HashMap<>();
+        
+        for (OrderBloodDonation order : rejectedOrderList) {
+            if (order.getCancelReason() != null) {
+                String reasonName = order.getCancelReason().getCancellationReasonName();
+                rejectionReasons.put(reasonName, rejectionReasons.getOrDefault(reasonName, 0) + 1);
+            }
+        }
+        
+        return BloodStatisticResponse.builder()
+                .totalOrders(totalOrders)
+                .successfulOrders(successfulOrders)
+                .rejectedOrders(rejectedOrders)
+                .rejectionReasons(rejectionReasons)
+                .period("30 ngày gần nhất")
+                .build();
+     }
+
 
 }

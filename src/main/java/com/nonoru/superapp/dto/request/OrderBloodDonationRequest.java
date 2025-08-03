@@ -24,11 +24,7 @@ public class OrderBloodDonationRequest {
     @Past(message = "DOB_MUST_IN_PAST")
     private LocalDate dob;
 
-    private int amountBloodMl;
-
     private int gender;
-
-    private float weight;
 
     @NotBlank(message = "CCCD_NUMBER_EMPTY")
     @Pattern(regexp = "0\\d{9,12}", message = "CCCD_NUMBER_INVALID")
@@ -41,8 +37,6 @@ public class OrderBloodDonationRequest {
     @NotBlank(message = "ADDRESS_EMPTY")
     private String address;
 
-    private int bloodId;
     private long orderDateId;
-    private long userId;
 
 }

@@ -74,7 +74,20 @@ public enum ErrorCode {
 
     EMAIL_NOT_FOUND(43, "Email này chưa được đăng ký"),
 
-    OTP_ERROR(44, "Mã OTP không chính xác hoặc đã hết hạn")
+    OTP_ERROR(44, "Mã OTP không chính xác hoặc đã hết hạn"),
+
+    OTHER_REASON_LENGTH_INVALID(45, "Lý do khác có độ dài không hợp lệ"),
+
+    OTHER_REASON_ISBLANK(46, "Lý do khác không được bỏ trống"),
+
+    CANCELREASON_ISNULL(47, "Không tìm thấy lý do hủy"),
+
+    BLOOD_BAG_EXPIRY_DATE(48,"Ngày túi máu hết hạn không thể ở quá khứ"),
+
+    VOLUME_BELLOW_MIN_VALUE(49,"Lượng máu hiến của người hiến phải trên 250ml"),
+    VOLUME_HIGHER_MIN_VALUE(50,"Lượng máu hiến của người hiến phải trên 650ml"),
+    ORDER_RECEIVE_NOT_FOUND(51, "Đơn nhận này không tìm thấy"),
+    ORDER_RECEIVE_ESTIMATE_DATE(52, "Ngày dự kiến hoàn tất đơn nhận máu phải ở tương lai"),
 
     ;
     private int code;

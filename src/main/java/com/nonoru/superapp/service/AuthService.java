@@ -149,24 +149,20 @@ public class AuthService {
     public void changePassword(ChangePasswordRequest request) {
         Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long idJwt = jwt.getClaim("id");
-        if (userService.hasId(idJwt)){
-            UserAccount user = userRepository.findById(idJwt).orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
-            boolean validOldPass = passwordEncoder.matches(request.getOldPassword(), user.getHashPassword());
-            boolean validNewPass = request.getNewPassword().equals(request.getConfirmNewPassword());
-            if(!validOldPass) {
-                throw new AppException(ErrorCode.OLD_PASSWORD_INVALID);
-            }else {
-                if(!validNewPass) {
-                    throw new AppException(ErrorCode.PASSWORD_CONFIRM_INCORRECT);
-                }
-                String newHashPassword = passwordEncoder.encode(request.getNewPassword());
-                if(passwordEncoder.matches(request.getNewPassword(), newHashPassword)) {
-                    user.setHashPassword(newHashPassword);
-                    userRepository.save(user);
-                }
+        UserAccount user = userRepository.findById(idJwt).orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
+        boolean validOldPass = passwordEncoder.matches(request.getOldPassword(), user.getHashPassword());
+        boolean validNewPass = request.getNewPassword().equals(request.getConfirmNewPassword());
+        if(!validOldPass) {
+            throw new AppException(ErrorCode.OLD_PASSWORD_INVALID);
+        }else {
+            if(!validNewPass) {
+                throw new AppException(ErrorCode.PASSWORD_CONFIRM_INCORRECT);
             }
-        }else{
-            throw new AppException(ErrorCode.FUNCTION_NOT_ALLOW);
+            String newHashPassword = passwordEncoder.encode(request.getNewPassword());
+            if(passwordEncoder.matches(request.getNewPassword(), newHashPassword)) {
+                user.setHashPassword(newHashPassword);
+                userRepository.save(user);
+            }
         }
     }
 

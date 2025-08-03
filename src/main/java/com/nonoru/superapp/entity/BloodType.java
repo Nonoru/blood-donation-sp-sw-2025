@@ -10,11 +10,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class BloodStorage {
+public class BloodType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String bloodType;
-    private float storage;
 }

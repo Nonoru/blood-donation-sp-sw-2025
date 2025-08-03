@@ -1,16 +1,14 @@
 package com.nonoru.superapp.repository;
 
 import com.nonoru.superapp.dto.BloodStorageChangeDTO;
-import com.nonoru.superapp.entity.BloodStorage;
+import com.nonoru.superapp.entity.BloodType;
 import com.nonoru.superapp.entity.OrderBloodReceive;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +20,7 @@ public interface OrderBloodReceiveRepository extends JpaRepository<OrderBloodRec
     SELECT new com.nonoru.superapp.dto.BloodStorageChangeDTO(o.createDate, o.userAccount.username ,
         'Receive' as type, o.amountBloodMl) FROM OrderBloodReceive o WHERE o.status = 3 AND o.blood = :blood
     """)
-    List<BloodStorageChangeDTO> getOrderBloodReceive(@Param("blood") BloodStorage blood);
+    List<BloodStorageChangeDTO> getOrderBloodReceive(@Param("blood") BloodType blood);
 
 //    ==============
 
@@ -78,6 +76,11 @@ public interface OrderBloodReceiveRepository extends JpaRepository<OrderBloodRec
     @Query(value = """
     SELECT SUM(o.amountBloodMl) FROM OrderBloodReceive o WHERE o.status = 3 AND o.blood = :blood
     """)
-    Optional<Float> getTotalBloodAmountByBlood(@Param("blood") BloodStorage blood);
+    Optional<Float> getTotalBloodAmountByBlood(@Param("blood") BloodType blood);
 
+    List<OrderBloodReceive> findAllByStatus(int status);
+
+    List<OrderBloodReceive> findAllByType(String type);
+
+    List<OrderBloodReceive> findAllByTypeAndStatusAndCancellationReason_CancellationReasonId(String type, int status, long cancellationReasonCancellationReasonId);
 }
