@@ -373,3 +373,327 @@
 .show {
     display: block;
 }
+
+// Header section layout
+.header-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px !important;
+    gap: 20px;
+}
+
+// New styles for object-based layout
+.schedule-list {
+    margin-top: 0 !important;
+    
+    h3 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1a202c;
+        text-align: center;
+        position: relative;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        padding: 20px 0 !important;
+        
+        &::before {
+            content: '📋';
+            display: block;
+            font-size: 32px;
+            margin-bottom: 10px !important;
+            -webkit-text-fill-color: initial;
+            background: none;
+        }
+        
+        &::after {
+            content: '';
+            display: block;
+            width: 300px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
+            margin: 15px auto 0 !important;
+            border-radius: 2px;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+    }
+}
+
+.schedule-content {
+    margin-top: 20px !important;
+}
+
+.no-data {
+    text-align: center;
+    padding: 40px !important;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    p {
+        font-size: 18px;
+        color: #6c757d;
+        margin: 0;
+        background: none;
+        padding: 0 !important;
+    }
+}
+
+.date-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.date-group {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    }
+}
+
+.date-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px 24px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    h4 {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .schedule-count {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 6px 12px !important;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 500;
+        backdrop-filter: blur(10px);
+    }
+}
+
+.schedule-cards {
+    padding: 24px !important;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+}
+
+.schedule-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        border-color: #667eea;
+    }
+}
+
+.card-header {
+    background: linear-gradient(135deg, #495057 0%, #6c757d 100%);
+    color: white;
+    padding: 8px 12px !important;
+    
+    .schedule-id {
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+}
+
+.card-content {
+    padding: 12px !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    flex: 1;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px !important;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+    
+    .label {
+        font-size: 10px;
+        font-weight: 600;
+        color: #495057;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+    }
+    
+    .value {
+        font-size: 12px;
+        font-weight: 500;
+        color: #2c3e50;
+        padding: 2px 0 !important;
+    }
+}
+
+// Responsive design for new layout
+@media (max-width: 1024px) {
+    .header-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .schedule-cards {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        padding: 20px !important;
+    }
+    
+    .date-header {
+        padding: 16px 20px !important;
+        
+        h4 {
+            font-size: 18px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .header-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .schedule-cards {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        padding: 16px !important;
+    }
+    
+    .date-header {
+        padding: 14px 16px !important;
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+        
+        h4 {
+            font-size: 16px;
+        }
+        
+        .schedule-count {
+            font-size: 12px;
+        }
+    }
+    
+    .card-content {
+        padding: 12px !important;
+    }
+    
+    .info-item {
+        padding: 10px !important;
+        
+        .label {
+            font-size: 11px;
+        }
+        
+        .value {
+            font-size: 13px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .header-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .schedule-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 12px !important;
+    }
+    
+    .schedule-list h3 {
+        font-size: 22px;
+        padding: 15px 0 !important;
+        
+        &::before {
+            font-size: 28px;
+            margin-bottom: 8px !important;
+        }
+        
+        &::after {
+            width: 250px;
+            height: 3px;
+            margin: 12px auto 0 !important;
+        }
+    }
+    
+    .date-header {
+        padding: 12px 14px !important;
+        
+        h4 {
+            font-size: 14px;
+        }
+        
+        .schedule-count {
+            font-size: 11px;
+            padding: 4px 8px !important;
+        }
+    }
+    
+    .card-content {
+        padding: 10px !important;
+    }
+    
+    .info-item {
+        padding: 8px !important;
+        
+        .label {
+            font-size: 10px;
+        }
+        
+        .value {
+            font-size: 12px;
+        }
+    }
+}

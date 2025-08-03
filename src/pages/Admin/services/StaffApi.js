@@ -4,26 +4,15 @@ const url = 'http://localhost:8080/staff'
 
 const createHeaders = () => {
     const token = localStorage.getItem('token');
-    return token ? { Authorization: `Bearer ${token}` } : {};
+    return token ? { 
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    } : {
+        'Content-Type': 'application/json'
+    };
 }
-export const getOrderBloodDonation = async () => {
-    return await axios.get(`${url}/list-order/processing`, { headers: createHeaders() });
-}
-export const getOrderBloodDonationAccept = async () => {
-    return await axios.get(`${url}/list-order/accept`, { headers: createHeaders() });
-}
-export const acceptOrder = async (id) => {
-    return await axios.put(`${url}/accept-orders/${id}`, null,{ headers: createHeaders() });
-}
-export const refuseOrder = async (id, reason) => {
-    return await axios.put(`${url}/refuse-orders/${id}`, {reason:reason},{ headers: createHeaders() });
-}
-export const completeOrder = async (id, reason) => {
-    return await axios.put(`${url}/complete-orders/${id}`, null,{ headers: createHeaders() });
-}
-export const cancelOrder = async (id, reason) => {
-    return await axios.put(`${url}/cancel-orders/${id}`, {reason:reason},{ headers: createHeaders() });
-}
+
+// CLINIC, BLOOD TYPE AND APPOINTMENT
 export const getClinics = async () => {
     return await axios.get(`${url}/list-clinics`, { headers: createHeaders() });
 }
@@ -33,34 +22,77 @@ export const getOrderDates = async () => {
 export const addOrderDate = async (formDate) => {
     return await axios.post(`${url}/create-date-donation`, formDate, {headers: createHeaders()});
 }
+export const getBloodType = async () => {
+    return await axios.get(`${url}/list-bloods`, { headers: createHeaders() });
+}
+export const getBloodBag = async () => {
+    return await axios.get(`${url}/list-blood-bags`, { headers: createHeaders() });
+}
+export const getBloodBagValid = async () => {
+    return await axios.get(`${url}/list-blood-valid-bags`, { headers: createHeaders() });
+}
+
+
+// ORDER BLOOD DONATION
+
+// GET ORDER BLOOD DONATION (PENDING, PROCESSING)
+export const getOrderBloodDonation = async () => {
+    return await axios.get(`${url}/donation/list-pending`, { headers: createHeaders() });
+}
+export const getOrderBloodDonationAccept = async () => {
+    return await axios.get(`${url}/donation/list-processing`, { headers: createHeaders() });
+}
 export const getAllOrderDonate = async () => {
-    return await axios.get(`${url}/list-order`, {headers: createHeaders()});
+    return await axios.get(`${url}/donation/list-all`, {headers: createHeaders()});
+}
+
+//===============================================
+// PROECESS STATUS (ACCEPT, REFUSE, COMPLETE, CANCEL)
+export const acceptOrder = async (id) => {
+    return await axios.put(`${url}/donation/accept-orders/${id}`, null,{ headers: createHeaders() });
+}
+export const refuseOrder = async (formRefuse) => {
+    return await axios.put(`${url}/donation/refuse-orders`, formRefuse,{ headers: createHeaders() });
+}
+export const completeOrder = async (formComplete) => {
+    return await axios.put(`${url}/donation/complete-orders`, formComplete,{ headers: createHeaders() });
+}
+export const cancelOrder = async (formCancel) => {
+    return await axios.put(`${url}/donation/cancel-orders`, formCancel,{ headers: createHeaders() });
+}
+//===============================================
+// ORDER BLOOD RECEIVING
+
+// GET ORDER BLOOD RECEIVING (PENDING, PROCESSING)
+export const getOrderReceivePending = async () => {
+    return await axios.get(`${url}/receive/list-order/receive-pending`, { headers: createHeaders() });
 }
 export const getOrderReceiveProcessing = async () => {
-    return await axios.get(`${url}/list-order/receive/processing`, { headers: createHeaders() });
-}
-export const getOrderReceiveAccept = async () => {
-    return await axios.get(`${url}/list-order/receive/accept`, { headers: createHeaders() });
-}
-export const acceptOrderReceive = async (id, clinicId) => {
-    return await axios.put(`${url}/accept-orders/receive/${id}`, {clinicId:clinicId},{ headers: createHeaders() });
-}
-export const refuseOrderReceive = async (id, reasonCancel) => {
-    return await axios.put(`${url}/refuse-orders/receive/${id}`, {reasonCancel:reasonCancel},{ headers: createHeaders() });
-}
-export const completeOrderReceive = async (id) => {
-    return await axios.put(`${url}/complete-orders/receive/${id}`, null,{ headers: createHeaders() });
-}
-export const cancelOrderReceive = async (id, reason) => {
-    return await axios.put(`${url}/cancel-orders/receive/${id}`, {reason:reason},{ headers: createHeaders() });
+    return await axios.get(`${url}/receive/list-order/receive-processing`, { headers: createHeaders() });
 }
 export const getAllOrderReceive = async () => {
-    return await axios.get(`${url}/list-order/receive`, {headers: createHeaders()});
+    return await axios.get(`${url}/receive/list-order/all`, {headers: createHeaders()});
 }
+
+// ================================
+export const acceptOrderReceive = async (formAccept) => {
+    return await axios.put(`${url}/receive/accept-orders`, formAccept,{ headers: createHeaders() });
+}
+export const refuseOrderReceive = async (formRefuse) => {
+    return await axios.put(`${url}/receive/refuse-orders`, formRefuse,{ headers: createHeaders() });
+}
+export const completeOrderReceive = async (id) => {
+    return await axios.put(`${url}/receive/complete-orders/${id}`, null,{ headers: createHeaders() });
+}
+export const cancelOrderReceive = async (formRefuse) => {
+    return await axios.put(`${url}/receive/cancel-orders`, formRefuse,{ headers: createHeaders() });
+}
+
+//===============================================
+
 export const getBlood = async () => {
     return await axios.get(`${url}/blood`, { headers: createHeaders() });
 }
-// STATISTIC
 // BLOOD DONATE
 export const getBloodDonateToday = async () => {
     return await axios.get(`${url}/statistic/today`, { headers: createHeaders() });
@@ -72,7 +104,8 @@ export const getBloodDonateMonth = async () => {
     return await axios.get(`${url}/statistic/month`, { headers: createHeaders() });
 }
 
-// BLOOD RECEIVE
+// STATISTIC
+
 export const getBloodDonateTodayReceive = async () => {
     return await axios.get(`${url}/statistic/receive/today`, { headers: createHeaders() });
 }
@@ -86,4 +119,10 @@ export const getBloodDonateMonthReceive = async () => {
 export const getBloodStatisticGraph = async () => {
     return await axios.get(`${url}/statistic/blood/graph`, { headers: createHeaders() });
 }
+// Cancel-Reason
+export const getListCancelReason = async () => {
+    return await axios.get(`${url}/cancel-reason`, { headers: createHeaders() });
+}
+// ================================
+// STATISTIC NEW VERSION
 

@@ -17,7 +17,7 @@ import FeaturesPage from '../Client/features/main/Features'
 import DonateBlood from '../Client/features/subs/DonateBlood'
 import ReceiveBlood from '../Client/features/subs/ReceiveBlood'
 import OrderHistory from '../Client/features/subs/OrderHistory'
-import GiftExchange from '../Client/features/subs/GiftExchange'
+import OtherFeature from '../Client/features/subs/OtherFeature'
 import ErrorPage from '../Client/pages/ErrorPage'
 import Chatbot from '../Client/pages/Chatbot'
 import ChangePassword from './pages/ChangePassword'
@@ -40,7 +40,7 @@ function Client({ userInfo, setUserInfo }) {
                 <Route path='/feature/donate-blood' element={<DonateBlood />} />
                 <Route path='/feature/receive-blood' element={<ReceiveBlood />} />
                 <Route path='/feature/order-history' element={<OrderHistory />} />
-                <Route path='/feature/gift-exchange' element={<GiftExchange />} />
+                <Route path='/feature/other-features' element={<OtherFeature />} />
                 <Route path='/blog/1' element={<Blog1 />} />
                 <Route path='/blog/2' element={<Blog2 />} />
                 <Route path='/blog/3' element={<Blog3 />} />

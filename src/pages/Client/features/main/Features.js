@@ -15,35 +15,35 @@ const Features = () => {
   const features = [
     {
       id: 1,
-      title: 'Hiến Máu',
+      title: 'Xét nghiệm và Hiến máu',
       icon: '🩸',
-      description: 'Đăng ký hiến máu và cứu sống những người cần giúp đỡ',
+      description: 'Đăng ký đặt lịch khám và tư vấn hiến máu',
       color: '#B63B3B',
       path: '/feature/donate-blood',
     },
     {
       id: 2,
-      title: 'Nhận Máu',
+      title: 'Yêu cầu nhận Máu',
       icon: '🏥',
-      description: 'Yêu cầu máu cho các trường hợp cấp cứu y tế',
+      description: 'Tạo yêu cầu hỗ trợ nhận cho các trường hợp cấp cứu y tế',
       color: '#ff6b6b',
       path: '/feature/receive-blood',
     },
     {
       id: 3,
-      title: 'Xem Đơn Hàng',
+      title: 'Lịch sử đặt lịch',
       icon: '📋',
-      description: 'Theo dõi lịch sử hiến máu và yêu cầu của bạn',
+      description: 'Theo dõi lịch sử hiến máu và các yêu cầu của bạn',
       color: '#4CAF50',
       path: '/feature/order-history',
     },
     {
       id: 4,
-      title: 'Comming soon',
-      icon: '🔧',
-      description: 'Chức năng sắp ra mắt, hãy theo dõi!',
+      title: 'Các tính năng khác',
+      icon: '✨',
+      description: 'Các tính năng khác hỗ trợ trong việc sử dụng dịch vụ',
       color: '#FF9800',
-      path: '/feature/gift-exchange',
+      path: '/feature/other-features',
     }
   ];
 
@@ -94,7 +94,7 @@ const Features = () => {
             {features.map((feature) => (
               <div 
                 key={feature.id} 
-                className={`feature-card ${feature.id === 4 ? 'pointer-events-none' :''}`}
+                className={`feature-card`}
                 onClick={() => handleFeatureClick(feature.path)}
                 style={{ '--feature-color': feature.color }}
               >

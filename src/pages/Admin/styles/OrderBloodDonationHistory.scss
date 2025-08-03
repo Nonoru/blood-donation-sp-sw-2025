@@ -1,0 +1,631 @@
+.order-blood-donation-page {
+  width: calc(100vw - 200px);
+  padding: 24px !important;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  min-height: 100vh;
+  left: 200px;
+  top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .page-header {
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 30px !important;
+    text-align: center;
+
+    h2 {
+      color: #495057;
+      font-size: 32px;
+      font-weight: 800;
+      margin: 0;
+      text-shadow: none;
+    }
+  }
+
+  .orders-container {
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  // Filter Buttons
+  .filter-buttons {
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px !important;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .filter-btn {
+      background: #ffffff;
+      border: 2px solid #e9ecef;
+      border-radius: 25px;
+      padding: 12px 20px !important;
+      font-size: 14px;
+      font-weight: 600;
+      color: #495057;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      min-width: 140px;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        border-color: #6c757d;
+      }
+
+      &.active {
+        color: white;
+        border-color: transparent;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+
+        .count-badge {
+          background: rgba(255, 255, 255, 0.2);
+          color: white;
+        }
+      }
+
+      .count-badge {
+        background: #f8f9fa;
+        color: #495057;
+        padding: 4px 8px !important;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 700;
+        min-width: 24px;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+    }
+
+    // Color variants for each status
+    .bg-gray-500 {
+      &.active {
+        background: #6b7280;
+      }
+    }
+
+    .bg-yellow-500 {
+      &.active {
+        background: #f59e0b;
+      }
+    }
+
+    .bg-blue-500 {
+      &.active {
+        background: #3b82f6;
+      }
+    }
+
+    .bg-green-500 {
+      &.active {
+        background: #10b981;
+      }
+    }
+
+    .bg-red-600 {
+      &.active {
+        background: #dc2626;
+      }
+    }
+
+    .bg-red-400 {
+      &.active {
+        background: #f87171;
+      }
+    }
+  }
+
+  .table-section {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+    width: 100%;
+
+    .section-title {
+      color: #495057;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px !important;
+      padding-bottom: 12px !important;
+      border-bottom: 2px solid #e9ecef;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid #e9ecef;
+      width: 100%;
+    }
+
+    .order-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      min-width: 1200px;
+
+      thead {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+
+        th {
+          padding: 16px 12px !important;
+          text-align: left;
+          font-weight: 600;
+          color: #495057;
+          border-bottom: 2px solid #dee2e6;
+          font-size: 14px;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          white-space: nowrap;
+          min-width: 120px;
+        }
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid #f1f3f4;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: rgba(248, 249, 250, 0.8);
+          }
+
+          &:nth-child(even) {
+            background: rgba(248, 249, 250, 0.3);
+          }
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+
+        td {
+          padding: 12px !important;
+          color: #495057;
+          font-size: 14px;
+          vertical-align: middle;
+          border-bottom: 1px solid #f1f3f4;
+          min-width: 120px;
+
+          &:first-child {
+            font-weight: 600;
+            color: #28a745;
+            min-width: 60px;
+          }
+
+          // Specific column widths for better layout
+          &:nth-child(2) { // Full name
+            min-width: 120px;
+          }
+
+          &:nth-child(3) { // CCCD
+            min-width: 100px;
+          }
+
+          &:nth-child(4) { // Phone
+            min-width: 100px;
+          }
+
+          &:nth-child(5) { // Order date
+            min-width: 80px;
+          }
+
+          &:nth-child(6) { // Order time
+            min-width: 60px;
+          }
+
+          &:nth-child(7) { // Create date
+            min-width: 80px;
+          }
+
+          &:nth-child(8) { // Blood type (for status 5) or Reason (for status 4)
+            min-width: 80px;
+          }
+
+          &:nth-child(9) { // Amount (for status 3) or Reason (for status 5)
+            min-width: 80px;
+          }
+
+          &:nth-child(10) { // Reason (for status 4) or Status (for status 5)
+            min-width: 250px;
+            max-width: 300px;
+            word-wrap: break-word;
+            white-space: normal;
+          }
+
+          &:last-child { // Status
+            min-width: 140px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    // Special styling for status 4 table (rejected orders - no bloodType column)
+    .status-4-table .order-table {
+      tbody td {
+        &:nth-child(8) { // Reason column (moved up one position)
+          min-width: 250px;
+          max-width: 300px;
+          word-wrap: break-word;
+          white-space: normal;
+        }
+
+        &:nth-child(9) { // Status column (moved up one position)
+          min-width: 140px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 40px 20px !important;
+      color: #6c757d;
+      font-style: italic;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border: 1px dashed #dee2e6;
+    }
+  }
+
+  // Status badges styling
+  .bg-yellow-500 {
+    background-color: #fbbf24 !important;
+  }
+
+  .bg-blue-500 {
+    background-color: #3b82f6 !important;
+  }
+
+  .bg-green-500 {
+    background-color: #10b981 !important;
+  }
+
+  .bg-red-600 {
+    background-color: #dc2626 !important;
+  }
+
+  .bg-red-400 {
+    background-color: #f87171 !important;
+  }
+
+  .bg-gray-400 {
+    background-color: #9ca3af !important;
+  }
+
+  // Responsive design
+  @media (max-width: 1024px) {
+    width: calc(100vw - 120px);
+    padding: 16px !important;
+
+    .page-header h2 {
+      font-size: 28px;
+    }
+
+    .orders-container {
+      max-width: 1200px;
+    }
+
+    .filter-buttons {
+      max-width: 1200px;
+      gap: 10px;
+      margin-bottom: 25px !important;
+
+      .filter-btn {
+        padding: 10px 16px !important;
+        font-size: 13px;
+        min-width: 120px;
+
+        .count-badge {
+          font-size: 11px;
+          padding: 3px 6px !important;
+        }
+      }
+    }
+
+    .table-section {
+      padding: 20px !important;
+
+      .section-title {
+        font-size: 18px;
+      }
+
+      .order-table {
+        min-width: 1000px;
+
+        thead th {
+          padding: 12px 8px !important;
+          font-size: 13px;
+          min-width: 100px;
+        }
+
+        tbody td {
+          padding: 10px 8px !important;
+          font-size: 13px;
+          min-width: 100px;
+
+          &:first-child {
+            min-width: 50px;
+          }
+
+          &:nth-child(2) {
+            min-width: 100px;
+          }
+
+          &:nth-child(3) {
+            min-width: 80px;
+          }
+
+          &:nth-child(4) {
+            min-width: 80px;
+          }
+
+          &:nth-child(5) {
+            min-width: 70px;
+          }
+
+          &:nth-child(6) {
+            min-width: 50px;
+          }
+
+          &:nth-child(7) {
+            min-width: 70px;
+          }
+
+          &:nth-child(8) {
+            min-width: 70px;
+          }
+
+          &:nth-child(9) {
+            min-width: 70px;
+          }
+
+          &:nth-child(10) {
+            min-width: 200px;
+            max-width: 250px;
+          }
+
+          &:last-child {
+            min-width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: calc(100vw - 80px);
+    padding: 12px !important;
+
+    .page-header h2 {
+      font-size: 24px;
+    }
+
+    .orders-container {
+      max-width: 1000px;
+    }
+
+    .filter-buttons {
+      max-width: 1000px;
+      gap: 8px;
+      margin-bottom: 20px !important;
+
+      .filter-btn {
+        padding: 8px 12px !important;
+        font-size: 12px;
+        min-width: 100px;
+
+        .count-badge {
+          font-size: 10px;
+          padding: 2px 5px !important;
+          min-width: 20px;
+        }
+      }
+    }
+
+    .orders-container {
+      gap: 20px;
+    }
+
+    .table-section {
+      padding: 16px !important;
+
+      .section-title {
+        font-size: 16px;
+        margin-bottom: 16px !important;
+      }
+
+      .order-table {
+        min-width: 800px;
+
+        thead th {
+          padding: 10px 6px !important;
+          font-size: 12px;
+          min-width: 80px;
+        }
+
+        tbody td {
+          padding: 8px 6px !important;
+          font-size: 12px;
+          min-width: 80px;
+
+          &:first-child {
+            min-width: 40px;
+          }
+
+          &:nth-child(2) {
+            min-width: 80px;
+          }
+
+          &:nth-child(3) {
+            min-width: 60px;
+          }
+
+          &:nth-child(4) {
+            min-width: 60px;
+          }
+
+          &:nth-child(5) {
+            min-width: 60px;
+          }
+
+          &:nth-child(6) {
+            min-width: 40px;
+          }
+
+          &:nth-child(7) {
+            min-width: 60px;
+          }
+
+          &:nth-child(8) {
+            min-width: 60px;
+          }
+
+          &:nth-child(9) {
+            min-width: 60px;
+          }
+
+          &:nth-child(10) {
+            min-width: 150px;
+            max-width: 200px;
+          }
+
+          &:last-child {
+            min-width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    width: calc(100vw - 40px);
+    padding: 8px !important;
+
+    .page-header h2 {
+      font-size: 20px;
+    }
+
+    .orders-container {
+      max-width: 800px;
+    }
+
+    .filter-buttons {
+      max-width: 800px;
+      gap: 6px;
+      margin-bottom: 15px !important;
+
+      .filter-btn {
+        padding: 6px 10px !important;
+        font-size: 11px;
+        min-width: 80px;
+
+        .count-badge {
+          font-size: 9px;
+          padding: 2px 4px !important;
+          min-width: 18px;
+        }
+      }
+    }
+
+    .table-section {
+      padding: 12px !important;
+
+      .section-title {
+        font-size: 14px;
+      }
+
+      .order-table {
+        min-width: 600px;
+
+        thead th {
+          padding: 8px 4px !important;
+          font-size: 11px;
+          min-width: 60px;
+        }
+
+        tbody td {
+          padding: 6px 4px !important;
+          font-size: 11px;
+          min-width: 60px;
+
+          &:first-child {
+            min-width: 30px;
+          }
+
+          &:nth-child(2) {
+            min-width: 60px;
+          }
+
+          &:nth-child(3) {
+            min-width: 50px;
+          }
+
+          &:nth-child(4) {
+            min-width: 50px;
+          }
+
+          &:nth-child(5) {
+            min-width: 50px;
+          }
+
+          &:nth-child(6) {
+            min-width: 30px;
+          }
+
+          &:nth-child(7) {
+            min-width: 50px;
+          }
+
+          &:nth-child(8) {
+            min-width: 50px;
+          }
+
+          &:nth-child(9) {
+            min-width: 50px;
+          }
+
+          &:nth-child(10) {
+            min-width: 120px;
+            max-width: 150px;
+          }
+
+          &:last-child {
+            min-width: 80px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+}

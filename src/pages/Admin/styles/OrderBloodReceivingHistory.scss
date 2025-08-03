@@ -1,0 +1,1456 @@
+.order-blood-receiving-page {
+    width: calc(100vw - 200px);
+    padding: 24px !important;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    min-height: 100vh;
+    left: 200px;
+    top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .page-header {
+        width: 100%;
+        max-width: 1200px;
+        margin-bottom: 30px !important;
+        text-align: center;
+
+        h2 {
+            color: #495057;
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0;
+            text-shadow: none;
+        }
+    }
+
+    .orders-container {
+        width: 100%;
+        max-width: 1400px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    // Filter Buttons
+    .filter-buttons {
+        width: 100%;
+        max-width: 1400px;
+        display: flex;
+        gap: 12px;
+        margin-bottom: 30px !important;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .filter-btn {
+            background: #ffffff;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            padding: 12px 20px !important;
+            font-size: 14px;
+            font-weight: 600;
+            color: #495057;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            min-width: 140px;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+                border-color: #6c757d;
+            }
+
+            &.active {
+                color: white;
+                border-color: transparent;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+
+                .count-badge {
+                    background: rgba(255, 255, 255, 0.2);
+                    color: white;
+                }
+            }
+
+            .count-badge {
+                background: #f8f9fa;
+                color: #495057;
+                padding: 4px 8px !important;
+                border-radius: 12px;
+                font-size: 12px;
+                font-weight: 700;
+                min-width: 24px;
+                text-align: center;
+                transition: all 0.3s ease;
+            }
+        }
+
+        // Color variants for each status
+        .bg-gray-500 {
+            &.active {
+                background: #6b7280;
+            }
+        }
+
+        .bg-yellow-500 {
+            &.active {
+                background: #f59e0b;
+            }
+        }
+
+        .bg-blue-500 {
+            &.active {
+                background: #3b82f6;
+            }
+        }
+
+        .bg-green-500 {
+            &.active {
+                background: #10b981;
+            }
+        }
+
+        .bg-red-600 {
+            &.active {
+                background: #dc2626;
+            }
+        }
+
+        .bg-red-400 {
+            &.active {
+                background: #f87171;
+            }
+        }
+    }
+
+    .table-section {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 24px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e9ecef;
+        width: 100%;
+
+        .section-title {
+            color: #495057;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px !important;
+            padding-bottom: 12px !important;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            width: 100%;
+        }
+
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            table-layout: fixed;
+
+            thead {
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+
+                th {
+                    padding: 16px 12px !important;
+                    text-align: left;
+                    font-weight: 600;
+                    color: #495057;
+                    border-bottom: 2px solid #dee2e6;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    white-space: nowrap;
+                    vertical-align: middle;
+
+                    &:first-child {
+                        width: 80px;
+                        max-width: 80px;
+                        min-width: 80px;
+                    }
+                }
+            }
+
+            tbody {
+                tr {
+                    border-bottom: 1px solid #f1f3f4;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        background: rgba(248, 249, 250, 0.8);
+                    }
+
+                    &:nth-child(even) {
+                        background: rgba(248, 249, 250, 0.3);
+                    }
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                }
+
+                td {
+                    padding: 12px 12px !important;
+                    color: #495057;
+                    font-size: 14px;
+                    vertical-align: middle;
+                    border-bottom: 1px solid #f1f3f4;
+                    text-align: left;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+
+                    &:first-child {
+                        font-weight: 600;
+                        color: #28a745;
+                        width: 80px;
+                        max-width: 80px;
+                        min-width: 80px;
+                    }
+
+                    // Specific column alignments - all left aligned
+                    &:nth-child(2) {
+                        // Full name
+                        text-align: left;
+                    }
+
+                    &:nth-child(3) {
+                        // User info button
+                        text-align: left;
+                    }
+
+                    &:nth-child(4) {
+                        // Create date
+                        text-align: left;
+                    }
+
+                    &:nth-child(5) {
+                        // Estimate/Done date
+                        text-align: left;
+                    }
+
+                    &:nth-child(6) {
+                        // Blood type
+                        text-align: left;
+                    }
+
+                    &:nth-child(7) {
+                        // Amount
+                        text-align: left;
+                    }
+
+                    &:nth-child(8) {
+                        // Reason
+                        text-align: left;
+                        word-wrap: break-word;
+                        white-space: normal;
+                    }
+
+                    &:last-child {
+                        // Status
+                        text-align: left;
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+
+        // User info button styling
+        .user-info-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px !important;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+            white-space: nowrap;
+            display: inline-block;
+
+            &:hover {
+                background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+            }
+
+            &:active {
+                transform: translateY(0);
+                box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+            }
+        }
+
+        // Blood info button styling
+        .blood-info-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px !important;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+            white-space: nowrap;
+            display: inline-block;
+
+            &:hover {
+                background: linear-gradient(135deg, #059669 0%, #047857 100%);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
+            }
+
+            &:active {
+                transform: translateY(0);
+                box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+            }
+        }
+
+        // User info cell styling
+        .user-info-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 12px;
+            line-height: 1.3;
+
+            .user-info-item {
+                display: flex;
+                align-items: flex-start;
+                gap: 4px;
+
+                strong {
+                    color: #495057;
+                    font-weight: 600;
+                    min-width: 50px;
+                    flex-shrink: 0;
+                }
+
+                span {
+                    color: #6c757d;
+                    word-break: break-word;
+                }
+            }
+        }
+
+        // Blood info cell styling
+        .blood-info-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 12px;
+            line-height: 1.3;
+
+            .blood-info-item {
+                display: flex;
+                align-items: flex-start;
+                gap: 4px;
+
+                strong {
+                    color: #10b981;
+                    font-weight: 600;
+                    min-width: 60px;
+                    flex-shrink: 0;
+                }
+
+                span {
+                    color: #6c757d;
+                    word-break: break-word;
+                }
+            }
+        }
+
+        // Special styling for status 4 and 5 tables (rejected/cancelled orders)
+        .status-4-5-table {
+            tbody td {
+                &:nth-child(5) {
+                    // Blood type column - make smaller
+                    min-width: 80px;
+                    max-width: 100px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                &:nth-child(6) {
+                    // Amount column - make smaller
+                    min-width: 80px;
+                    max-width: 100px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                &:nth-child(7) {
+                    // Reason column - make longer
+                    min-width: 300px;
+                    max-width: 400px;
+                    word-wrap: break-word;
+                    white-space: normal;
+                }
+            }
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px 20px !important;
+            color: #6c757d;
+            font-style: italic;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px dashed #dee2e6;
+        }
+    }
+
+    // Modal styling
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 20px;
+        backdrop-filter: blur(4px);
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease-out;
+
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 24px !important;
+                border-bottom: 1px solid #e9ecef;
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                border-radius: 12px 12px 0 0;
+
+                h3 {
+                    color: #495057;
+                    font-size: 20px;
+                    font-weight: 700;
+                    margin: 0;
+                }
+
+                .close-btn {
+                    background: none;
+                    border: none;
+                    font-size: 24px;
+                    color: #6c757d;
+                    cursor: pointer;
+                    padding: 4px !important;
+                    border-radius: 4px;
+                    transition: all 0.2s ease;
+                    width: 32px;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    &:hover {
+                        background: #e9ecef;
+                        color: #495057;
+                    }
+
+                    &:active {
+                        background: #dee2e6;
+                    }
+                }
+            }
+
+            .modal-body {
+                padding: 24px !important;
+
+                .user-info-grid {
+                    display: grid;
+                    gap: 16px;
+
+                    .info-item {
+                        display: flex;
+                        align-items: flex-start;
+                        gap: 12px;
+                        padding: 5px !important;
+                        background: #f8f9fa;
+                        border-radius: 8px;
+                        border-left: 4px solid #3b82f6;
+
+                        strong {
+                            color: #495057;
+                            font-weight: 600;
+                            min-width: 120px;
+                            flex-shrink: 0;
+                            font-size: 14px;
+                        }
+
+                        span {
+                            color: #6c757d;
+                            word-break: break-word;
+                            font-size: 14px;
+                            line-height: 1.4;
+                        }
+                    }
+                }
+
+                .blood-info-summary {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 16px !important;
+                    background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+                    border: 2px solid #28a745;
+                    border-radius: 8px;
+
+                    .summary-item {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        text-align: center;
+                        padding: 12px;
+                        background: rgba(255, 255, 255, 0.8);
+                        border-radius: 6px;
+                        border-left: 4px solid #28a745;
+
+                        strong {
+                            color: #155724;
+                            font-weight: 600;
+                            font-size: 0.8em;
+                            margin-bottom: 4px;
+                        }
+
+                        span {
+                            color: #155724;
+                            font-weight: 500;
+                            font-size: 0.8em;
+                        }
+                    }
+                }
+
+                .blood-info-grid {
+                    display: grid;
+                    gap: 16px;
+
+                    .info-item {
+                        display: flex;
+                        align-items: flex-start;
+                        gap: 12px;
+                        padding: 5px !important;
+                        background: #f0fdf4;
+                        border-radius: 8px;
+                        border-left: 4px solid #10b981;
+
+                        strong {
+                            color: #495057;
+                            font-weight: 600;
+                            min-width: 120px;
+                            flex-shrink: 0;
+                            font-size: 14px;
+                        }
+
+                        span {
+                            color: #6c757d;
+                            word-break: break-word;
+                            font-size: 14px;
+                            line-height: 1.4;
+                        }
+                    }
+                }
+
+                // Blood bags section styling
+                .blood-bags-section {
+                    margin-top: 24px !important;
+                    border-top: 2px solid #e9ecef;
+                    padding-top: 20px !important;
+
+                    h4 {
+                        color: #495057;
+                        font-size: 18px;
+                        font-weight: 700;
+                        margin-bottom: 16px !important;
+                        text-align: center;
+                    }
+
+                    .blood-bags-container {
+                        max-height: 300px;
+                        overflow-y: auto;
+                        border: 1px solid #e9ecef;
+                        border-radius: 8px;
+                        padding: 12px !important;
+                        background: #f8f9fa;
+
+                        // Custom scrollbar
+                        &::-webkit-scrollbar {
+                            width: 8px;
+                        }
+
+                        &::-webkit-scrollbar-track {
+                            background: #f1f1f1;
+                            border-radius: 4px;
+                        }
+
+                        &::-webkit-scrollbar-thumb {
+                            background: #c1c1c1;
+                            border-radius: 4px;
+
+                            &:hover {
+                                background: #a8a8a8;
+                            }
+                        }
+
+                        .blood-bag-item {
+                            background: white;
+                            border: 1px solid #dee2e6;
+                            border-radius: 8px;
+                            padding: 12px !important;
+                            margin-bottom: 4px !important;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                            transition: all 0.2s ease;
+
+                            &:last-child {
+                                margin-bottom: 0 !important;
+                            }
+
+                            &:hover {
+                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                                transform: translateY(-1px);
+                            }
+
+                            .bag-header {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-bottom: 8px !important;
+                                border-bottom: 1px solid #f1f3f4;
+
+                                .bag-id {
+                                    font-weight: 700;
+                                    color: #495057;
+                                    font-size: 14px;
+                                }
+
+                                .bag-number {
+                                    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                                    color: white;
+                                    padding: 4px 8px !important;
+                                    border-radius: 12px;
+                                    font-size: 12px;
+                                    font-weight: 600;
+                                    min-width: 32px;
+                                    text-align: center;
+                                }
+                            }
+
+                            .bag-details {
+                                display: grid;
+                                gap: 8px;
+
+                                .bag-detail-item {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 8px;
+
+                                    strong {
+                                        color: #495057;
+                                        font-weight: 600;
+                                        font-size: 13px;
+                                        min-width: 80px;
+                                        flex-shrink: 0;
+                                    }
+
+                                    span {
+                                        color: #6c757d;
+                                        font-size: 13px;
+
+                                        &.blood-type-badge {
+                                            background: linear-gradient(135deg, #26dc32 0%, #159631 100%);
+                                            color: white;
+                                            padding: 4px 8px !important;
+                                            border-radius: 6px;
+                                            font-weight: 600;
+                                            font-size: 12px;
+                                            text-transform: uppercase;
+                                            letter-spacing: 0.5px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Modal animation
+    @keyframes modalSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px) scale(0.95);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    // Status badges styling
+    .bg-yellow-500 {
+        background-color: #fbbf24 !important;
+    }
+
+    .bg-blue-500 {
+        background-color: #3b82f6 !important;
+    }
+
+    .bg-green-500 {
+        background-color: #10b981 !important;
+    }
+
+    .bg-red-600 {
+        background-color: #dc2626 !important;
+    }
+
+    .bg-red-400 {
+        background-color: #f87171 !important;
+    }
+
+    .bg-gray-400 {
+        background-color: #9ca3af !important;
+    }
+
+    // Order type styling
+    .order-type {
+        &.urgent {
+            background: linear-gradient(135deg, #ec4899 0%, #be185d 100%) !important;
+            box-shadow: 0 2px 4px rgba(236, 72, 153, 0.3);
+            animation: pulse-urgent 2s infinite;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        &.normal {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    // Pulse animation for urgent orders
+    @keyframes pulse-urgent {
+
+        0%,
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+    }
+
+    // Responsive design
+    @media (max-width: 1024px) {
+        width: calc(100vw - 120px);
+        padding: 16px !important;
+
+        .page-header h2 {
+            font-size: 28px;
+        }
+
+        .orders-container {
+            max-width: 1200px;
+        }
+
+        .filter-buttons {
+            max-width: 1200px;
+            gap: 10px;
+            margin-bottom: 25px !important;
+
+            .filter-btn {
+                padding: 10px 16px !important;
+                font-size: 13px;
+                min-width: 120px;
+
+                .count-badge {
+                    font-size: 11px;
+                    padding: 3px 6px !important;
+                }
+            }
+        }
+
+        .table-section {
+            padding: 20px !important;
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .order-table {
+                thead th {
+                    padding: 12px 8px !important;
+                    font-size: 13px;
+                }
+
+                tbody td {
+                    padding: 10px 8px !important;
+                    font-size: 13px;
+                }
+            }
+
+            .user-info-btn {
+                padding: 6px 12px !important;
+                font-size: 11px;
+            }
+
+            .blood-info-btn {
+                padding: 6px 12px !important;
+                font-size: 11px;
+            }
+        }
+
+        .modal-overlay {
+            padding: 16px;
+
+            .modal-content {
+                max-width: 500px;
+
+                .modal-header {
+                    padding: 16px 20px !important;
+
+                    h3 {
+                        font-size: 18px;
+                    }
+                }
+
+                .modal-body {
+                    padding: 20px !important;
+
+                    .user-info-grid {
+                        gap: 12px;
+
+                        .info-item {
+                            padding: 10px !important;
+
+                            strong {
+                                min-width: 100px;
+                                font-size: 13px;
+                            }
+
+                            span {
+                                font-size: 13px;
+                            }
+                        }
+                    }
+
+                    .blood-info-summary {
+                        gap: 12px;
+                        padding: 12px;
+
+                        .summary-item {
+                            padding: 10px;
+
+                            strong {
+                                font-size: 0.8em;
+                            }
+
+                            span {
+                                font-size: 1em;
+                            }
+                        }
+                    }
+
+                    .blood-info-grid {
+                        gap: 12px;
+
+                        .info-item {
+                            padding: 10px !important;
+
+                            strong {
+                                min-width: 100px;
+                                font-size: 13px;
+                            }
+
+                            span {
+                                font-size: 13px;
+                            }
+                        }
+                    }
+
+                    .blood-bags-section {
+                        margin-top: 20px !important;
+                        padding-top: 16px !important;
+
+                        h4 {
+                            font-size: 16px;
+                            margin-bottom: 12px !important;
+                        }
+
+                        .blood-bags-container {
+                            max-height: 250px;
+                            padding: 10px !important;
+
+                            .blood-bag-item {
+                                padding: 10px !important;
+                                margin-bottom: 6px !important;
+
+                                .bag-header {
+                                    margin-bottom: 6px !important;
+                                    padding-bottom: 6px !important;
+
+                                    .bag-id {
+                                        font-size: 13px;
+                                    }
+
+                                    .bag-number {
+                                        padding: 3px 6px !important;
+                                        font-size: 11px;
+                                        min-width: 28px;
+                                    }
+                                }
+
+                                .bag-details {
+                                    gap: 6px;
+
+                                    .bag-detail-item {
+                                        gap: 6px;
+
+                                        strong {
+                                            font-size: 12px;
+                                            min-width: 70px;
+                                        }
+
+                                        span {
+                                            font-size: 12px;
+
+                                            &.blood-type-badge {
+                                                padding: 3px 6px !important;
+                                                font-size: 11px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        width: calc(100vw - 80px);
+        padding: 12px !important;
+
+        .page-header h2 {
+            font-size: 24px;
+        }
+
+        .orders-container {
+            max-width: 1000px;
+        }
+
+        .filter-buttons {
+            max-width: 1000px;
+            gap: 8px;
+            margin-bottom: 20px !important;
+
+            .filter-btn {
+                padding: 8px 12px !important;
+                font-size: 12px;
+                min-width: 100px;
+
+                .count-badge {
+                    font-size: 10px;
+                    padding: 2px 5px !important;
+                    min-width: 20px;
+                }
+            }
+        }
+
+        .orders-container {
+            gap: 20px;
+        }
+
+        .table-section {
+            padding: 16px !important;
+
+            .section-title {
+                font-size: 16px;
+                margin-bottom: 16px !important;
+            }
+
+            .order-table {
+                thead th {
+                    padding: 10px 6px !important;
+                    font-size: 12px;
+                }
+
+                tbody td {
+                    padding: 8px 6px !important;
+                    font-size: 12px;
+                }
+            }
+
+            .user-info-btn {
+                padding: 5px 10px !important;
+                font-size: 10px;
+            }
+
+            .blood-info-btn {
+                padding: 5px 10px !important;
+                font-size: 10px;
+            }
+        }
+
+        .modal-overlay {
+            padding: 12px;
+
+            .modal-content {
+                max-width: 400px;
+
+                .modal-header {
+                    padding: 14px 16px !important;
+
+                    h3 {
+                        font-size: 16px;
+                    }
+
+                    .close-btn {
+                        font-size: 20px;
+                        width: 28px;
+                        height: 28px;
+                    }
+                }
+
+                .modal-body {
+                    padding: 16px !important;
+
+                    .user-info-grid {
+                        gap: 10px;
+
+                        .info-item {
+                            padding: 8px !important;
+                            flex-direction: column;
+                            gap: 4px;
+
+                            strong {
+                                min-width: auto;
+                                font-size: 12px;
+                            }
+
+                            span {
+                                font-size: 12px;
+                            }
+                        }
+                    }
+
+                    .blood-info-summary {
+                        flex-direction: column;
+                        gap: 8px;
+                        padding: 10px;
+
+                        .summary-item {
+                            padding: 8px;
+
+                            strong {
+                                font-size: 0.7em;
+                            }
+
+                            span {
+                                font-size: 0.9em;
+                            }
+                        }
+                    }
+
+                    .blood-info-grid {
+                        gap: 10px;
+
+                        .info-item {
+                            padding: 8px !important;
+                            flex-direction: column;
+                            gap: 4px;
+
+                            strong {
+                                min-width: auto;
+                                font-size: 12px;
+                            }
+
+                            span {
+                                font-size: 12px;
+                            }
+                        }
+                    }
+
+                    .blood-bags-section {
+                        margin-top: 16px !important;
+                        padding-top: 12px !important;
+
+                        h4 {
+                            font-size: 14px;
+                            margin-bottom: 8px !important;
+                        }
+
+                        .blood-bags-container {
+                            max-height: 200px;
+                            padding: 8px !important;
+
+                            .blood-bag-item {
+                                padding: 8px !important;
+                                margin-bottom: 4px !important;
+
+                                .bag-header {
+                                    margin-bottom: 4px !important;
+                                    padding-bottom: 4px !important;
+
+                                    .bag-id {
+                                        font-size: 12px;
+                                    }
+
+                                    .bag-number {
+                                        padding: 2px 4px !important;
+                                        font-size: 10px;
+                                        min-width: 24px;
+                                    }
+                                }
+
+                                .bag-details {
+                                    gap: 4px;
+
+                                    .bag-detail-item {
+                                        gap: 4px;
+
+                                        strong {
+                                            font-size: 11px;
+                                            min-width: 60px;
+                                        }
+
+                                        span {
+                                            font-size: 11px;
+
+                                            &.blood-type-badge {
+                                                padding: 2px 4px !important;
+                                                font-size: 10px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        width: calc(100vw - 40px);
+        padding: 8px !important;
+
+        .page-header h2 {
+            font-size: 20px;
+        }
+
+        .orders-container {
+            max-width: 800px;
+        }
+
+        .filter-buttons {
+            max-width: 800px;
+            gap: 6px;
+            margin-bottom: 15px !important;
+
+            .filter-btn {
+                padding: 6px 10px !important;
+                font-size: 11px;
+                min-width: 80px;
+
+                .count-badge {
+                    font-size: 9px;
+                    padding: 2px 4px !important;
+                    min-width: 18px;
+                }
+            }
+        }
+
+        .table-section {
+            padding: 12px !important;
+
+            .section-title {
+                font-size: 14px;
+            }
+
+            .order-table {
+                thead th {
+                    padding: 8px 4px !important;
+                    font-size: 11px;
+                }
+
+                tbody td {
+                    padding: 6px 4px !important;
+                    font-size: 11px;
+                }
+            }
+
+            .user-info-btn {
+                padding: 4px 8px !important;
+                font-size: 9px;
+            }
+
+            .blood-info-btn {
+                padding: 4px 8px !important;
+                font-size: 9px;
+            }
+        }
+
+        .modal-overlay {
+            padding: 8px;
+
+            .modal-content {
+                max-width: 320px;
+
+                .modal-header {
+                    padding: 12px 14px !important;
+
+                    h3 {
+                        font-size: 14px;
+                    }
+
+                    .close-btn {
+                        font-size: 18px;
+                        width: 24px;
+                        height: 24px;
+                    }
+                }
+
+                .modal-body {
+                    padding: 12px !important;
+
+                    .user-info-grid {
+                        gap: 8px;
+
+                        .info-item {
+                            padding: 6px !important;
+                            gap: 2px;
+
+                            strong {
+                                font-size: 11px;
+                            }
+
+                            span {
+                                font-size: 11px;
+                            }
+                        }
+                    }
+
+                    .blood-info-summary {
+                        gap: 6px;
+                        padding: 8px;
+
+                        .summary-item {
+                            padding: 6px;
+
+                            strong {
+                                font-size: 0.6em;
+                            }
+
+                            span {
+                                font-size: 0.8em;
+                            }
+                        }
+                    }
+
+                    .blood-info-grid {
+                        gap: 8px;
+
+                        .info-item {
+                            padding: 6px !important;
+                            gap: 2px;
+
+                            strong {
+                                font-size: 11px;
+                            }
+
+                            span {
+                                font-size: 11px;
+                            }
+                        }
+                    }
+
+                    .blood-bags-section {
+                        margin-top: 12px !important;
+                        padding-top: 8px !important;
+
+                        h4 {
+                            font-size: 12px;
+                            margin-bottom: 6px !important;
+                        }
+
+                        .blood-bags-container {
+                            max-height: 150px;
+                            padding: 6px !important;
+
+                            .blood-bag-item {
+                                padding: 6px !important;
+                                margin-bottom: 2px !important;
+
+                                .bag-header {
+                                    margin-bottom: 2px !important;
+                                    padding-bottom: 2px !important;
+
+                                    .bag-id {
+                                        font-size: 11px;
+                                    }
+
+                                    .bag-number {
+                                        padding: 1px 2px !important;
+                                        font-size: 9px;
+                                        min-width: 20px;
+                                    }
+                                }
+
+                                .bag-details {
+                                    gap: 2px;
+
+                                    .bag-detail-item {
+                                        gap: 2px;
+
+                                        strong {
+                                            font-size: 10px;
+                                            min-width: 50px;
+                                        }
+
+                                        span {
+                                            font-size: 10px;
+
+                                            &.blood-type-badge {
+                                                padding: 1px 2px !important;
+                                                font-size: 9px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.modal-header-for-blood {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px !important;
+    border-bottom: 1px solid #e9ecef;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    border-radius: 12px 12px 0 0;
+
+    h3 {
+        color: #f5f5f5;
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: #6c757d;
+        cursor: pointer;
+        padding: 4px !important;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        &:active {
+            background: #dee2e6;
+        }
+    }
+}
+
+.modal-header-for-user{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px !important;
+    border-bottom: 1px solid #e9ecef;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border-radius: 12px 12px 0 0;
+
+    h3 {
+        color: #f5f5f5;
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: #6c757d;
+        cursor: pointer;
+        padding: 4px !important;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        &:active {
+            background: #dee2e6;
+        }
+    }
+}

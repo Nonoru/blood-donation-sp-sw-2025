@@ -1,21 +1,18 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { getUserId } from '../../../../util/Token'
 import * as UserApi from '../../services/UserApi';
 import '../../styles/DonateBlood.scss';
+
 const form = {
   fullName: '',
   dob: '',
   gender: '',
-  weight: '',
-  amountBloodMl: '',
   cccdNumber: '',
   phone: '',
   address: '',
-  bloodId: '',
-  userId: '',
   orderDateId: '',
 }
+
 const DonateBlood = () => {
   const [formData, setFormData] = useState(form);
   const handleChange = (e) => {
@@ -30,7 +27,6 @@ const DonateBlood = () => {
       return
     }
     try {
-      formData.userId = getUserId();
       formData.orderDateId = chooseOrderDate.orderDateId;
       const response = await UserApi.orderDonation(formData);
       if (response.data.code === 200) {
@@ -38,12 +34,9 @@ const DonateBlood = () => {
           fullName: '',
           dob: '',
           gender: '',
-          weight: '',
-          amountBloodMl: '',
           cccdNumber: '',
           phone: '',
           address: '',
-          bloodId: '',
           orderDateId: '',
         })
         setFormState(prev => !prev)
@@ -117,121 +110,209 @@ const DonateBlood = () => {
       </div>
       <div className="donate-form-section">
         {/* FORM điền thông tin */}
-        <form className={`donate-blood-form ${formState ? 'show' : 'hidden'}`} onSubmit={e => handleSubmit(e)}>
-          <fieldset>
-            <div className='form-title'>
-              <legend>Thông tin cá nhân</legend>
-              <div className='form-schedule'>
-                <div>
-                  <span>Ngày : {chooseOrderDate.orderDate}</span>
+        <form className={`donate-blood-form enhanced-form ${formState ? 'show' : 'hidden'}`} onSubmit={e => handleSubmit(e)}>
+          <div className="form-header">
+            <div className="form-title-section">
+              <h3 className="form-main-title">
+                <span className="form-icon">📋</span>
+                Thông tin cá nhân
+              </h3>
+              <div className="form-schedule-info">
+                <div className="schedule-item">
+                  <span className="schedule-label">📅 Ngày:</span>
+                  <span className="schedule-value">{chooseOrderDate.orderDate}</span>
                 </div>
-                <div>
-                  <span>Giờ : {chooseOrderDate.orderTime}</span>
+                <div className="schedule-item">
+                  <span className="schedule-label">🕐 Giờ:</span>
+                  <span className="schedule-value">{chooseOrderDate.orderTime}</span>
+                </div>
+                <div className="schedule-item">
+                  <span className="schedule-label">🏥 Phòng khám:</span>
+                  <span className="schedule-value">{chooseOrderDate.clinicName}</span>
                 </div>
               </div>
-              <button type="none" className="close-btn" onClick={e => openForm([])}> </button>
             </div>
-            <div className="form-row">
+            <button type="button" className="close-btn enhanced-close" onClick={e => openForm([])}>
+              <span className="close-icon">×</span>
+            </button>
+          </div>
+          
+          <div className="form-content">
+            <div className="form-row enhanced-row">
               {/* FULLNAME */}
-              <label>
-                <span className="label-row">Họ và tên <span>*</span></span>
-                <input name="fullName" value={formData.fullName} onChange={e => handleChange(e)} required />
-              </label>
+              <div className="form-field-group">
+                <label className="enhanced-label">
+                  <span className="label-text">
+                    <span className="field-icon">👤</span>
+                    Họ và tên <span className="required-mark">*</span>
+                  </span>
+                  <input 
+                    name="fullName" 
+                    value={formData.fullName} 
+                    onChange={e => handleChange(e)} 
+                    className="enhanced-input"
+                    placeholder="Nhập họ và tên đầy đủ"
+                    required 
+                  />
+                </label>
+              </div>
 
               {/* DOB */}
-              <label>
-                <span className="label-row">Ngày sinh <span>*</span></span>
-                <input type="date" name="dob" value={formData.dob} onChange={e => handleChange(e)} required />
-              </label>
+              <div className="form-field-group">
+                <label className="enhanced-label">
+                  <span className="label-text">
+                    <span className="field-icon">🎂</span>
+                    Ngày sinh <span className="required-mark">*</span>
+                  </span>
+                  <input 
+                    type="date" 
+                    name="dob" 
+                    value={formData.dob} 
+                    onChange={e => handleChange(e)} 
+                    className="enhanced-input"
+                    required 
+                  />
+                </label>
+              </div>
 
               {/* GENDER */}
-              <label>
-                <span className="label-row">Giới tính <span>*</span></span>
-                <select name="gender" value={formData.gender} onChange={e => handleChange(e)} required>
-                  <option disabled value="" selected>Chọn giới tính</option>
-                  <option value="1">Nam</option>
-                  <option value="2">Nữ</option>
-                </select>
-              </label>
-              {/* WEIGHT */}
-              <label>
-                <span className='label-row'>Cân nặng<span>*</span></span>
-                <input type="number" value={formData.weight} name="weight" min="1" max="200" step="0.1" onChange={e => handleChange(e)} required />
-              </label>
-              {/* BLOOD TYPE */}
-              <label>
-                <span className="label-row">Nhóm máu <span> *</span></span>
-                <select name="bloodId" value={formData.bloodId} onChange={e => handleChange(e)} required>
-                  <option disabled value="" selected>Chọn nhóm máu</option>
-                  <option value="1">A+</option>
-                  <option value="2">A-</option>
-                  <option value="3">B+</option>
-                  <option value="4">B-</option>
-                  <option value="5">AB+</option>
-                  <option value="6">AB-</option>
-                  <option value="7">O+</option>
-                  <option value="8">O-</option>
-                </select>
-              </label>
-
-              {/* BLOOD AMOUNT */}
-              <label><span className="label-row">Lượng máu sẽ hiến (ml)<span> *</span></span>
-                <input type="number" name="amountBloodMl" value={formData.amountBloodMl} step="10" onChange={e => handleChange(e)} required />
-              </label>
+              <div className="form-field-group">
+                <label className="enhanced-label">
+                  <span className="label-text">
+                    <span className="field-icon">⚧</span>
+                    Giới tính <span className="required-mark">*</span>
+                  </span>
+                  <select 
+                    name="gender" 
+                    value={formData.gender} 
+                    onChange={e => handleChange(e)} 
+                    className="enhanced-select"
+                    required
+                  >
+                    <option value="" disabled>Chọn giới tính</option>
+                    <option value="1">Nam</option>
+                    <option value="2">Nữ</option>
+                  </select>
+                </label>
+              </div>
 
               {/* CMND */}
-              <label><span className="label-row">Số CCCD <span> *</span></span>
-                <input name="cccdNumber" value={formData.cccdNumber} onChange={e => handleChange(e)} required />
-              </label>
+              <div className="form-field-group">
+                <label className="enhanced-label">
+                  <span className="label-text">
+                    <span className="field-icon">🆔</span>
+                    Số CCCD <span className="required-mark">*</span>
+                  </span>
+                  <input 
+                    name="cccdNumber" 
+                    value={formData.cccdNumber} 
+                    onChange={e => handleChange(e)} 
+                    className="enhanced-input"
+                    placeholder="Nhập số CCCD"
+                    required 
+                  />
+                </label>
+              </div>
 
               {/* NUMBER PHONE */}
-              <label><span className="label-row">Số điện thoại <span> *</span></span>
-                <input name="phone" value={formData.phone} onChange={e => handleChange(e)} required />
-              </label>
+              <div className="form-field-group">
+                <label className="enhanced-label">
+                  <span className="label-text">
+                    <span className="field-icon">📱</span>
+                    Số điện thoại <span className="required-mark">*</span>
+                  </span>
+                  <input 
+                    name="phone" 
+                    value={formData.phone} 
+                    onChange={e => handleChange(e)} 
+                    className="enhanced-input"
+                    placeholder="Nhập số điện thoại"
+                    required 
+                  />
+                </label>
+              </div>
 
               {/* ADDRESS */}
-              <label><span className="label-row">Địa chỉ thường trú<span> *</span></span>
-                <input name="address" value={formData.address} onChange={e => handleChange(e)} required />
-              </label>
-            </div>
-          </fieldset>
-          <div className="form-row agree-row">
-            <div className="agree-label">
-              <input type="checkbox" name="agree" onClick={e => setAgreeForTruth(!agreeForTruth)} />
-              Tôi cam kết các thông tin trên là đúng sự thật và tự nguyện đăng ký hiến máu.
+              <div className="form-field-group">
+                <label className="enhanced-label">
+                  <span className="label-text">
+                    <span className="field-icon">📍</span>
+                    Địa chỉ thường trú <span className="required-mark">*</span>
+                  </span>
+                  <input 
+                    name="address" 
+                    value={formData.address} 
+                    onChange={e => handleChange(e)} 
+                    className="enhanced-input"
+                    placeholder="Nhập địa chỉ đầy đủ"
+                    required 
+                  />
+                </label>
+              </div>
             </div>
           </div>
 
-          <button type="submit" className="submit-btn">Gửi đăng ký</button>
+          <div className="form-footer">
+            <div className="agree-section">
+              <label className="enhanced-checkbox">
+                <input 
+                  type="checkbox" 
+                  name="agree" 
+                  checked={agreeForTruth}
+                  onChange={e => setAgreeForTruth(e.target.checked)} 
+                  className="checkbox-input"
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checkbox-text">
+                  Tôi cam kết các thông tin trên là đúng sự thật và tự nguyện đăng ký hiến máu.
+                </span>
+              </label>
+            </div>
+
+            <button type="submit" className="submit-btn enhanced-submit">
+              <span className="submit-icon">📤</span>
+              <span className="submit-text">Gửi đăng ký</span>
+            </button>
+          </div>
         </form>
 
-        <div className={`order ${!formState ? 'show' : 'hidden'}`}>
-          <h2>Các mốc thời gian đặt lịch hiến máu</h2>
-          <div className='order-date'>
+        <div className={`order enhanced-order ${!formState ? 'show' : 'hidden'}`}>
+          <h2 className="order-title">
+            <span className="title-icon">📅</span>
+            Các mốc thời gian đặt lịch hiến máu
+          </h2>
+          <div className='order-date enhanced-order-grid'>
             {listDate.map((item, index) => (
-              <div key={index} className={`order-date-ele`} onClick={e => openForm(item)}>
-                <div>
-                  <span>Mã</span>
-                  {item.orderDateId}
+              <div key={index} className={`order-date-ele enhanced-card`} onClick={e => openForm(item)}>
+                <div className="card-header">
+                  <span className="card-badge">Lịch #{index + 1}</span>
                 </div>
-                <div>
-                  <span>Ngày</span>
-                  {item.orderDate}
-                </div>
-                <div>
-                  <span>Thời gian</span>
-                  {item.orderTime}
-                </div>
-                <div>
-                  <span>Số lượng người tham gia</span>
-                  {item.numberOfPeople}
+                <div className="card-content">
+                  <div className="info-grid">
+                    <div className="info-item">
+                      <span>📅 NGÀY</span>
+                      <span>{item.orderDate}</span>
+                    </div>
+                    <div className="info-item">
+                      <span>🕐 THỜI GIAN</span>
+                      <span>{item.orderTime}</span>
+                    </div>
+                    <div className="info-item">
+                      <span>🏥 PHÒNG KHÁM</span>
+                      <span>{item.clinicName}</span>
+                    </div>
+                    <div className="info-item">
+                      <span>👥 SỐ LƯỢNG</span>
+                      <span>{item.numberOfPeople} người</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+        
       </div>
-
     </div>
   );
 };

@@ -4,9 +4,6 @@ import * as UserApi from '../../services/UserApi'
 import { toast } from 'react-toastify';
 import '../../styles/OrderHistory.scss';
 
-const receiveHistory = [
-  { id: 1, date: '05-05-2025', hospital: 'Bệnh viện C', status: 'Đã nhận', amount: '250ml' },
-];
 
 const tabs = [
   { key: 'donate', label: 'Lịch sử hiến máu' },
@@ -15,6 +12,8 @@ const tabs = [
 
 const OrderHistory = () => {
   const [activeTab, setActiveTab] = useState('donate');
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: '', content: '' });
 
   const [listOrderDonateHistory, setListOrderDonateHistory] = useState([])
   const getListDonate = async () => {
@@ -73,18 +72,79 @@ const OrderHistory = () => {
     getListDonate();
     getListReceive();
   }, []);
-  const renderStatusDiv = (statusCode) => {
+
+  const openModal = (title, content) => {
+    setModalContent({ title, content });
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const renderModalContent = (title, content) => {
+    if (title === 'Thông tin người nhận') {
+      const lines = content.split('\n');
+      return (
+        <div className="modal-info-grid">
+          {lines.map((line, index) => {
+            const [label, value] = line.split(': ');
+            return (
+              <div key={index} className="modal-info-item">
+                <div className="info-label">{label}:</div>
+                <div className="info-value">{value}</div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    } else if (title === 'Thông tin thời gian') {
+      const lines = content.split('\n');
+      return (
+        <div className="modal-info-grid">
+          {lines.map((line, index) => {
+            const [label, value] = line.split(': ');
+            return (
+              <div key={index} className="modal-info-item time-info">
+                <div className="info-label">{label}:</div>
+                <div className="info-value">{value}</div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+    return <pre className="modal-text">{content}</pre>;
+  };
+
+  const renderStatusDivForDonate = (statusCode) => {
     switch (statusCode) {
       case 1:
-        return <div className="bg-yellow-500 text-white px-2 py-1 rounded font-semibold">Chờ xác nhận</div>;
+        return <div className="bg-yellow-500 text-white px-2 py-1 rounded font-semibold">Đang chờ duyệt</div>;
       case 2:
-        return <div className="bg-blue-500 text-white px-2 py-1 rounded font-semibold">Đã xác nhận</div>;
+        return <div className="bg-blue-500 text-white px-2 py-1 rounded font-semibold">Trong giai đoạn hiến máu</div>;
       case 3:
-        return <div className="bg-green-500 text-white px-2 py-1 rounded font-semibold">Đã hoàn tất</div>;
+        return <div className="bg-green-500 text-white px-2 py-1 rounded font-semibold">Đã được hoàn tất</div>;
       case 4:
-        return <div className="bg-red-600 text-white px-2 py-1 rounded font-semibold">Đã từ chối đơn</div>;
+        return <div className="bg-red-600 text-white px-2 py-1 rounded font-semibold">Đã bị từ chối</div>;
       case 5:
-        return <div className="bg-red-400 text-white px-2 py-1 rounded font-semibold">Đã hủy đơn</div>;
+        return <div className="bg-red-400 text-white px-2 py-1 rounded font-semibold">Đã bị hủy đơn</div>;
+      default:
+        return <div className="bg-gray-400 text-white px-2 py-1 rounded font-semibold">Không xác định</div>;
+    }
+  };
+  const renderStatusDivForReceive = (statusCode) => {
+    switch (statusCode) {
+      case 1:
+        return <div className="bg-yellow-500 text-white px-2 py-1 rounded font-semibold">Đang chờ duyệt</div>;
+      case 2:
+        return <div className="bg-blue-500 text-white px-2 py-1 rounded font-semibold">Giai đoạn vận chuyển máu</div>;
+      case 3:
+        return <div className="bg-green-500 text-white px-2 py-1 rounded font-semibold">Đã được hoàn tất</div>;
+      case 4:
+        return <div className="bg-red-600 text-white px-2 py-1 rounded font-semibold">Đã bị từ chối</div>;
+      case 5:
+        return <div className="bg-red-400 text-white px-2 py-1 rounded font-semibold">Đã bị hủy đơn</div>;
       default:
         return <div className="bg-gray-400 text-white px-2 py-1 rounded font-semibold">Không xác định</div>;
     }
@@ -98,6 +158,20 @@ const OrderHistory = () => {
     const month = String(date.getMonth() + 1).padStart(2, '0'); // MM
     const year = date.getFullYear();                         // yyyy
     return `${day}/${month}/${year}`;
+  }
+
+  const formatBloodType = (bloodType) => {
+    if (!bloodType || bloodType === '' || bloodType === null) {
+      return <span className="text-gray-500 italic">Chưa biết</span>;
+    }
+    return <span className="font-semibold text-blue-600">{bloodType}</span>;
+  }
+
+  const formatDonationAmount = (amount) => {
+    if (!amount || amount === 0 || amount === null) {
+      return <span className="text-gray-500 italic">Chưa biết</span>;
+    }
+    return <span className="font-semibold text-green-600">{amount} ml</span>;
   }
   return (
     <div className="order-history-page">
@@ -114,7 +188,7 @@ const OrderHistory = () => {
           </div>
         </div>
       </div>
-      <h2 className="order-title">Xem Lịch Sử Đơn Hàng</h2>
+      <h2 className="order-title">Xem Lịch Sử Các Đơn Và Các Yêu Cầu</h2>
       <div className="order-tabs">
         {tabs.map(tab => (
           <button
@@ -128,17 +202,18 @@ const OrderHistory = () => {
       </div>
       <div className="order-tab-content">
         {activeTab === 'donate' && (
-          <table className="order-table">
+          <table className="order-table order-table-donation">
             <thead>
               <tr>
                 <th>Mã đơn</th>
                 <th>Họ tên</th>
                 <th>Ngày tạo</th>
-                <th>Loại máu</th>
-                <th>Số lượng</th>
                 <th>Ngày hiến</th>
+                <th>Khung giờ hiến</th>
                 <th>Phòng khám</th>
                 <th>Trạng thái</th>
+                <th>Loại máu</th>
+                <th>Lượng máu (ml)</th>
                 <th>Lý do bị hủy</th>
               </tr>
             </thead>
@@ -147,48 +222,56 @@ const OrderHistory = () => {
                 <tr key={item.id}>
                   <td>{item.orderDonationId}</td>
                   <td>{item.fullName}</td>
-                  <td>{item.createDate}</td>
-                  <td>{item.bloodType}</td>
-                  <td>{item.amountBloodMl}</td>
-                  <td>{item.donateDate}</td>
-                  <td>{item.clinicName}</td>
+                  <td>{item.createDate ? formatDate(item.createDate) : <span className="text-gray-400">-</span>}</td>
+                  <td>{item.appointmentDate ? formatDate(item.appointmentDate) : <span className="text-gray-400">-</span>}</td>
+                  <td>{item.appointmentTime || <span className="text-gray-400">-</span>}</td>
+                  <td>{item.clinicName || <span className="text-gray-400">-</span>}</td>
                   <td id='status-row'>
                     <div className='status-code'>
-                      {renderStatusDiv(item.statusCode)}
-                    </div></td>
-                  <td>{item.reason}</td>
+                      {renderStatusDivForDonate(item.statusCode)}
+                    </div>
+                  </td>
+                  <td>{formatBloodType(item.bloodType)}</td>
+                  <td>{formatDonationAmount(item.donationAmount)}</td>
+                  <td>{item.reason || <span className="text-gray-400">-</span>}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         )}
         {activeTab === 'receive' && (
-          <table className="order-table">
+          <table className="order-table order-table-receive">
             <thead>
               <tr>
                 <th>Mã đơn</th>
                 <th>Họ tên</th>
-                <th>Ngày tạo</th>
                 <th>Loại máu</th>
-                <th>Số lượng</th>
-                <th>Lý do</th>
-                <th>Địa điểm nhận máu</th>
+                <th>Lượng máu(ml)</th>
+                <th>Thông tin người nhận</th>
                 <th>Loại đơn</th>
                 <th>Trạng thái</th>
                 <th>Lý do bị hủy</th>
-                <th>Ngày hoàn tất</th>
+                <th>Mục thời gian</th>
               </tr>
             </thead>
             <tbody>
               {listOrderReceiveHistory.map((item, idx) => (
                 <tr key={item.id}>
-                  <td>{item.orderId + 1}</td>
+                  <td>{item.orderReceivingId}</td>
                   <td>{item.fullName}</td>
-                  <td>{formatDate(item.createDate)}</td>
-                  <td>{item.bloodType}</td>
-                  <td>{item.amountBloodMl}</td>
-                  <td>{item.reason}</td>
-                  <td>{item.clinicName}</td>
+                  <td>{formatBloodType(item.bloodType)}</td>
+                  <td>{formatDonationAmount(item.amountBloodMl)}</td>
+                  <td>
+                    <button
+                      className="info-btn recipient-info-btn"
+                      onClick={() => {
+                        const info = `Số điện thoại: ${item.phone || 'Chưa có'}\nCCCD: ${item.cccdNumber || 'Chưa có'}\nĐịa chỉ: ${item.address || 'Chưa có'}\nLý do: ${item.userReason || 'Chưa có'}`;
+                        openModal('Thông tin người nhận', info);
+                      }}
+                    >
+                      Xem thông tin
+                    </button>
+                  </td>
                   <td>
                     {item.type === 'normal' ?
                       <span className='bg-green-100 text-green-700 px-2 py-1 rounded-full'>Bình thường</span>
@@ -198,16 +281,47 @@ const OrderHistory = () => {
                   </td>
                   <td id='status-row'>
                     <div className='status-code' >
-                      {renderStatusDiv(item.status)}
-                    </div></td>
-                  <td>{item.reasonCancel}</td>
-                  <td>{formatDate(item.doneDate)}</td>
+                      {renderStatusDivForReceive(item.status)}
+                    </div>
+                  </td>
+                  <td>{item.cancelReason || <span className="text-gray-400">-</span>}</td>
+                  <td>
+                    <button
+                      className="info-btn time-info-btn"
+                      onClick={() => {
+                        const createDate = item.createDate ? formatDate(item.createDate) : 'Chưa có';
+                        const estimateDate = item.estimateDate ? formatDate(item.estimateDate) : 'Chưa có';
+                        const doneDate = item.doneDate ? formatDate(item.doneDate) : 'Chưa hoàn tất';
+                        const info = `Ngày tạo: ${createDate}\nNgày dự kiến: ${estimateDate}\nNgày hoàn tất: ${doneDate}`;
+                        openModal('Thông tin thời gian', info);
+                      }}
+                    >
+                      Xem thời gian
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         )}
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className={`modal-header ${modalContent.title === 'Thông tin thời gian' ? 'time-info' : 'recipient-info'}`}>
+              <h3 className="modal-title">{modalContent.title}</h3>
+              <button className="modal-close-btn" onClick={closeModal}>
+                ✕
+              </button>
+            </div>
+            <div className="modal-body">
+              {renderModalContent(modalContent.title, modalContent.content)}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

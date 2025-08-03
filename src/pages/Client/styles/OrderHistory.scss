@@ -150,6 +150,7 @@
     justify-content: flex-start;
   }
 
+  // Base table styles
   .order-table {
     width: 100%;
     border-collapse: collapse;
@@ -158,7 +159,6 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 12px rgba(182,59,59,0.07);
-
 
     th, td {
       padding: 12px 10px !important;
@@ -191,7 +191,324 @@
       background: #fff6f6;
     }
   }
+
+  // Donation table specific styles
+  .order-table-donation {
+    th:nth-child(1), td:nth-child(1) { // Mã đơn
+      width: 80px;
+      max-width: 80px;
+    }
+
+    th:nth-child(2), td:nth-child(2) { // Họ tên
+      width: 120px;
+      max-width: 120px;
+    }
+
+    th:nth-child(3), td:nth-child(3) { // Ngày tạo
+      width: 100px;
+      max-width: 100px;
+    }
+
+    th:nth-child(4), td:nth-child(4) { // Ngày hiến
+      width: 100px;
+      max-width: 100px;
+    }
+
+    th:nth-child(5), td:nth-child(5) { // Khung giờ hiến
+      width: 120px;
+      max-width: 120px;
+    }
+
+    th:nth-child(6), td:nth-child(6) { // Phòng khám
+      width: 120px;
+      max-width: 120px;
+    }
+
+    th:nth-child(7), td:nth-child(7) { // Trạng thái
+      width: 180px;
+      max-width: 180px;
+    }
+
+    th:nth-child(8), td:nth-child(8) { // Loại máu
+      width: 80px;
+      max-width: 80px;
+    }
+
+    th:nth-child(9), td:nth-child(9) { // Lượng máu
+      width: 100px;
+      max-width: 100px;
+    }
+
+    th:nth-child(10), td:nth-child(10) { // Lý do bị hủy
+      width: 200px;
+      max-width: 200px;
+    }
+  }
+
+  // Receive table specific styles
+  .order-table-receive {
+    th:nth-child(1), td:nth-child(1) { // Mã đơn
+      width: 80px;
+      max-width: 80px;
+    }
+
+    th:nth-child(2), td:nth-child(2) { // Họ tên
+      width: 120px;
+      max-width: 120px;
+    }
+
+    th:nth-child(3), td:nth-child(3) { // Loại máu
+      width: 80px;
+      max-width: 80px;
+    }
+
+    th:nth-child(4), td:nth-child(4) { // Lượng máu
+      width: 100px;
+      max-width: 100px;
+    }
+
+    th:nth-child(5), td:nth-child(5) { // Thông tin người nhận
+      width: 120px;
+      max-width: 120px;
+    }
+
+    th:nth-child(6), td:nth-child(6) { // Loại đơn
+      width: 100px;
+      max-width: 100px;
+    }
+
+    th:nth-child(7), td:nth-child(7) { // Trạng thái
+      width: 180px;
+      max-width: 180px;
+    }
+
+    th:nth-child(8), td:nth-child(8) { // Lý do bị hủy
+      width: 200px;
+      max-width: 200px;
+    }
+
+    th:nth-child(9), td:nth-child(9) { // Mục thời gian
+      width: 120px;
+      max-width: 120px;
+    }
+  }
+
   #status-row{
-    width: 150px;
+    width: 180px;
+  }
+
+  // Info buttons styling
+  .info-btn {
+    background: linear-gradient(135deg, #B63B3B, #ff6b6b);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px !important;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(182, 59, 59, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, #a03535, #e55a5a);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(182, 59, 59, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(182, 59, 59, 0.2);
+    }
+  }
+
+  .recipient-info-btn {
+    background: linear-gradient(135deg, #ff6b6b, #ff4d4d);
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, #ff5555, #ff3333);
+      box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+    }
+
+    &:active {
+      box-shadow: 0 2px 6px rgba(255, 107, 107, 0.2);
+    }
+  }
+
+  .time-info-btn {
+    background: linear-gradient(135deg, #2196F3, #42A5F5);
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, #1E88E5, #3B9DE5);
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+    }
+
+    &:active {
+      box-shadow: 0 2px 6px rgba(33, 150, 243, 0.2);
+    }
+  }
+
+  // Modal styling
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow: hidden;
+    animation: modalSlideIn 0.3s ease-out;
+  }
+
+  .modal-header {
+    color: white;
+    padding: 20px 24px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  // Modal header for recipient info - red theme
+  .modal-header.recipient-info {
+    background: linear-gradient(135deg, #ff6b6b, #ff4d4d);
+  }
+
+  // Modal header for time info - blue theme
+  .modal-header.time-info {
+    background: linear-gradient(135deg, #2196F3, #42A5F5);
+  }
+
+  .modal-title {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .modal-close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 4px 8px !important;
+    border-radius: 4px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  .modal-body {
+    padding: 24px !important;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  .modal-text {
+    margin: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #333;
+    white-space: pre-line;
+    
+    // Style for each line of information
+    &::before {
+      content: '';
+      display: block;
+      margin-bottom: 8px;
+    }
+  }
+
+  // Custom styling for modal content
+  .modal-info-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 16px !important;
+    padding: 12px 16px !important;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #B63B3B;
+    
+    .info-label {
+      font-weight: 700;
+      color: #B63B3B;
+      min-width: 120px;
+      margin-right: 12px !important;
+      font-size: 1rem;
+    }
+    
+    .info-value {
+      font-weight: 500;
+      color: #333;
+      flex: 1;
+      font-size: 1rem;
+      word-break: break-word;
+    }
+  }
+
+  // Time info modal styling - blue theme
+  .modal-info-item.time-info {
+    border-left: 4px solid #2196F3;
+    
+    .info-label {
+      color: #2196F3;
+    }
+  }
+
+  .modal-info-grid {
+    display: grid;
+    gap: 12px;
+    
+    .modal-info-item {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  // Animation for modal
+  @keyframes modalSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-50px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  // Pulse animation for decoration circle
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
 }

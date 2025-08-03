@@ -2,9 +2,32 @@ import { useState, useEffect } from 'react';
 import * as StaffApi from '../services/StaffApi'
 import { toast } from 'react-toastify';
 import "../styles/OrderDateDonation.scss"
+
 function OrderDateDonation() {
     const [orderDateInfo, setOrderDateInfo] = useState([])
     const [clinicInfo, setClinicInfo] = useState([])
+    
+    // Group data by date and sort by time
+    const groupByDate = (data) => {
+        const grouped = {};
+        data.forEach(item => {
+            const date = item.orderDate;
+            if (!grouped[date]) {
+                grouped[date] = [];
+            }
+            grouped[date].push(item);
+        });
+        
+        // Sort each date group by time (earliest to latest)
+        Object.keys(grouped).forEach(date => {
+            grouped[date].sort((a, b) => {
+                return a.orderTime.localeCompare(b.orderTime);
+            });
+        });
+        
+        return grouped;
+    };
+
     const getList = async () => {
         const execute = async () => {
             try {
@@ -53,6 +76,7 @@ function OrderDateDonation() {
     useEffect(() => {
         getList();
     }, []);
+    
     const [stateAddBtn, setStateAddBtn] = useState(false)
     const clickAddBtn = async () => {
         const res = await StaffApi.getClinics();
@@ -63,11 +87,13 @@ function OrderDateDonation() {
         setClinicInfo(clinicList);
         setStateAddBtn(prev => !prev)
     }
+    
     const [formDate, setFormDate] = useState({
         orderDate: '',
         orderTime: '',
         clinicId: ''
     })
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormDate(prev => ({
@@ -75,6 +101,7 @@ function OrderDateDonation() {
             [name]: name === "clinicId" ? parseInt(value, 10) : value
         }));
     }
+    
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
@@ -105,17 +132,22 @@ function OrderDateDonation() {
             }
         }
     }
+
+    const groupedData = groupByDate(orderDateInfo);
+    const sortedDates = Object.keys(groupedData).sort();
+
     return (
         <div className="clinic-page">
-            <div className='count-order'>
-                <span>Tổng số ngày hẹn</span>
-                <span>{orderDateInfo.length}</span>
+            <div className="header-section">
+                {/* CREATE */}
+                <div className="schedule-list">
+                    <h3>Danh sách lịch khám</h3>
+                </div>
+                <button className="add-btn btn" onClick={clickAddBtn}>
+                    <img src="/img/icons/add.svg"></img>
+                    <span>Thêm thời gian</span>
+                </button>
             </div>
-            {/* CREATE */}
-            <button className="add-btn btn" onClick={clickAddBtn}>
-                <img src="/img/icons/add.svg"></img>
-                <span>Thêm thời gian</span>
-            </button>
 
             <div className={`create-date-container ${stateAddBtn ? 'show' : 'hidden'}`}>
                 <h2>Tạo lịch khám mới</h2>
@@ -145,32 +177,54 @@ function OrderDateDonation() {
                 </button>
             </div>
 
-            <div>
-                <p>Danh sách lịch khám</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Mã</th>
-                            <th>Ngày khám</th>
-                            <th>Thời gian khám</th>
-                            <th>Phòng khám</th>
-                            <th>Số lượng người khám</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {orderDateInfo.map((item, index) => (
-                            <tr key={index}>
-                                <th>{item.orderDateId}</th>
-                                <th>{item.orderDate}</th>
-                                <th>{item.orderTime}</th>
-                                <th>{item.clinic.clinicName}</th>
-                                <th>{item.numberOfPeople}</th>
-                            </tr>
+            <div className="schedule-content">
+                {sortedDates.length === 0 ? (
+                    <div className="no-data">
+                        <p>Chưa có lịch khám nào</p>
+                    </div>
+                ) : (
+                    <div className="date-groups">
+                        {sortedDates.map((date, dateIndex) => (
+                            <div key={dateIndex} className="date-group">
+                                <div className="date-header">
+                                    <h4>📅 Ngày: {date}</h4>
+                                    <span className="schedule-count">
+                                        {groupedData[date].length} lịch khám
+                                    </span>
+                                </div>
+                                
+                                <div className="schedule-cards">
+                                    {groupedData[date].map((item, itemIndex) => (
+                                        <div key={itemIndex} className="schedule-card">
+                                            <div className="card-header">
+                                                <span className="schedule-id">Khung giờ #{itemIndex + 1}</span>
+                                            </div>
+                                            <div className="card-content">
+                                                <div className="info-grid">
+                                                    <div className="info-item">
+                                                        <span className="label">🕐 Thời gian</span>
+                                                        <span className="value">{item.orderTime}</span>
+                                                    </div>
+                                                    <div className="info-item">
+                                                        <span className="label">🏥 Phòng khám</span>
+                                                        <span className="value">{item.clinicName}</span>
+                                                    </div>
+                                                    <div className="info-item">
+                                                        <span className="label">👥 Số lượng</span>
+                                                        <span className="value">{item.numberOfPeople} người</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         ))}
-                    </tbody>
-                </table>
+                    </div>
+                )}
             </div>
         </div>
     )
 }
+
 export default OrderDateDonation
