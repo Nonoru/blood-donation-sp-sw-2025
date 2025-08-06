@@ -154,6 +154,7 @@ public class OrderBloodDonationService {
                  .orderBloodDonation(orBD)
                  .build();
 
+         newBloodBag.setExisted(true);
          bloodBagRepo.save(newBloodBag);
 
          orBD.setBlood(blood);

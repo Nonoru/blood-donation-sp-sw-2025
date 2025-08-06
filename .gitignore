@@ -15,6 +15,7 @@ target/
 application.yml
 application.properties
 .idea
+IgnoreFile.java
 
 ### Eclipse ###
 .apt_generated
