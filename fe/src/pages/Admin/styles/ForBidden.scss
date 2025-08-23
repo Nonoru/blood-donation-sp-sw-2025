@@ -1,0 +1,10 @@
+.for-bidden-page {
+    width: calc(100vw - 200px);
+    overflow: hidden;
+    margin: 50px 0 0 200px !important;
+    height: calc(100vh - 50px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

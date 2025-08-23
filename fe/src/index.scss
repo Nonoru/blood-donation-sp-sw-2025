@@ -1,0 +1,16 @@
+*{
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+}
+body{
+    overflow-x: hidden;
+    font-family: "Roboto Slab", serif !important;
+    background-color: white;
+}
+.my-toast{
+    width: max-content;
+    padding: 30px !important;
+    gap: 20px;
+    z-index: 1000 !important;
+}

@@ -1,0 +1,514 @@
+/* OrderHistory page styles */
+.order-history-page {
+  margin: 100px auto 0 auto; 
+  background: #fff;
+  box-shadow: 0 4px 32px rgba(182,59,59,0.10);
+  font-family: 'Roboto', Arial, sans-serif;
+  min-height: 100vh;
+
+  .donate-title-section {
+    height: 40vh;
+    min-height: unset;
+    align-items: center;
+    padding-top: 40px !important;
+    padding-bottom: 0;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100vw;
+    z-index: 0;
+    background: linear-gradient(135deg, #B63B3B 0%, #ff6b6b 100%);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://images.pexels.com/photos/1001897/pexels-photo-1001897.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center/cover;
+      opacity: 0.1;
+      z-index: 1;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(182, 59, 59, 0.8);
+      z-index: 1;
+    }
+
+    .donate-title-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      color: white;
+
+      .main-title {
+        font-family: 'Roboto Slab', 'sans-serif';
+        font-size: 4rem;
+        font-weight: 900;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+        .blood-bridge {
+          display: block;
+          font-size: 4.5rem;
+          background: linear-gradient(45deg, #fff, #ffcccb);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          margin-bottom: 0.5rem;
+        }
+
+        .features-text {
+          margin-bottom: 5px !important;
+          display: block;
+          font-size: 1.6rem;
+          font-weight: 510;
+          letter-spacing: 0.3rem;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+
+  .title-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem !important;
+  }
+
+  .decoration-line {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, white, transparent);
+  }
+
+  .decoration-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    animation: pulse 2s infinite;
+  }
+
+
+
+  .order-title {
+    margin-top: 20px !important;
+    text-align: center;
+    color: #B63B3B;
+    margin-bottom: 28px !important;
+    font-size: 2rem;
+    font-weight: 800;
+  }
+
+  .order-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 24px !important;
+    
+    .order-tab-btn {
+      background: #fff;
+      color: #B63B3B;
+      border: 2px solid #ff6b6b;
+      border-radius: 8px 8px 0 0;
+      font-weight: 700;
+      font-size: 1.08rem;
+      padding: 10px 32px !important;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+      outline: none;
+
+      &:hover, &.active {
+        background: linear-gradient(90deg, #ff6b6b, #fff0f0);
+        color: #fff;
+        border-bottom: 2px solid #fff;
+      }
+    }
+  }
+
+  .order-tab-content {
+    width: 100%;
+    min-height: 320px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  // Base table styles
+  .order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px !important;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(182,59,59,0.07);
+
+    th, td {
+      padding: 12px 10px !important;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    th {
+      background: #ffeaea;
+      color: #B63B3B;
+      font-weight: 700;
+      border-bottom: 2px solid #ff6b6b;
+    }
+
+    tr {
+      border-bottom: 1px solid #f3caca;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      color: #333;
+      font-weight: 500;
+      max-width: 150px;
+      word-wrap: break-word;
+    }
+    
+    tr:hover {
+      background: #fff6f6;
+    }
+  }
+
+  // Donation table specific styles
+  .order-table-donation {
+    th:nth-child(1), td:nth-child(1) { // Mã đơn
+      width: 80px;
+      max-width: 80px;
+    }
+
+    th:nth-child(2), td:nth-child(2) { // Họ tên
+      width: 120px;
+      max-width: 120px;
+    }
+
+    th:nth-child(3), td:nth-child(3) { // Ngày tạo
+      width: 100px;
+      max-width: 100px;
+    }
+
+    th:nth-child(4), td:nth-child(4) { // Ngày hiến
+      width: 100px;
+      max-width: 100px;
+    }
+
+    th:nth-child(5), td:nth-child(5) { // Khung giờ hiến
+      width: 120px;
+      max-width: 120px;
+    }
+
+    th:nth-child(6), td:nth-child(6) { // Phòng khám
+      width: 120px;
+      max-width: 120px;
+    }
+
+    th:nth-child(7), td:nth-child(7) { // Trạng thái
+      width: 180px;
+      max-width: 180px;
+    }
+
+    th:nth-child(8), td:nth-child(8) { // Loại máu
+      width: 80px;
+      max-width: 80px;
+    }
+
+    th:nth-child(9), td:nth-child(9) { // Lượng máu
+      width: 100px;
+      max-width: 100px;
+    }
+
+    th:nth-child(10), td:nth-child(10) { // Lý do bị hủy
+      width: 200px;
+      max-width: 200px;
+    }
+  }
+
+  // Receive table specific styles
+  .order-table-receive {
+    th:nth-child(1), td:nth-child(1) { // Mã đơn
+      width: 80px;
+      max-width: 80px;
+    }
+
+    th:nth-child(2), td:nth-child(2) { // Họ tên
+      width: 120px;
+      max-width: 120px;
+    }
+
+    th:nth-child(3), td:nth-child(3) { // Loại máu
+      width: 80px;
+      max-width: 80px;
+    }
+
+    th:nth-child(4), td:nth-child(4) { // Lượng máu
+      width: 100px;
+      max-width: 100px;
+    }
+
+    th:nth-child(5), td:nth-child(5) { // Thông tin người nhận
+      width: 120px;
+      max-width: 120px;
+    }
+
+    th:nth-child(6), td:nth-child(6) { // Loại đơn
+      width: 100px;
+      max-width: 100px;
+    }
+
+    th:nth-child(7), td:nth-child(7) { // Trạng thái
+      width: 180px;
+      max-width: 180px;
+    }
+
+    th:nth-child(8), td:nth-child(8) { // Lý do bị hủy
+      width: 200px;
+      max-width: 200px;
+    }
+
+    th:nth-child(9), td:nth-child(9) { // Mục thời gian
+      width: 120px;
+      max-width: 120px;
+    }
+  }
+
+  #status-row{
+    width: 180px;
+  }
+
+  // Info buttons styling
+  .info-btn {
+    background: linear-gradient(135deg, #B63B3B, #ff6b6b);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px !important;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(182, 59, 59, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, #a03535, #e55a5a);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(182, 59, 59, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(182, 59, 59, 0.2);
+    }
+  }
+
+  .recipient-info-btn {
+    background: linear-gradient(135deg, #ff6b6b, #ff4d4d);
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, #ff5555, #ff3333);
+      box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+    }
+
+    &:active {
+      box-shadow: 0 2px 6px rgba(255, 107, 107, 0.2);
+    }
+  }
+
+  .time-info-btn {
+    background: linear-gradient(135deg, #2196F3, #42A5F5);
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, #1E88E5, #3B9DE5);
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+    }
+
+    &:active {
+      box-shadow: 0 2px 6px rgba(33, 150, 243, 0.2);
+    }
+  }
+
+  // Modal styling
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow: hidden;
+    animation: modalSlideIn 0.3s ease-out;
+  }
+
+  .modal-header {
+    color: white;
+    padding: 20px 24px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  // Modal header for recipient info - red theme
+  .modal-header.recipient-info {
+    background: linear-gradient(135deg, #ff6b6b, #ff4d4d);
+  }
+
+  // Modal header for time info - blue theme
+  .modal-header.time-info {
+    background: linear-gradient(135deg, #2196F3, #42A5F5);
+  }
+
+  .modal-title {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .modal-close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 4px 8px !important;
+    border-radius: 4px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  .modal-body {
+    padding: 24px !important;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  .modal-text {
+    margin: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #333;
+    white-space: pre-line;
+    
+    // Style for each line of information
+    &::before {
+      content: '';
+      display: block;
+      margin-bottom: 8px;
+    }
+  }
+
+  // Custom styling for modal content
+  .modal-info-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 16px !important;
+    padding: 12px 16px !important;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #B63B3B;
+    
+    .info-label {
+      font-weight: 700;
+      color: #B63B3B;
+      min-width: 120px;
+      margin-right: 12px !important;
+      font-size: 1rem;
+    }
+    
+    .info-value {
+      font-weight: 500;
+      color: #333;
+      flex: 1;
+      font-size: 1rem;
+      word-break: break-word;
+    }
+  }
+
+  // Time info modal styling - blue theme
+  .modal-info-item.time-info {
+    border-left: 4px solid #2196F3;
+    
+    .info-label {
+      color: #2196F3;
+    }
+  }
+
+  .modal-info-grid {
+    display: grid;
+    gap: 12px;
+    
+    .modal-info-item {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  // Animation for modal
+  @keyframes modalSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-50px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  // Pulse animation for decoration circle
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
