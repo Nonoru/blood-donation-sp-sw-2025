@@ -1,0 +1,74 @@
+package com.nonoru.superapp.exception;
+
+import ch.qos.logback.core.spi.ErrorCodes;
+import com.nonoru.superapp.dto.response.ApiResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Object> handleRuntimeException(RuntimeException ex) {
+        System.out.println("RuntimeException: " + ex.getMessage());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("error", "INTERNAL_ERROR");
+        response.put("message", ex.getMessage());
+        response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+    @ExceptionHandler
+    ResponseEntity<ApiResponse> handlingAppException(AppException exception){
+        ErrorCode errorCode = exception.getErrorCode();
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setCode(errorCode.getCode());
+        apiResponse.setMessage(errorCode.getMessage());
+        return ResponseEntity.badRequest().body(apiResponse);
+    }
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    ResponseEntity<ApiResponse> handlingMethodArgumentNotValidException(MethodArgumentNotValidException exception){
+        List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+        List<String> priorityOrder = List.of(
+                "USER_EMPTY", "USER_LENGTH_INVALID", "USER_CONTAIN_ERROR_SYMBOL",
+                "PASSWORD_EMPTY","PASSWORD_LENGTH_INVALID","PASSWORD_CONTAIN_ERROR_SYMBOL","PASSWORD_CONFIRM_EMPTY",
+                "EMAIL_EMPTY", "EMAIL_INVALID",
+                "FULL_NAME_EMPTY", "STATUS_OF_RECEIVING_ORDER_EMPTY",
+                "DOB_EMPTY", "DOB_MUST_IN_PAST",
+                "CCCD_NUMBER_EMPTY", "CCCD_NUMBER_INVALID",
+                "PHONE_EMPTY", "PHONE_INVALID",
+                "ADDRESS_EMPTY", "YEAR_LOWER_18", "AMMOUNT_BLOOD_ERROR",
+                "ORDER_DATE_EMPTY","ORDER_DATE_MUST_IN_FUTURE", "ORDER_TIME_EMPTY", "ORDER_TIME_MUST_IN_FUTURE", "ORDER_TIME_EXISTED_IN_DAY"
+        );
+
+        FieldError prioritizedError = fieldErrors.stream()
+                .sorted(Comparator.comparingInt(e -> {
+                    String code = e.getDefaultMessage();
+                    int index = priorityOrder.indexOf(code);
+                    return index < 0 ? Integer.MAX_VALUE : index;
+                }))
+                .findFirst()
+                .orElse(null);
+
+        ApiResponse apiResponse = new ApiResponse();
+        String enumKey = prioritizedError.getDefaultMessage();
+        ErrorCode errorCode = ErrorCode.valueOf(enumKey);
+        if(errorCode == null){
+            errorCode = ErrorCode.valueOf("UNCATEGORIZED_NOT_FOUND");
+        }
+        apiResponse.setCode(errorCode.getCode());
+        apiResponse.setMessage(errorCode.getMessage());
+
+        return ResponseEntity.badRequest().body(apiResponse);
+    }
+}
